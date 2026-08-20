@@ -2,7 +2,7 @@ import { useState, useEffect, CSSProperties } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 /**
- * TTMA-Quant「產業金流與跨市場連動」儀表板
+ * TTMA-Quant「跨市場資金動能與板塊輪動」儀表板
  * Framer Code Component — 讀取 main.py 產出的 sector_data.json
  *
  * 不依賴 Tailwind 或任何外部 UI 函式庫，純內聯樣式 (Inline CSS)。
@@ -38,6 +38,10 @@ type MomentumItem = {
     momentum_score: number
     weighted_change_pct: number
     turnover_usd: number
+    vol_surge: number // 成交量放大倍率
+    price_mom: number // 價格動能（%）
+    weight_pct: number // 權重佔比（%）
+    history_scores: number[] // 近 5 日動能分數，供 Sparkline 使用
 }
 
 type SectorData = {
@@ -121,6 +125,101 @@ function PctChangeTag({ value, size = 13 }: { value: number; size?: number }) {
         >
             {display}
         </span>
+    )
+}
+
+// 迷你趨勢線（Sparkline）：不含座標軸，僅呈現近 5 日動能分數走勢
+function Sparkline({
+    values,
+    color = COLOR_ACCENT,
+    width = 60,
+    height = 20,
+}: {
+    values: number[]
+    color?: string
+    width?: number
+    height?: number
+}) {
+    if (!values || values.length < 2) return null
+
+    const min = Math.min(...values)
+    const max = Math.max(...values)
+    const range = max - min
+    const stepX = width / (values.length - 1)
+    const points = values
+        .map((v, i) => {
+            const x = i * stepX
+            const y = range < 1e-9 ? height / 2 : height - ((v - min) / range) * height
+            return `${x.toFixed(1)},${y.toFixed(1)}`
+        })
+        .join(" ")
+
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox={`0 0 ${width} ${height}`}
+            style={{ display: "block", flexShrink: 0, overflow: "visible" }}
+        >
+            <polyline
+                points={points}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.5}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                opacity={0.9}
+            />
+        </svg>
+    )
+}
+
+// 動能分數 + 懸浮提示（成交量放大 / 價格動能 / 權重佔比）+ 迷你趨勢線
+function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
+    const [hovered, setHovered] = useState(false)
+    const volSurge = item.vol_surge ?? 0
+    const priceMom = item.price_mom ?? item.weighted_change_pct ?? 0
+    const weightPct = item.weight_pct ?? 0
+    const tooltipText = `成交量放大：${volSurge.toFixed(1)}倍 | 價格動能：${
+        priceMom > 0 ? "+" : ""
+    }${priceMom.toFixed(2)}% | 權重佔比：${weightPct.toFixed(0)}%`
+
+    return (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
+            {item.history_scores && item.history_scores.length >= 2 && (
+                <Sparkline values={item.history_scores} />
+            )}
+            <div
+                style={{ position: "relative", cursor: "default" }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <span style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, whiteSpace: "nowrap" }}>
+                    動能分數 {item.momentum_score.toFixed(1)} / 100
+                </span>
+                {hovered && (
+                    <div
+                        style={{
+                            position: "absolute",
+                            bottom: "calc(100% + 6px)",
+                            right: 0,
+                            padding: "6px 10px",
+                            borderRadius: 6,
+                            background: COLOR_PANEL_RAISED,
+                            border: `1px solid ${COLOR_ACCENT}`,
+                            color: COLOR_TEXT_PRIMARY,
+                            fontSize: 10,
+                            whiteSpace: "nowrap",
+                            zIndex: 20,
+                            boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+                            pointerEvents: "none",
+                        }}
+                    >
+                        {tooltipText}
+                    </div>
+                )}
+            </div>
+        </div>
     )
 }
 
@@ -714,9 +813,7 @@ function MomentumBarRow({
                         }}
                     />
                 </div>
-                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, textAlign: "right" }}>
-                    動能分數 {item.momentum_score.toFixed(1)} / 100
-                </div>
+                <MomentumScoreDisplay item={item} />
             </div>
         </div>
     )
@@ -941,9 +1038,7 @@ function SectorAccordionRow({
                             }}
                         />
                     </div>
-                    <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, textAlign: "right" }}>
-                        動能分數 {item.momentum_score.toFixed(1)} / 100
-                    </div>
+                    <MomentumScoreDisplay item={item} />
                 </div>
             </button>
 
@@ -1161,7 +1256,7 @@ export default function SectorDashboard(props) {
             try {
                 setLoading(true)
                 setError(null)
-                const res = await fetch(dataUrl, { cache: "no-store" })
+                const res = await fetch("https://raw.githubusercontent.com/daster9450-oss/TTMA-Quant/refs/heads/master/sector_data.json", { cache: "no-store" })
                 if (!res.ok) {
                     throw new Error(`HTTP ${res.status}`)
                 }
@@ -1226,7 +1321,7 @@ export default function SectorDashboard(props) {
                             letterSpacing: 0.5,
                         }}
                     >
-                        產業金流與跨市場連動
+                        跨市場資金動能與板塊輪動
                     </div>
                     {data && (
                         <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>

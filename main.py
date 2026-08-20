@@ -506,6 +506,50 @@ def compute_ticker_metrics(df, market, asia_t_date=None):
     }
 
 
+def compute_ticker_metrics_series(df, market, asia_t_date, days=5):
+    """
+    回傳最近 `days` 個交易日的指標序列（由舊到新），供動能分數歷史（Sparkline）使用。
+    US 市場沿用與 compute_ticker_metrics 相同的「T-1 對齊亞股 T 日」篩選基準，
+    確保序列中每一筆美股資料都仍是「亞股 T 日當下已實際發生」的收盤，不含跨時區未來資訊。
+    """
+    min_rows = 3
+    if df is None or len(df) < min_rows:
+        return []
+
+    if market == "US":
+        if asia_t_date is not None:
+            base_df = df[df.index.normalize() < pd.Timestamp(asia_t_date).normalize()]
+        else:
+            base_df = df.iloc[:-1]
+    else:
+        base_df = df
+
+    if len(base_df) < 2:
+        return []
+
+    latest_pos = len(base_df) - 1
+    start_pos = max(1, latest_pos - days + 1)
+
+    series = []
+    for pos in range(start_pos, latest_pos + 1):
+        ref_row = base_df.iloc[pos]
+        prev_row = base_df.iloc[pos - 1]
+        close = float(ref_row["Close"])
+        prev_close = float(prev_row["Close"])
+        volume = float(ref_row["Volume"])
+        vol_start = max(0, pos - 20)
+        avg_volume_window = base_df["Volume"].iloc[vol_start:pos]
+        avg_volume = float(avg_volume_window.mean()) if len(avg_volume_window) > 0 else volume
+        pct_change = (close - prev_close) / prev_close * 100.0 if prev_close != 0 else 0.0
+        volume_ratio = (volume / avg_volume) if avg_volume > 0 else 1.0
+        series.append({
+            "pct_change": pct_change,
+            "volume_ratio": volume_ratio,
+            "turnover_local": close * volume,
+        })
+    return series
+
+
 # ---------------------------------------------------------------------------
 # 5. 板塊層級彙總：加權漲跌幅 / 動能分數 / 成交金額(USD)
 # ---------------------------------------------------------------------------
@@ -534,9 +578,17 @@ def build_sector_data():
         asia_t_date = None
         print("[警告] 無法取得台積電資料以判定亞股 T 日基準，美股將改用保守作法（捨棄最新一筆收盤）")
 
+    HISTORY_DAYS = 5
+
     cross_market_table = []
     sector_raw_scores = []  # 暫存供動能分數正規化使用
     market_sector_raw = {m: [] for m in MARKET_CURRENCY.keys()}  # 暫存供「單一市場」動能排行正規化使用
+
+    # 暫存供「動能分數歷史」（Sparkline）正規化使用：
+    # sector_daily_scores_raw[offset]（offset: 0=最舊…HISTORY_DAYS-1=最新）為當日跨市場各板塊原始數據
+    sector_daily_scores_raw = [[] for _ in range(HISTORY_DAYS)]
+    # market_daily_sector_raw[market][offset] 為該市場當日各板塊原始數據
+    market_daily_sector_raw = {m: [[] for _ in range(HISTORY_DAYS)] for m in MARKET_CURRENCY.keys()}
 
     for sector_name, markets in SECTOR_MAP.items():
         market_blocks = {}
@@ -545,12 +597,20 @@ def build_sector_data():
         sector_weighted_pct_all_markets = []
         sector_weight_all_markets = []
 
+        sector_daily_weighted_pct = [0.0] * HISTORY_DAYS
+        sector_daily_weight = [0.0] * HISTORY_DAYS
+        sector_daily_vol_ratio_lists = [[] for _ in range(HISTORY_DAYS)]
+
         for market, tickers in markets.items():
             currency = MARKET_CURRENCY[market]
             ticker_infos = []
             weighted_pct_sum = 0.0
             weight_sum = 0.0
             market_volume_ratios = []  # 暫存供該市場單獨計算動能分數使用
+
+            market_daily_weighted_pct = [0.0] * HISTORY_DAYS
+            market_daily_weight = [0.0] * HISTORY_DAYS
+            market_daily_vol_ratio_lists = [[] for _ in range(HISTORY_DAYS)]
 
             for ticker in tickers:
                 df = extract_ticker_df(raw, ticker, tickers_count)
@@ -577,6 +637,14 @@ def build_sector_data():
                 sector_total_turnover_usd += turnover_usd
                 sector_total_volume_ratio.append(metrics["volume_ratio"])
                 market_volume_ratios.append(metrics["volume_ratio"])
+
+                # 近 HISTORY_DAYS 日歷史序列，供動能分數歷史（Sparkline）使用
+                history_series = compute_ticker_metrics_series(df, market, asia_t_date, days=HISTORY_DAYS)
+                for offset, h in enumerate(history_series):
+                    h_weight = h["turnover_local"] if h["turnover_local"] > 0 else 1e-6
+                    market_daily_weighted_pct[offset] += h["pct_change"] * h_weight
+                    market_daily_weight[offset] += h_weight
+                    market_daily_vol_ratio_lists[offset].append(h["volume_ratio"])
 
             if weight_sum > 0:
                 weighted_change_pct = weighted_pct_sum / weight_sum
@@ -608,6 +676,23 @@ def build_sector_data():
                     "volume_ratio": market_avg_volume_ratio,
                 })
 
+            for offset in range(HISTORY_DAYS):
+                if market_daily_weight[offset] > 0:
+                    m_wpct = market_daily_weighted_pct[offset] / market_daily_weight[offset]
+                    m_vol = (
+                        float(np.mean(market_daily_vol_ratio_lists[offset]))
+                        if market_daily_vol_ratio_lists[offset]
+                        else 1.0
+                    )
+                    market_daily_sector_raw[market][offset].append({
+                        "sector": sector_name,
+                        "weighted_change_pct": m_wpct,
+                        "volume_ratio": m_vol,
+                    })
+                    sector_daily_weighted_pct[offset] += m_wpct * market_daily_weight[offset]
+                    sector_daily_weight[offset] += market_daily_weight[offset]
+                    sector_daily_vol_ratio_lists[offset].extend(market_daily_vol_ratio_lists[offset])
+
         total_weight = sum(sector_weight_all_markets)
         sector_weighted_pct = (
             sum(sector_weighted_pct_all_markets) / total_weight if total_weight > 0 else 0.0
@@ -629,9 +714,51 @@ def build_sector_data():
             "volume_ratio": avg_volume_ratio,
         })
 
+        for offset in range(HISTORY_DAYS):
+            if sector_daily_weight[offset] > 0:
+                s_wpct = sector_daily_weighted_pct[offset] / sector_daily_weight[offset]
+                s_vol = (
+                    float(np.mean(sector_daily_vol_ratio_lists[offset]))
+                    if sector_daily_vol_ratio_lists[offset]
+                    else 1.0
+                )
+                sector_daily_scores_raw[offset].append({
+                    "sector": sector_name,
+                    "weighted_change_pct": s_wpct,
+                    "volume_ratio": s_vol,
+                })
+
+    # --- 動能分數歷史（近 HISTORY_DAYS 日，供前端 Sparkline 使用）---
+    # 每一天分別對「當天有資料的板塊」做 0~100 正規化，與當日動能分數計算邏輯一致。
+    sector_history_scores = {s["sector"]: [] for s in sector_raw_scores}
+    for offset in range(HISTORY_DAYS):
+        day_raw = sector_daily_scores_raw[offset]
+        if not day_raw:
+            continue
+        day_abs_scores = normalize_0_100([abs(r["weighted_change_pct"]) for r in day_raw])
+        day_vol_scores = normalize_0_100([r["volume_ratio"] for r in day_raw])
+        for i, r in enumerate(day_raw):
+            composite = 0.5 * day_abs_scores[i] + 0.5 * day_vol_scores[i]
+            sector_history_scores[r["sector"]].append(round(composite, 1))
+
+    market_history_scores = {
+        m: {r["sector"]: [] for r in market_sector_raw[m]} for m in market_sector_raw
+    }
+    for market, daily_lists in market_daily_sector_raw.items():
+        for offset in range(HISTORY_DAYS):
+            day_raw = daily_lists[offset]
+            if not day_raw:
+                continue
+            day_abs_scores = normalize_0_100([abs(r["weighted_change_pct"]) for r in day_raw])
+            day_vol_scores = normalize_0_100([r["volume_ratio"] for r in day_raw])
+            for i, r in enumerate(day_raw):
+                composite = 0.5 * day_abs_scores[i] + 0.5 * day_vol_scores[i]
+                market_history_scores[market][r["sector"]].append(round(composite, 1))
+
     # --- 動能分數：漲跌幅強度(50%) + 量能比(50%)，各自正規化後加總，再整體正規化到 0~100 ---
     abs_change_scores = normalize_0_100([s["abs_change"] for s in sector_raw_scores])
     volume_ratio_scores = normalize_0_100([s["volume_ratio"] for s in sector_raw_scores])
+    total_turnover_all = sum(s["turnover_usd"] for s in sector_raw_scores) or 1.0
 
     momentum_ranking = []
     for i, s in enumerate(sector_raw_scores):
@@ -641,6 +768,14 @@ def build_sector_data():
             "momentum_score": round(composite, 1),
             "weighted_change_pct": s["weighted_change_pct"],
             "turnover_usd": s["turnover_usd"],
+            # 成交量放大倍率（近 20 日均量的倍數）
+            "vol_surge": round(s["volume_ratio"], 2),
+            # 價格動能（加權漲跌幅，與 weighted_change_pct 相同，供 Tooltip 獨立取用）
+            "price_mom": s["weighted_change_pct"],
+            # 該板塊成交金額佔本次排行總成交金額的比重
+            "weight_pct": round(s["turnover_usd"] / total_turnover_all * 100, 1),
+            # 近 5 日動能分數，供前端 Sparkline 迷你趨勢線使用
+            "history_scores": sector_history_scores.get(s["sector"], []),
         })
 
     momentum_ranking.sort(key=lambda x: x["momentum_score"], reverse=True)
@@ -653,6 +788,7 @@ def build_sector_data():
             continue
         m_abs_scores = normalize_0_100([r["abs_change"] for r in raw_list])
         m_vol_scores = normalize_0_100([r["volume_ratio"] for r in raw_list])
+        total_market_turnover = sum(r["turnover_usd"] for r in raw_list) or 1.0
         items = []
         for i, r in enumerate(raw_list):
             composite = 0.5 * m_abs_scores[i] + 0.5 * m_vol_scores[i]
@@ -661,6 +797,10 @@ def build_sector_data():
                 "momentum_score": round(composite, 1),
                 "weighted_change_pct": r["weighted_change_pct"],
                 "turnover_usd": r["turnover_usd"],
+                "vol_surge": round(r["volume_ratio"], 2),
+                "price_mom": r["weighted_change_pct"],
+                "weight_pct": round(r["turnover_usd"] / total_market_turnover * 100, 1),
+                "history_scores": market_history_scores.get(market, {}).get(r["sector"], []),
             })
         items.sort(key=lambda x: x["momentum_score"], reverse=True)
         market_momentum[market] = items
