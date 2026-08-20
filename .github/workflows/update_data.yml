@@ -1,0 +1,47 @@
+name: 更新產業金流資料
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # 每週一到週五 UTC 07:00（台股/日股收盤後）自動執行
+    - cron: "0 7 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  update-sector-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Python 環境
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安裝相依套件
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas numpy
+
+      - name: 執行 main.py 產出最新 sector_data.json
+        run: python main.py
+
+      - name: 設定 Git 使用者資訊
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 提交並推送更新後的 sector_data.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add sector_data.json
+          if git diff --cached --quiet; then
+            echo "沒有資料變動，略過提交。"
+          else
+            git commit -m "自動更新 sector_data.json ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          fi
