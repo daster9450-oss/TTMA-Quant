@@ -229,6 +229,102 @@ function MarketTabs({
 }
 
 // -----------------------------------------------------------------------
+// 資金流向篩選（Top 10 / Bottom 10）— 膠囊切換按鈕，視覺層級略小於國家頁籤
+// -----------------------------------------------------------------------
+const FLOW_FILTER_OPTIONS: { key: "top" | "bottom"; label: string }[] = [
+    { key: "top", label: "前 10 大熱門資金板塊" },
+    { key: "bottom", label: "後 10 大冷門資金板塊" },
+]
+
+function FlowFilterToggle({
+    selected,
+    onSelect,
+}: {
+    selected: "top" | "bottom"
+    onSelect: (key: "top" | "bottom") => void
+}) {
+    return (
+        <div
+            style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: 8,
+            }}
+        >
+            <span
+                style={{
+                    fontSize: 11,
+                    color: COLOR_TEXT_SECONDARY,
+                    letterSpacing: 0.3,
+                }}
+            >
+                資金流向篩選
+            </span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {FLOW_FILTER_OPTIONS.map((opt) => {
+                    const isActive = opt.key === selected
+                    return (
+                        <button
+                            key={opt.key}
+                            onClick={() => onSelect(opt.key)}
+                            style={{
+                                padding: "5px 14px",
+                                borderRadius: 999,
+                                fontSize: 11,
+                                fontWeight: 600,
+                                letterSpacing: 0.2,
+                                cursor: "pointer",
+                                border: isActive
+                                    ? `1px solid ${COLOR_ACCENT}`
+                                    : `1px solid ${COLOR_BORDER}`,
+                                background: isActive ? "rgba(0,242,254,0.10)" : "transparent",
+                                color: isActive ? COLOR_ACCENT : COLOR_TEXT_SECONDARY,
+                                transition: "all 0.15s ease",
+                                fontFamily: FONT_STACK,
+                            }}
+                        >
+                            {opt.label}
+                        </button>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
+// 依「動能分數」排序並截斷為前/後 10 筆（單一市場板塊列表用）
+function sortMomentumItems(
+    items: MomentumItem[],
+    filter: "top" | "bottom"
+): MomentumItem[] {
+    const sorted = [...items].sort((a, b) =>
+        filter === "top"
+            ? b.momentum_score - a.momentum_score
+            : a.momentum_score - b.momentum_score
+    )
+    return sorted.slice(0, 10)
+}
+
+// 依「動能分數」排序並截斷為前/後 10 筆（跨市場連動表用：以 momentum_ranking 對照分數）
+function sortSectorRowsByFlow(
+    rows: SectorRow[],
+    momentumRanking: MomentumItem[],
+    filter: "top" | "bottom"
+): SectorRow[] {
+    const scoreBySector: Record<string, number> = {}
+    momentumRanking.forEach((m) => {
+        scoreBySector[m.sector] = m.momentum_score
+    })
+    const sorted = [...rows].sort((a, b) => {
+        const scoreA = scoreBySector[a.sector] ?? 0
+        const scoreB = scoreBySector[b.sector] ?? 0
+        return filter === "top" ? scoreB - scoreA : scoreA - scoreB
+    })
+    return sorted.slice(0, 10)
+}
+
+// -----------------------------------------------------------------------
 // 統計卡片列（單一市場檢視用）
 // -----------------------------------------------------------------------
 function StatTile({ label, value, sub }: { label: string; value: string; sub?: string }) {
@@ -345,7 +441,7 @@ function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
 // -----------------------------------------------------------------------
 // 全部市場：跨市場連動表格
 // -----------------------------------------------------------------------
-function CrossMarketTable({ rows }: { rows: SectorRow[] }) {
+function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }) {
     return (
         <div
             style={{
@@ -359,13 +455,25 @@ function CrossMarketTable({ rows }: { rows: SectorRow[] }) {
                 style={{
                     padding: "14px 18px",
                     borderBottom: `1px solid ${COLOR_BORDER}`,
-                    fontSize: 14,
-                    fontWeight: 700,
-                    color: COLOR_ACCENT,
-                    letterSpacing: 0.5,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 12,
                 }}
             >
-                跨市場連動表
+                <div
+                    style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: COLOR_ACCENT,
+                        letterSpacing: 0.5,
+                    }}
+                >
+                    跨市場連動表
+                </div>
+                {badge && (
+                    <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>{badge}</div>
+                )}
             </div>
 
             <div style={{ overflowX: "auto" }}>
@@ -614,6 +722,236 @@ function MomentumBarRow({
     )
 }
 
+// -----------------------------------------------------------------------
+// 單一市場：成分股細項卡片（點擊展開後顯示）
+// -----------------------------------------------------------------------
+function TickerDetailCard({ ticker }: { ticker: TickerInfo }) {
+    return (
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 4,
+                padding: "10px 12px",
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${COLOR_BORDER}`,
+            }}
+        >
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: 8,
+                }}
+            >
+                <span
+                    style={{
+                        fontSize: 13,
+                        fontWeight: 700,
+                        color: COLOR_TEXT_PRIMARY,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                    }}
+                    title={ticker.name}
+                >
+                    {ticker.name}
+                </span>
+                <PctChangeTag value={ticker.pct_change} size={12} />
+            </div>
+            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
+                {ticker.symbol} · 收盤 {ticker.close.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
+                成交額 {formatUsd(ticker.turnover_usd)} · {ticker.as_of_date}
+            </div>
+        </div>
+    )
+}
+
+// 展開區塊：深色微透明容器，內部以卡片格線排列成分股，避免全部擠在同一行
+function ExpandedSectorPanel({ tickers }: { tickers: TickerInfo[] }) {
+    if (!tickers || tickers.length === 0) return null
+    return (
+        <div
+            style={{
+                margin: "0 4px 14px",
+                padding: 14,
+                borderRadius: 10,
+                background: "rgba(0,242,254,0.05)",
+                border: "1px solid rgba(0,242,254,0.25)",
+            }}
+        >
+            <div
+                style={{
+                    fontSize: 11,
+                    color: COLOR_ACCENT,
+                    letterSpacing: 0.5,
+                    marginBottom: 10,
+                    fontWeight: 700,
+                }}
+            >
+                成分股明細（{tickers.length} 檔）
+            </div>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                    gap: 10,
+                }}
+            >
+                {tickers.map((t) => (
+                    <TickerDetailCard key={t.symbol} ticker={t} />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+// 單一市場列表用：可點擊展開/收合的板塊列（Accordion）
+function SectorAccordionRow({
+    rank,
+    item,
+    maxScore,
+    tickers,
+    isExpanded,
+    onToggle,
+}: {
+    rank: number
+    item: MomentumItem
+    maxScore: number
+    tickers: TickerInfo[]
+    isExpanded: boolean
+    onToggle: () => void
+}) {
+    const widthPct = maxScore > 0 ? (item.momentum_score / maxScore) * 100 : 0
+    const barColor = item.weighted_change_pct >= 0 ? COLOR_UP : COLOR_DOWN
+    return (
+        <div>
+            <button
+                onClick={onToggle}
+                style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    padding: "14px 8px",
+                    border: "none",
+                    borderTop: `1px solid ${COLOR_BORDER}`,
+                    borderRadius: 8,
+                    background: isExpanded ? "rgba(0,242,254,0.06)" : "transparent",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    fontFamily: FONT_STACK,
+                    transition: "background 0.15s ease",
+                }}
+            >
+                {/* 左側：展開箭頭 + 排名 + 板塊名稱 */}
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        flex: "1 1 260px",
+                        minWidth: 0,
+                    }}
+                >
+                    <span
+                        style={{
+                            fontSize: 11,
+                            color: isExpanded ? COLOR_ACCENT : COLOR_TEXT_SECONDARY,
+                            flexShrink: 0,
+                            transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)",
+                            transition: "transform 0.15s ease",
+                            display: "inline-block",
+                        }}
+                    >
+                        ▸
+                    </span>
+                    <div
+                        style={{
+                            flexShrink: 0,
+                            width: 26,
+                            height: 26,
+                            borderRadius: 6,
+                            background: COLOR_PANEL_RAISED,
+                            border: `1px solid ${COLOR_BORDER}`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: rank <= 3 ? COLOR_ACCENT : COLOR_TEXT_SECONDARY,
+                        }}
+                    >
+                        {String(rank).padStart(2, "0")}
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
+                            {item.sector}
+                        </div>
+                        <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY }}>
+                            {tickers.length} 檔成分股 · 點擊{isExpanded ? "收合" : "展開"}明細
+                        </div>
+                    </div>
+                </div>
+
+                {/* 右側：漲跌幅 + 動能長條圖 + 分數 */}
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 6,
+                        flex: "1 1 240px",
+                        minWidth: 180,
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            fontSize: 11,
+                        }}
+                    >
+                        <PctChangeTag value={item.weighted_change_pct} />
+                        <span style={{ color: COLOR_TEXT_SECONDARY, fontVariantNumeric: "tabular-nums" }}>
+                            {formatUsd(item.turnover_usd)}
+                        </span>
+                    </div>
+                    <div
+                        style={{
+                            position: "relative",
+                            height: 10,
+                            borderRadius: 6,
+                            background: "rgba(255,255,255,0.05)",
+                            border: `1px solid ${COLOR_BORDER}`,
+                            overflow: "hidden",
+                        }}
+                    >
+                        <div
+                            style={{
+                                width: `${widthPct}%`,
+                                height: "100%",
+                                borderRadius: 6,
+                                background: `linear-gradient(90deg, ${barColor}55 0%, ${barColor} 100%)`,
+                                transition: "width 0.5s ease",
+                            }}
+                        />
+                    </div>
+                    <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, textAlign: "right" }}>
+                        動能分數 {item.momentum_score.toFixed(1)} / 100
+                    </div>
+                </div>
+            </button>
+
+            {isExpanded && <ExpandedSectorPanel tickers={tickers} />}
+        </div>
+    )
+}
+
 function PanelHeader({ title, badge }: { title: string; badge?: string }) {
     return (
         <div
@@ -657,17 +995,27 @@ function getRepresentativeTickers(row: SectorRow | undefined): TickerInfo[] {
 // -----------------------------------------------------------------------
 // 全部市場檢視
 // -----------------------------------------------------------------------
-function AllMarketsView({ data, topN }: { data: SectorData; topN: number }) {
-    const sliced = data.momentum_ranking.slice(0, topN)
-    const maxScore = Math.max(100, ...data.momentum_ranking.map((i) => i.momentum_score))
+function AllMarketsView({
+    data,
+    flowFilter,
+}: {
+    data: SectorData
+    flowFilter: "top" | "bottom"
+}) {
+    // 3. 資料排序與截斷：依動能分數排序（top=由大到小 / bottom=由小到大），固定只取 10 筆
+    const sortedRows = sortSectorRowsByFlow(data.cross_market_table, data.momentum_ranking, flowFilter)
+    const sortedMomentum = sortMomentumItems(data.momentum_ranking, flowFilter)
+    const maxScore = Math.max(100, ...sortedMomentum.map((i) => i.momentum_score))
     const sectorByName: Record<string, SectorRow> = {}
     data.cross_market_table.forEach((row) => {
         sectorByName[row.sector] = row
     })
+    const badgeText =
+        flowFilter === "top" ? "前 10 大熱門資金板塊" : "後 10 大冷門資金板塊"
 
     return (
         <>
-            <CrossMarketTable rows={data.cross_market_table} />
+            <CrossMarketTable rows={sortedRows} badge={badgeText} />
 
             <div
                 style={{
@@ -676,9 +1024,9 @@ function AllMarketsView({ data, topN }: { data: SectorData; topN: number }) {
                     background: COLOR_PANEL,
                 }}
             >
-                <PanelHeader title="動能排行榜（跨市場綜合）" badge={`前 ${sliced.length} 大板塊`} />
+                <PanelHeader title="動能排行榜（跨市場綜合）" badge={badgeText} />
                 <div style={{ padding: "0 18px 6px" }}>
-                    {sliced.map((item, i) => (
+                    {sortedMomentum.map((item, i) => (
                         <MomentumBarRow
                             key={item.sector}
                             rank={i + 1}
@@ -699,18 +1047,31 @@ function AllMarketsView({ data, topN }: { data: SectorData; topN: number }) {
 function SingleMarketView({
     data,
     marketKey,
+    flowFilter,
 }: {
     data: SectorData
     marketKey: string
+    flowFilter: "top" | "bottom"
 }) {
     const marketLabel = MARKET_LABEL_FALLBACK[marketKey] || marketKey
-    const items = data.market_momentum[marketKey] || []
-    const maxScore = Math.max(100, ...items.map((i) => i.momentum_score))
+    const [expandedSector, setExpandedSector] = useState<string | null>(null)
 
     const sectorByName: Record<string, SectorRow> = {}
     data.cross_market_table.forEach((row) => {
         sectorByName[row.sector] = row
     })
+
+    // 2. 自動隱藏空白資料：只保留該市場「確實有成分股資料」的板塊，
+    //    不顯示任何 — 或空白區塊。
+    const nonEmptyItems = (data.market_momentum[marketKey] || []).filter((item) => {
+        const block = sectorByName[item.sector]?.markets[marketKey]
+        return !!block && block.tickers && block.tickers.length > 0
+    })
+
+    // 3. 資料排序與截斷：依動能分數排序（top=由大到小 / bottom=由小到大），固定只取 10 筆
+    const items = sortMomentumItems(nonEmptyItems, flowFilter)
+
+    const maxScore = Math.max(100, ...items.map((i) => i.momentum_score))
 
     const totalTurnoverUsd = items.reduce((sum, i) => sum + i.turnover_usd, 0)
     const topSector = items.length > 0 ? items[0].sector : ""
@@ -753,17 +1114,29 @@ function SingleMarketView({
                     background: COLOR_PANEL,
                 }}
             >
-                <PanelHeader title={`${marketLabel}細分板塊動能排行`} badge={`${items.length} 個板塊`} />
+                <PanelHeader
+                    title={`${marketLabel}細分板塊動能排行`}
+                    badge={`${flowFilter === "top" ? "前 10 大熱門" : "後 10 大冷門"} · ${items.length} 個板塊`}
+                />
                 <div style={{ padding: "0 18px 6px" }}>
-                    {items.map((item, i) => (
-                        <MomentumBarRow
-                            key={item.sector}
-                            rank={i + 1}
-                            item={item}
-                            maxScore={maxScore}
-                            tickers={sectorByName[item.sector]?.markets[marketKey]?.tickers || []}
-                        />
-                    ))}
+                    {items.map((item, i) => {
+                        const tickers = sectorByName[item.sector]?.markets[marketKey]?.tickers || []
+                        return (
+                            <SectorAccordionRow
+                                key={item.sector}
+                                rank={i + 1}
+                                item={item}
+                                maxScore={maxScore}
+                                tickers={tickers}
+                                isExpanded={expandedSector === item.sector}
+                                onToggle={() =>
+                                    setExpandedSector((prev) =>
+                                        prev === item.sector ? null : item.sector
+                                    )
+                                }
+                            />
+                        )
+                    })}
                 </div>
             </div>
         </>
@@ -774,11 +1147,12 @@ function SingleMarketView({
 // 主元件
 // -----------------------------------------------------------------------
 export default function SectorDashboard(props) {
-    const { dataUrl, topN, refreshIntervalSec } = props
+    const { dataUrl, refreshIntervalSec } = props
     const [data, setData] = useState<SectorData | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(true)
     const [selectedMarket, setSelectedMarket] = useState<string>("ALL")
+    const [flowFilter, setFlowFilter] = useState<"top" | "bottom">("top")
 
     useEffect(() => {
         let cancelled = false
@@ -866,14 +1240,23 @@ export default function SectorDashboard(props) {
                 )}
             </div>
 
+            {!loading && !error && data && (
+                <FlowFilterToggle selected={flowFilter} onSelect={setFlowFilter} />
+            )}
+
             {loading && <LoadingState />}
             {!loading && error && <ErrorState message={error} />}
             {!loading && !error && data && (
                 <>
                     {selectedMarket === "ALL" ? (
-                        <AllMarketsView data={data} topN={topN} />
+                        <AllMarketsView data={data} flowFilter={flowFilter} />
                     ) : (
-                        <SingleMarketView data={data} marketKey={selectedMarket} />
+                        <SingleMarketView
+                            key={selectedMarket}
+                            data={data}
+                            marketKey={selectedMarket}
+                            flowFilter={flowFilter}
+                        />
                     )}
                 </>
             )}
@@ -883,7 +1266,6 @@ export default function SectorDashboard(props) {
 
 SectorDashboard.defaultProps = {
     dataUrl: "/sector_data.json",
-    topN: 5,
     refreshIntervalSec: 0,
 }
 
@@ -892,14 +1274,6 @@ addPropertyControls(SectorDashboard, {
         type: ControlType.String,
         title: "資料來源網址",
         defaultValue: "/sector_data.json",
-    },
-    topN: {
-        type: ControlType.Number,
-        title: "顯示前N大板塊",
-        defaultValue: 5,
-        min: 1,
-        max: 20,
-        step: 1,
     },
     refreshIntervalSec: {
         type: ControlType.Number,
