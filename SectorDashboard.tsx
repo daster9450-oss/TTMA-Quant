@@ -863,12 +863,13 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                 )}
             </div>
 
-            <div style={{ overflowX: "auto" }}>
+            {/* 手機版可左右滑動 (Swipe) 查看美股／日股／韓股欄位，表格本身設 minWidth 避免文字擠成一坨 */}
+            <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
                 <table
                     style={{
                         width: "100%",
                         borderCollapse: "collapse",
-                        minWidth: 760,
+                        minWidth: 800,
                     }}
                 >
                     <thead>
@@ -1016,9 +1017,11 @@ function MomentumBarRow({
         <div
             style={{
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
-                gap: 16,
-                padding: "14px 4px",
+                rowGap: 10,
+                columnGap: 16,
+                padding: "14px 8px",
                 borderTop: `1px solid ${COLOR_BORDER}`,
             }}
         >
@@ -1084,11 +1087,13 @@ function MomentumBarRow({
                 <div
                     style={{
                         position: "relative",
+                        width: "100%",
                         height: 10,
                         borderRadius: 6,
                         background: "rgba(255,255,255,0.05)",
                         border: `1px solid ${COLOR_BORDER}`,
                         overflow: "hidden",
+                        boxSizing: "border-box",
                     }}
                 >
                     <div
@@ -1221,9 +1226,12 @@ function SectorAccordionRow({
                 onClick={onToggle}
                 style={{
                     width: "100%",
+                    boxSizing: "border-box",
                     display: "flex",
+                    flexWrap: "wrap",
                     alignItems: "center",
-                    gap: 16,
+                    rowGap: 10,
+                    columnGap: 16,
                     padding: "14px 8px",
                     border: "none",
                     borderTop: `1px solid ${COLOR_BORDER}`,
@@ -1314,11 +1322,13 @@ function SectorAccordionRow({
                     <div
                         style={{
                             position: "relative",
+                            width: "100%",
                             height: 10,
                             borderRadius: 6,
                             background: "rgba(255,255,255,0.05)",
                             border: `1px solid ${COLOR_BORDER}`,
                             overflow: "hidden",
+                            boxSizing: "border-box",
                         }}
                     >
                         <div
@@ -1612,16 +1622,20 @@ export default function SectorDashboard(props) {
                     borderRadius: 12,
                 }}
             >
+                {/* 頂部控制區：標題、市場頁籤、語言切換器。外層與內層皆設 flexWrap，
+                    手機螢幕空間不足時自動往下折行，rowGap/columnGap 分開設定讓折行後的
+                    上下間距更寬鬆好看，不會和左右間距擠在一起。 */}
                 <div
                     style={{
                         display: "flex",
                         flexWrap: "wrap",
                         justifyContent: "space-between",
-                        alignItems: "flex-end",
-                        gap: 14,
+                        alignItems: "center",
+                        rowGap: 14,
+                        columnGap: 14,
                     }}
                 >
-                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
                         <div
                             style={{
                                 fontSize: 18,
@@ -1640,7 +1654,15 @@ export default function SectorDashboard(props) {
                         )}
                     </div>
 
-                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            alignItems: "center",
+                            rowGap: 8,
+                            columnGap: 10,
+                        }}
+                    >
                         {!loading && !error && data && (
                             <MarketTabs selected={selectedMarket} onSelect={setSelectedMarket} />
                         )}
