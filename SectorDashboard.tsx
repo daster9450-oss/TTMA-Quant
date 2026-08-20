@@ -1,4 +1,4 @@
-import { useState, useEffect, CSSProperties } from "react"
+import { useState, useEffect, useContext, createContext, CSSProperties } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 /**
@@ -53,6 +53,229 @@ type SectorData = {
 }
 
 // -----------------------------------------------------------------------
+// 多語系 (i18n)：自動偵測預設 ＋ 強制手動覆寫
+// -----------------------------------------------------------------------
+type Lang = "zh-TW" | "zh-CN" | "ja" | "en-US"
+
+// 翻譯字典：所有靜態 UI 文字。術語一律採用全球金流／量化交易慣用語
+// （動能 Momentum、板塊 Sector、資金流向 Capital Flow、權重 Weighting），
+// 避免生硬直翻（例如中文避免「動力」「部門」）。
+const TRANSLATIONS: Record<Lang, Record<string, string>> = {
+    "zh-TW": {
+        title: "跨市場資金動能與板塊輪動",
+        updatedAt: "資料更新時間（UTC）：",
+        tabAll: "全部市場",
+        tabTW: "台股",
+        tabCN: "中股",
+        tabUS: "美股",
+        tabJP: "日股",
+        tabKR: "韓股",
+        flowFilterLabel: "資金流向篩選",
+        flowTop: "前 10 大熱門資金板塊",
+        flowBottom: "後 10 大冷門資金板塊",
+        crossMarketTableTitle: "跨市場連動表",
+        sectorColumn: "板塊",
+        momentumRankingTitle: "動能排行榜（跨市場綜合）",
+        statSectorCount: "涵蓋板塊數",
+        statSectorCountSub: "{market}目前追蹤板塊",
+        statTopSector: "最高成交動能",
+        statTopSectorSub: "動能分數排名第一",
+        statTurnover: "板塊成交金額合計",
+        statTurnoverSub: "換算美元 (USD)",
+        statBenchmark: "研究基準",
+        marketNoteTW: "日成交資料 · 上市與上櫃",
+        marketNoteCN: "日成交資料 · 滬深兩市",
+        marketNoteUS: "美股 T-1 收盤對齊亞股 T 日",
+        marketNoteJP: "日成交資料",
+        marketNoteKR: "日成交資料",
+        singleMarketRankingTitle: "{market}細分板塊動能排行",
+        badgeTop: "前 10 大熱門",
+        badgeBottom: "後 10 大冷門",
+        sectorCountUnit: "{count} 個板塊",
+        constituentCountTitle: "成分股明細（{count} 檔）",
+        constituentCountLine: "{count} 檔成分股 · 點擊{action}明細",
+        actionExpand: "展開",
+        actionCollapse: "收合",
+        noDataForMarket: "目前尚無{market}板塊資料。",
+        loadingText: "資料載入中，正在同步跨市場金流數據...",
+        errorTitle: "資料載入失敗",
+        unknownError: "未知錯誤",
+        momentumScoreLabel: "動能分數",
+        tooltipVolSurge: "成交量放大",
+        tooltipPriceMom: "價格動能",
+        tooltipWeight: "權重佔比",
+        unitTimes: "倍",
+    },
+    "zh-CN": {
+        title: "跨市场资金动能与板块轮动",
+        updatedAt: "数据更新时间（UTC）：",
+        tabAll: "全部市场",
+        tabTW: "台股",
+        tabCN: "中股",
+        tabUS: "美股",
+        tabJP: "日股",
+        tabKR: "韩股",
+        flowFilterLabel: "资金流向筛选",
+        flowTop: "前 10 大热门资金板块",
+        flowBottom: "后 10 大冷门资金板块",
+        crossMarketTableTitle: "跨市场联动表",
+        sectorColumn: "板块",
+        momentumRankingTitle: "动能排行榜（跨市场综合）",
+        statSectorCount: "涵盖板块数",
+        statSectorCountSub: "{market}目前追踪板块",
+        statTopSector: "最高成交动能",
+        statTopSectorSub: "动能分数排名第一",
+        statTurnover: "板块成交金额合计",
+        statTurnoverSub: "折算美元 (USD)",
+        statBenchmark: "研究基准",
+        marketNoteTW: "日成交数据 · 上市与上柜",
+        marketNoteCN: "日成交数据 · 沪深两市",
+        marketNoteUS: "美股 T-1 收盘对齐亚股 T 日",
+        marketNoteJP: "日成交数据",
+        marketNoteKR: "日成交数据",
+        singleMarketRankingTitle: "{market}细分板块动能排行",
+        badgeTop: "前 10 大热门",
+        badgeBottom: "后 10 大冷门",
+        sectorCountUnit: "{count} 个板块",
+        constituentCountTitle: "成分股明细（{count} 只）",
+        constituentCountLine: "{count} 只成分股 · 点击{action}明细",
+        actionExpand: "展开",
+        actionCollapse: "收起",
+        noDataForMarket: "目前尚无{market}板块数据。",
+        loadingText: "数据载入中，正在同步跨市场资金流数据...",
+        errorTitle: "数据载入失败",
+        unknownError: "未知错误",
+        momentumScoreLabel: "动能分数",
+        tooltipVolSurge: "成交量放大",
+        tooltipPriceMom: "价格动能",
+        tooltipWeight: "权重占比",
+        unitTimes: "倍",
+    },
+    ja: {
+        title: "クロスマーケット資金モメンタム＆セクターローテーション",
+        updatedAt: "データ更新時刻（UTC）：",
+        tabAll: "全市場",
+        tabTW: "台湾株",
+        tabCN: "中国株",
+        tabUS: "米国株",
+        tabJP: "日本株",
+        tabKR: "韓国株",
+        flowFilterLabel: "資金フロー絞り込み",
+        flowTop: "資金流入上位10セクター",
+        flowBottom: "資金流出下位10セクター",
+        crossMarketTableTitle: "クロスマーケット連動表",
+        sectorColumn: "セクター",
+        momentumRankingTitle: "モメンタムランキング（クロスマーケット総合）",
+        statSectorCount: "対象セクター数",
+        statSectorCountSub: "{market}の追跡対象セクター",
+        statTopSector: "最高モメンタムセクター",
+        statTopSectorSub: "モメンタムスコア第1位",
+        statTurnover: "セクター合計売買代金",
+        statTurnoverSub: "米ドル換算 (USD)",
+        statBenchmark: "基準日",
+        marketNoteTW: "日次売買データ・上場及び店頭",
+        marketNoteCN: "日次売買データ・上海深セン両市場",
+        marketNoteUS: "米国株T-1終値をアジア株T日に整合",
+        marketNoteJP: "日次売買データ",
+        marketNoteKR: "日次売買データ",
+        singleMarketRankingTitle: "{market}セクター別モメンタムランキング",
+        badgeTop: "資金流入上位10",
+        badgeBottom: "資金流出下位10",
+        sectorCountUnit: "{count} セクター",
+        constituentCountTitle: "構成銘柄詳細（{count} 銘柄）",
+        constituentCountLine: "構成銘柄 {count} 件 · クリックで{action}",
+        actionExpand: "詳細を表示",
+        actionCollapse: "折りたたむ",
+        noDataForMarket: "現在{market}のセクターデータはありません。",
+        loadingText: "データ読み込み中、クロスマーケット資金フローを同期しています...",
+        errorTitle: "データの読み込みに失敗しました",
+        unknownError: "不明なエラー",
+        momentumScoreLabel: "モメンタムスコア",
+        tooltipVolSurge: "出来高倍率",
+        tooltipPriceMom: "価格モメンタム",
+        tooltipWeight: "ウェイト比率",
+        unitTimes: "倍",
+    },
+    "en-US": {
+        title: "Cross-Market Capital Momentum & Sector Rotation",
+        updatedAt: "Data Updated (UTC): ",
+        tabAll: "All Markets",
+        tabTW: "Taiwan",
+        tabCN: "China",
+        tabUS: "US",
+        tabJP: "Japan",
+        tabKR: "Korea",
+        flowFilterLabel: "Capital Flow Filter",
+        flowTop: "Top 10 Capital Inflow Sectors",
+        flowBottom: "Bottom 10 Capital Outflow Sectors",
+        crossMarketTableTitle: "Cross-Market Correlation Table",
+        sectorColumn: "Sector",
+        momentumRankingTitle: "Momentum Ranking (Cross-Market)",
+        statSectorCount: "Sectors Covered",
+        statSectorCountSub: "Sectors tracked in {market}",
+        statTopSector: "Top Momentum Sector",
+        statTopSectorSub: "#1 by Momentum Score",
+        statTurnover: "Total Sector Turnover",
+        statTurnoverSub: "Converted to USD",
+        statBenchmark: "Benchmark Date",
+        marketNoteTW: "Daily Data · Listed & OTC",
+        marketNoteCN: "Daily Data · Shanghai & Shenzhen",
+        marketNoteUS: "US T-1 Close Aligned to Asia T-Day",
+        marketNoteJP: "Daily Data",
+        marketNoteKR: "Daily Data",
+        singleMarketRankingTitle: "{market} Sector Momentum Ranking",
+        badgeTop: "Top 10 Inflow",
+        badgeBottom: "Bottom 10 Outflow",
+        sectorCountUnit: "{count} Sectors",
+        constituentCountTitle: "Constituent Details ({count})",
+        constituentCountLine: "{count} Constituents · Click to {action}",
+        actionExpand: "expand",
+        actionCollapse: "collapse",
+        noDataForMarket: "No sector data available for {market} yet.",
+        loadingText: "Loading data, syncing cross-market capital flows...",
+        errorTitle: "Failed to Load Data",
+        unknownError: "Unknown error",
+        momentumScoreLabel: "Momentum Score",
+        tooltipVolSurge: "Volume Surge",
+        tooltipPriceMom: "Price Momentum",
+        tooltipWeight: "Weighting",
+        unitTimes: "x",
+    },
+}
+
+// 依 key 取翻譯字串，並以 {placeholder} 語法代入動態變數；若當前語系缺字則退回英文，仍缺則回傳 key 本身
+function translate(lang: Lang, key: string, vars?: Record<string, string | number>): string {
+    const dict = TRANSLATIONS[lang] || TRANSLATIONS["en-US"]
+    let template = dict[key] ?? TRANSLATIONS["en-US"][key] ?? key
+    if (vars) {
+        for (const k of Object.keys(vars)) {
+            template = template.split(`{${k}}`).join(String(vars[k]))
+        }
+    }
+    return template
+}
+
+// 自動偵測：讀取 navigator.language，日文 → ja／簡體中文 → zh-CN／繁體中文 → zh-TW，其餘一律退回 en-US
+function detectInitialLang(): Lang {
+    if (typeof navigator === "undefined") return "en-US"
+    const raw = (navigator.language || (navigator as any).userLanguage || "").toLowerCase()
+    if (raw.startsWith("ja")) return "ja"
+    if (raw.startsWith("zh")) {
+        if (raw.includes("cn") || raw.includes("hans") || raw.includes("sg")) return "zh-CN"
+        return "zh-TW"
+    }
+    return "en-US"
+}
+
+const LangContext = createContext<Lang>("en-US")
+
+// 供子元件使用：回傳綁定當前語系 Context 的翻譯函式 t(key, vars)
+function useT() {
+    const lang = useContext(LangContext)
+    return (key: string, vars?: Record<string, string | number>) => translate(lang, key, vars)
+}
+
+// -----------------------------------------------------------------------
 // 視覺樣式常數
 // -----------------------------------------------------------------------
 const COLOR_BG = "#0B0F17"
@@ -71,31 +294,33 @@ const FONT_STACK =
 
 // 跨市場欄位顯示順序：台、中、美、日、韓
 const MARKET_ORDER = ["TW", "CN", "US", "JP", "KR"]
-const MARKET_LABEL_FALLBACK: Record<string, string> = {
-    TW: "台股",
-    CN: "中股",
-    US: "美股",
-    JP: "日股",
-    KR: "韓股",
+
+// 市場代碼 → 語系字典鍵值對照（市場名稱與研究基準備註皆透過字典翻譯，而非寫死中文）
+const MARKET_LABEL_KEYS: Record<string, string> = {
+    TW: "tabTW",
+    CN: "tabCN",
+    US: "tabUS",
+    JP: "tabJP",
+    KR: "tabKR",
+}
+
+const MARKET_NOTE_KEYS: Record<string, string> = {
+    TW: "marketNoteTW",
+    CN: "marketNoteCN",
+    US: "marketNoteUS",
+    JP: "marketNoteJP",
+    KR: "marketNoteKR",
 }
 
 // 市場切換頁籤：全部市場 + 使用者指定的四個市場（不含中股，中股僅保留於跨市場對比表欄位）
-const MARKET_TABS: { key: string; label: string }[] = [
-    { key: "ALL", label: "全部市場" },
-    { key: "TW", label: "台股" },
-    { key: "CN", label: "中股" },
-    { key: "US", label: "美股" },
-    { key: "JP", label: "日股" },
-    { key: "KR", label: "韓股" },
+const MARKET_TABS: { key: string; labelKey: string }[] = [
+    { key: "ALL", labelKey: "tabAll" },
+    { key: "TW", labelKey: "tabTW" },
+    { key: "CN", labelKey: "tabCN" },
+    { key: "US", labelKey: "tabUS" },
+    { key: "JP", labelKey: "tabJP" },
+    { key: "KR", labelKey: "tabKR" },
 ]
-
-const MARKET_RESEARCH_NOTE: Record<string, string> = {
-    TW: "日成交資料 · 上市與上櫃",
-    CN: "日成交資料 · 滬深兩市",
-    US: "美股 T-1 收盤對齊亞股 T 日",
-    JP: "日成交資料",
-    KR: "日成交資料",
-}
 
 // -----------------------------------------------------------------------
 // 共用小元件
@@ -176,13 +401,14 @@ function Sparkline({
 
 // 動能分數 + 懸浮提示（成交量放大 / 價格動能 / 權重佔比）+ 迷你趨勢線
 function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
+    const t = useT()
     const [hovered, setHovered] = useState(false)
     const volSurge = item.vol_surge ?? 0
     const priceMom = item.price_mom ?? item.weighted_change_pct ?? 0
     const weightPct = item.weight_pct ?? 0
-    const tooltipText = `成交量放大：${volSurge.toFixed(1)}倍 | 價格動能：${
-        priceMom > 0 ? "+" : ""
-    }${priceMom.toFixed(2)}% | 權重佔比：${weightPct.toFixed(0)}%`
+    const tooltipText = `${t("tooltipVolSurge")}：${volSurge.toFixed(1)}${t("unitTimes")} | ${t(
+        "tooltipPriceMom"
+    )}：${priceMom > 0 ? "+" : ""}${priceMom.toFixed(2)}% | ${t("tooltipWeight")}：${weightPct.toFixed(0)}%`
 
     return (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
@@ -195,7 +421,7 @@ function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
                 onMouseLeave={() => setHovered(false)}
             >
                 <span style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, whiteSpace: "nowrap" }}>
-                    動能分數 {item.momentum_score.toFixed(1)} / 100
+                    {t("momentumScoreLabel")} {item.momentum_score.toFixed(1)} / 100
                 </span>
                 {hovered && (
                     <div
@@ -224,6 +450,7 @@ function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
 }
 
 function LoadingState() {
+    const t = useT()
     return (
         <div
             style={{
@@ -248,15 +475,14 @@ function LoadingState() {
                     animation: "ttma-spin 0.9s linear infinite",
                 }}
             />
-            <div style={{ fontSize: 13, letterSpacing: 0.5 }}>
-                資料載入中，正在同步跨市場金流數據...
-            </div>
+            <div style={{ fontSize: 13, letterSpacing: 0.5 }}>{t("loadingText")}</div>
             <style>{`@keyframes ttma-spin { to { transform: rotate(360deg); } }`}</style>
         </div>
     )
 }
 
 function ErrorState({ message }: { message: string }) {
+    const t = useT()
     return (
         <div
             style={{
@@ -273,7 +499,7 @@ function ErrorState({ message }: { message: string }) {
                 padding: 24,
             }}
         >
-            <div style={{ fontSize: 15, fontWeight: 600 }}>資料載入失敗</div>
+            <div style={{ fontSize: 15, fontWeight: 600 }}>{t("errorTitle")}</div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>{message}</div>
         </div>
     )
@@ -289,6 +515,7 @@ function MarketTabs({
     selected: string
     onSelect: (key: string) => void
 }) {
+    const t = useT()
     return (
         <div
             style={{
@@ -319,7 +546,7 @@ function MarketTabs({
                             fontFamily: FONT_STACK,
                         }}
                     >
-                        {tab.label}
+                        {t(tab.labelKey)}
                     </button>
                 )
             })}
@@ -330,9 +557,9 @@ function MarketTabs({
 // -----------------------------------------------------------------------
 // 資金流向篩選（Top 10 / Bottom 10）— 膠囊切換按鈕，視覺層級略小於國家頁籤
 // -----------------------------------------------------------------------
-const FLOW_FILTER_OPTIONS: { key: "top" | "bottom"; label: string }[] = [
-    { key: "top", label: "前 10 大熱門資金板塊" },
-    { key: "bottom", label: "後 10 大冷門資金板塊" },
+const FLOW_FILTER_OPTIONS: { key: "top" | "bottom"; labelKey: string }[] = [
+    { key: "top", labelKey: "flowTop" },
+    { key: "bottom", labelKey: "flowBottom" },
 ]
 
 function FlowFilterToggle({
@@ -342,6 +569,7 @@ function FlowFilterToggle({
     selected: "top" | "bottom"
     onSelect: (key: "top" | "bottom") => void
 }) {
+    const t = useT()
     return (
         <div
             style={{
@@ -358,7 +586,7 @@ function FlowFilterToggle({
                     letterSpacing: 0.3,
                 }}
             >
-                資金流向篩選
+                {t("flowFilterLabel")}
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {FLOW_FILTER_OPTIONS.map((opt) => {
@@ -383,11 +611,61 @@ function FlowFilterToggle({
                                 fontFamily: FONT_STACK,
                             }}
                         >
-                            {opt.label}
+                            {t(opt.labelKey)}
                         </button>
                     )
                 })}
             </div>
+        </div>
+    )
+}
+
+// -----------------------------------------------------------------------
+// 語言切換器（右上角，極簡樣式，強制手動覆寫語系）
+// -----------------------------------------------------------------------
+const LANG_TOGGLE_OPTIONS: { key: Lang; label: string }[] = [
+    { key: "en-US", label: "EN" },
+    { key: "zh-TW", label: "繁" },
+    { key: "zh-CN", label: "簡" },
+    { key: "ja", label: "JP" },
+]
+
+function LangSwitcher({ lang, onSelect }: { lang: Lang; onSelect: (l: Lang) => void }) {
+    return (
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                border: `1px solid ${COLOR_BORDER}`,
+                borderRadius: 8,
+                padding: "3px 6px",
+                background: COLOR_PANEL,
+            }}
+        >
+            <span style={{ fontSize: 12, marginRight: 2 }}>🌍</span>
+            {LANG_TOGGLE_OPTIONS.map((opt, i) => {
+                const isActive = opt.key === lang
+                return (
+                    <button
+                        key={opt.key}
+                        onClick={() => onSelect(opt.key)}
+                        style={{
+                            border: "none",
+                            borderLeft: i > 0 ? `1px solid ${COLOR_BORDER}` : "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                            fontSize: 11,
+                            fontWeight: isActive ? 800 : 500,
+                            color: isActive ? COLOR_ACCENT : COLOR_TEXT_SECONDARY,
+                            padding: "2px 8px",
+                            fontFamily: FONT_STACK,
+                        }}
+                    >
+                        {opt.label}
+                    </button>
+                )
+            })}
         </div>
     )
 }
@@ -484,15 +762,24 @@ function MarketStatsRow({
     totalTurnoverUsd: number
     asOfDate: string
 }) {
+    const t = useT()
     return (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-            <StatTile label="涵蓋板塊數" value={`${sectorCount}`} sub={`${marketLabel}目前追蹤板塊`} />
-            <StatTile label="最高成交動能" value={topSector || "—"} sub="動能分數排名第一" />
-            <StatTile label="板塊成交金額合計" value={formatUsd(totalTurnoverUsd)} sub="換算美元 (USD)" />
             <StatTile
-                label="研究基準"
+                label={t("statSectorCount")}
+                value={`${sectorCount}`}
+                sub={t("statSectorCountSub", { market: marketLabel })}
+            />
+            <StatTile label={t("statTopSector")} value={topSector || "—"} sub={t("statTopSectorSub")} />
+            <StatTile
+                label={t("statTurnover")}
+                value={formatUsd(totalTurnoverUsd)}
+                sub={t("statTurnoverSub")}
+            />
+            <StatTile
+                label={t("statBenchmark")}
                 value={asOfDate || "—"}
-                sub={MARKET_RESEARCH_NOTE[marketKey] || "日成交資料"}
+                sub={t(MARKET_NOTE_KEYS[marketKey] || "marketNoteJP")}
             />
         </div>
     )
@@ -541,6 +828,7 @@ function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
 // 全部市場：跨市場連動表格
 // -----------------------------------------------------------------------
 function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }) {
+    const t = useT()
     return (
         <div
             style={{
@@ -568,7 +856,7 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                         letterSpacing: 0.5,
                     }}
                 >
-                    跨市場連動表
+                    {t("crossMarketTableTitle")}
                 </div>
                 {badge && (
                     <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>{badge}</div>
@@ -592,11 +880,11 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                     color: COLOR_TEXT_SECONDARY,
                                 }}
                             >
-                                板塊
+                                {t("sectorColumn")}
                             </th>
                             {MARKET_ORDER.map((m) => (
                                 <th key={m} style={thStyle}>
-                                    {MARKET_LABEL_FALLBACK[m]}
+                                    {t(MARKET_LABEL_KEYS[m])}
                                 </th>
                             ))}
                         </tr>
@@ -870,6 +1158,7 @@ function TickerDetailCard({ ticker }: { ticker: TickerInfo }) {
 
 // 展開區塊：深色微透明容器，內部以卡片格線排列成分股，避免全部擠在同一行
 function ExpandedSectorPanel({ tickers }: { tickers: TickerInfo[] }) {
+    const t = useT()
     if (!tickers || tickers.length === 0) return null
     return (
         <div
@@ -890,7 +1179,7 @@ function ExpandedSectorPanel({ tickers }: { tickers: TickerInfo[] }) {
                     fontWeight: 700,
                 }}
             >
-                成分股明細（{tickers.length} 檔）
+                {t("constituentCountTitle", { count: tickers.length })}
             </div>
             <div
                 style={{
@@ -923,6 +1212,7 @@ function SectorAccordionRow({
     isExpanded: boolean
     onToggle: () => void
 }) {
+    const t = useT()
     const widthPct = maxScore > 0 ? (item.momentum_score / maxScore) * 100 : 0
     const barColor = item.weighted_change_pct >= 0 ? COLOR_UP : COLOR_DOWN
     return (
@@ -990,7 +1280,10 @@ function SectorAccordionRow({
                             {item.sector}
                         </div>
                         <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY }}>
-                            {tickers.length} 檔成分股 · 點擊{isExpanded ? "收合" : "展開"}明細
+                            {t("constituentCountLine", {
+                                count: tickers.length,
+                                action: t(isExpanded ? "actionCollapse" : "actionExpand"),
+                            })}
                         </div>
                     </div>
                 </div>
@@ -1097,6 +1390,7 @@ function AllMarketsView({
     data: SectorData
     flowFilter: "top" | "bottom"
 }) {
+    const t = useT()
     // 3. 資料排序與截斷：依動能分數排序（top=由大到小 / bottom=由小到大），固定只取 10 筆
     const sortedRows = sortSectorRowsByFlow(data.cross_market_table, data.momentum_ranking, flowFilter)
     const sortedMomentum = sortMomentumItems(data.momentum_ranking, flowFilter)
@@ -1105,8 +1399,7 @@ function AllMarketsView({
     data.cross_market_table.forEach((row) => {
         sectorByName[row.sector] = row
     })
-    const badgeText =
-        flowFilter === "top" ? "前 10 大熱門資金板塊" : "後 10 大冷門資金板塊"
+    const badgeText = t(flowFilter === "top" ? "flowTop" : "flowBottom")
 
     return (
         <>
@@ -1119,7 +1412,7 @@ function AllMarketsView({
                     background: COLOR_PANEL,
                 }}
             >
-                <PanelHeader title="動能排行榜（跨市場綜合）" badge={badgeText} />
+                <PanelHeader title={t("momentumRankingTitle")} badge={badgeText} />
                 <div style={{ padding: "0 18px 6px" }}>
                     {sortedMomentum.map((item, i) => (
                         <MomentumBarRow
@@ -1148,7 +1441,8 @@ function SingleMarketView({
     marketKey: string
     flowFilter: "top" | "bottom"
 }) {
-    const marketLabel = MARKET_LABEL_FALLBACK[marketKey] || marketKey
+    const t = useT()
+    const marketLabel = MARKET_LABEL_KEYS[marketKey] ? t(MARKET_LABEL_KEYS[marketKey]) : marketKey
     const [expandedSector, setExpandedSector] = useState<string | null>(null)
 
     const sectorByName: Record<string, SectorRow> = {}
@@ -1186,7 +1480,7 @@ function SingleMarketView({
                     fontSize: 13,
                 }}
             >
-                目前尚無{marketLabel}板塊資料。
+                {t("noDataForMarket", { market: marketLabel })}
             </div>
         )
     }
@@ -1210,8 +1504,10 @@ function SingleMarketView({
                 }}
             >
                 <PanelHeader
-                    title={`${marketLabel}細分板塊動能排行`}
-                    badge={`${flowFilter === "top" ? "前 10 大熱門" : "後 10 大冷門"} · ${items.length} 個板塊`}
+                    title={t("singleMarketRankingTitle", { market: marketLabel })}
+                    badge={`${t(flowFilter === "top" ? "badgeTop" : "badgeBottom")} · ${t("sectorCountUnit", {
+                        count: items.length,
+                    })}`}
                 />
                 <div style={{ padding: "0 18px 6px" }}>
                     {items.map((item, i) => {
@@ -1249,6 +1545,18 @@ export default function SectorDashboard(props) {
     const [selectedMarket, setSelectedMarket] = useState<string>("ALL")
     const [flowFilter, setFlowFilter] = useState<"top" | "bottom">("top")
 
+    // 多語系：1) useState 管理目前語系（預設 en-US）
+    //         2) useEffect 於掛載時讀取 navigator.language 自動偵測一次
+    //         3) 之後使用者透過 LangSwitcher 手動點擊可隨時強制覆寫，不受自動偵測影響
+    const [currentLang, setCurrentLang] = useState<Lang>("en-US")
+    // 本元件本身是 LangContext 的提供者，無法用 useContext 讀取自己提供的值，
+    // 故直接以 currentLang 呼叫 translate()；子元件一律改用 useT()（見上方定義）。
+    const t = (key: string, vars?: Record<string, string | number>) => translate(currentLang, key, vars)
+
+    useEffect(() => {
+        setCurrentLang(detectInitialLang())
+    }, [])
+
     useEffect(() => {
         let cancelled = false
 
@@ -1267,7 +1575,7 @@ export default function SectorDashboard(props) {
                 }
             } catch (err) {
                 if (!cancelled) {
-                    setError(err instanceof Error ? err.message : "未知錯誤")
+                    setError(err instanceof Error ? err.message : t("unknownError"))
                     setLoading(false)
                 }
             }
@@ -1287,75 +1595,81 @@ export default function SectorDashboard(props) {
     }, [dataUrl, refreshIntervalSec])
 
     return (
-        <div
-            style={{
-                width: "100%",
-                height: "100%",
-                minHeight: 480,
-                background: COLOR_BG,
-                fontFamily: FONT_STACK,
-                color: COLOR_TEXT_PRIMARY,
-                padding: 20,
-                boxSizing: "border-box",
-                display: "flex",
-                flexDirection: "column",
-                gap: 18,
-                borderRadius: 12,
-            }}
-        >
+        <LangContext.Provider value={currentLang}>
             <div
                 style={{
+                    width: "100%",
+                    height: "100%",
+                    minHeight: 480,
+                    background: COLOR_BG,
+                    fontFamily: FONT_STACK,
+                    color: COLOR_TEXT_PRIMARY,
+                    padding: 20,
+                    boxSizing: "border-box",
                     display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
-                    alignItems: "flex-end",
-                    gap: 14,
+                    flexDirection: "column",
+                    gap: 18,
+                    borderRadius: 12,
                 }}
             >
-                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    <div
-                        style={{
-                            fontSize: 18,
-                            fontWeight: 800,
-                            color: COLOR_ACCENT,
-                            letterSpacing: 0.5,
-                        }}
-                    >
-                        跨市場資金動能與板塊輪動
-                    </div>
-                    {data && (
-                        <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
-                            資料更新時間（UTC）：{data.generated_at_utc}
+                <div
+                    style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                        gap: 14,
+                    }}
+                >
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <div
+                            style={{
+                                fontSize: 18,
+                                fontWeight: 800,
+                                color: COLOR_ACCENT,
+                                letterSpacing: 0.5,
+                            }}
+                        >
+                            {t("title")}
                         </div>
-                    )}
+                        {data && (
+                            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
+                                {t("updatedAt")}
+                                {data.generated_at_utc}
+                            </div>
+                        )}
+                    </div>
+
+                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+                        {!loading && !error && data && (
+                            <MarketTabs selected={selectedMarket} onSelect={setSelectedMarket} />
+                        )}
+                        <LangSwitcher lang={currentLang} onSelect={setCurrentLang} />
+                    </div>
                 </div>
 
                 {!loading && !error && data && (
-                    <MarketTabs selected={selectedMarket} onSelect={setSelectedMarket} />
+                    <FlowFilterToggle selected={flowFilter} onSelect={setFlowFilter} />
+                )}
+
+                {loading && <LoadingState />}
+                {!loading && error && <ErrorState message={error} />}
+                {!loading && !error && data && (
+                    <>
+                        {selectedMarket === "ALL" ? (
+                            <AllMarketsView data={data} flowFilter={flowFilter} />
+                        ) : (
+                            <SingleMarketView
+                                key={selectedMarket}
+                                data={data}
+                                marketKey={selectedMarket}
+                                flowFilter={flowFilter}
+                            />
+                        )}
+                    </>
                 )}
             </div>
-
-            {!loading && !error && data && (
-                <FlowFilterToggle selected={flowFilter} onSelect={setFlowFilter} />
-            )}
-
-            {loading && <LoadingState />}
-            {!loading && error && <ErrorState message={error} />}
-            {!loading && !error && data && (
-                <>
-                    {selectedMarket === "ALL" ? (
-                        <AllMarketsView data={data} flowFilter={flowFilter} />
-                    ) : (
-                        <SingleMarketView
-                            key={selectedMarket}
-                            data={data}
-                            marketKey={selectedMarket}
-                            flowFilter={flowFilter}
-                        />
-                    )}
-                </>
-            )}
-        </div>
+        </LangContext.Provider>
     )
 }
 
