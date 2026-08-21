@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, CSSProperties } from "react"
+import { useState, useEffect, useMemo, useContext, createContext, CSSProperties } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 /**
@@ -483,11 +483,26 @@ function PctChangeTag({ value, size = 13 }: { value: number; size?: number }) {
     )
 }
 
-// 迷你趨勢線（Sparkline）：不含座標軸，僅呈現近 5 日動能分數走勢
-// titleText：滑鼠懸浮於整個 <svg> 上時的原生瀏覽器提示文字（「5日動能走勢」多語系翻譯）
+// 微光熱力圖背景：依個股漲跌幅方向與量級，計算極低透明度的背景色。
+// 紅／綠語意與現有文字漲跌配色（COLOR_UP／COLOR_DOWN，台股慣例：漲紅跌綠）保持一致；
+// 透明度刻意壓得極低並設有上限（約 0.08 ~ 0.22），確保完全不影響文字可讀性。
+// pct 為 undefined／null／0（無資料或無漲跌）時回傳 transparent。
+function getHeatmapBackground(pct: number | undefined | null): string {
+    if (pct === undefined || pct === null || Number.isNaN(pct) || pct === 0) return "transparent"
+    const intensity = Math.min(Math.abs(pct) / 10, 1) // ±10% 以上即達到強度上限，避免極端值蓋掉文字
+    const alpha = 0.08 + intensity * 0.14
+    return pct > 0
+        ? `rgba(255, 99, 132, ${alpha.toFixed(2)})` // 上漲：紅色系
+        : `rgba(75, 192, 192, ${alpha.toFixed(2)})` // 下跌：綠色系
+}
+
+// 迷你趨勢線（Sparkline）：漸層面積圖 + 折線，呈現近 5 日動能分數走勢。
+// titleText：滑鼠懸浮於整個 <svg> 上時的原生瀏覽器提示文字（「5日動能走勢」多語系翻譯）。
+// 面積漸層與線條顏色依「首尾值趨勢」自動判斷：走勢向上＝薄荷綠、走勢向下＝粉紅／紅，
+// 由不透明漸淡至全透明，在深色背景下呈現科技微光感；color prop 可選擇性覆寫線條顏色。
 function Sparkline({
     values,
-    color = COLOR_ACCENT,
+    color,
     width = 60,
     height = 20,
     titleText,
@@ -498,19 +513,32 @@ function Sparkline({
     height?: number
     titleText?: string
 }) {
+    // Hook 必須無條件呼叫，故 gradient id 產生放在任何 early return 之前
+    const gradientId = useMemo(() => `spark-grad-${Math.random().toString(36).slice(2, 10)}`, [])
+
     if (!values || values.length < 2) return null
 
     const min = Math.min(...values)
     const max = Math.max(...values)
     const range = max - min
     const stepX = width / (values.length - 1)
-    const points = values
-        .map((v, i) => {
-            const x = i * stepX
-            const y = range < 1e-9 ? height / 2 : height - ((v - min) / range) * height
-            return `${x.toFixed(1)},${y.toFixed(1)}`
-        })
-        .join(" ")
+    const points = values.map((v, i) => {
+        const x = i * stepX
+        const y = range < 1e-9 ? height / 2 : height - ((v - min) / range) * height
+        return { x, y }
+    })
+    const linePoints = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ")
+
+    // 面積路徑：從左下角出發沿折線走一遍，再回到右下角、封閉回起點
+    const areaPath =
+        `M ${points[0].x.toFixed(1)},${height} ` +
+        points.map((p) => `L ${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ") +
+        ` L ${points[points.length - 1].x.toFixed(1)},${height} Z`
+
+    const trendUp = values[values.length - 1] >= values[0]
+    const areaTopColor = trendUp ? "rgba(0, 227, 150, 0.38)" : "rgba(255, 77, 109, 0.34)"
+    const areaBottomColor = trendUp ? "rgba(0, 227, 150, 0)" : "rgba(255, 77, 109, 0)"
+    const lineColor = color || (trendUp ? COLOR_DELTA_POSITIVE : COLOR_DELTA_NEGATIVE)
 
     return (
         <svg
@@ -521,10 +549,17 @@ function Sparkline({
             style={{ display: "block", flexShrink: 0, overflow: "visible" }}
         >
             {titleText && <title>{titleText}</title>}
+            <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={areaTopColor} />
+                    <stop offset="100%" stopColor={areaBottomColor} />
+                </linearGradient>
+            </defs>
+            <path d={areaPath} fill={`url(#${gradientId})`} stroke="none" />
             <polyline
-                points={points}
+                points={linePoints}
                 fill="none"
-                stroke={color}
+                stroke={lineColor}
                 strokeWidth={1.5}
                 strokeLinejoin="round"
                 strokeLinecap="round"
@@ -1132,6 +1167,10 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                                                 overflow: "hidden",
                                                                 textOverflow: "ellipsis",
                                                                 whiteSpace: "nowrap",
+                                                                background: getHeatmapBackground(t.pct_change),
+                                                                borderRadius: 3,
+                                                                padding: "1px 4px",
+                                                                margin: "0 -4px",
                                                             }}
                                                             title={`${getTranslatedText(t.name, lang) || t.symbol} (${t.symbol}) ${t.pct_change > 0 ? "+" : ""}${t.pct_change.toFixed(2)}%`}
                                                         >
@@ -1599,12 +1638,21 @@ function PanelHeader({
 // 財經摘要，供搜尋引擎與人類閱讀者理解目前跨市場資金動能排行榜首與
 // 次席板塊的量價訊號。四語系皆採專業金融慣用語撰寫，非逐字機器翻譯。
 // -----------------------------------------------------------------------
-function generateMarketInsight(
-    top1Sector: string,
-    top1Score: number,
-    top2Sector: string,
-    lang: Lang
-): string {
+// 「搭配 TTMA-Quant 實戰」操作提示：四語系皆採精準專業翻譯，附於洞察摘要文末，
+// 作為低摩擦的商業引導（Contextual Upsell）。獨立成字典常數，方便 UI 端與
+// generateMarketInsight() 共用同一份文案，不必重複維護或做字串切割解析。
+const TRADING_TIP: Record<Lang, string> = {
+    "zh-TW":
+        "💡 操作提示：建議搭配 TTMA-Quant 系統，於 TradingView 內監控上述強勢板塊的 L1 趨勢重建或 S1 結構破壞訊號，以建立大勝小敗的交易紀律。",
+    "zh-CN":
+        "💡 操作提示：建议搭配 TTMA-Quant 系统，于 TradingView 内监控上述强势板块的 L1 趋势重建或 S1 结构破坏信号，以建立大胜小败的交易纪律。",
+    ja: "💡 操作ヒント：TTMA-Quantシステムと併用し、TradingView上で上記強勢セクターの「L1（トレンド再構築）」または「S1（構造破壊）」シグナルを監視することで、「大勝小敗」のトレード規律を構築することをお勧めします。",
+    "en-US":
+        "💡 Trading Tip: We recommend using the TTMA-Quant system on TradingView to monitor 'L1' (Trend Reconstruction) or 'S1' (Structural Breakdown) signals for these leading sectors, establishing a disciplined 'big win, small loss' trading framework.",
+}
+
+// 洞察摘要主文（不含操作提示），供 UI 端與 generateMarketInsight() 共用
+function buildInsightCore(top1Sector: string, top1Score: number, top2Sector: string, lang: Lang): string {
     const score = top1Score.toFixed(1)
     switch (lang) {
         case "zh-CN":
@@ -1619,9 +1667,18 @@ function generateMarketInsight(
     }
 }
 
+// 對外主函式：洞察摘要主文 + 操作提示（Contextual Upsell）組合成單一字串，
+// 供不需要分段樣式的呼叫端（例如 JSON-LD description）直接取用完整文案。
+function generateMarketInsight(top1Sector: string, top1Score: number, top2Sector: string, lang: Lang): string {
+    const core = buildInsightCore(top1Sector, top1Score, top2Sector, lang)
+    const tip = TRADING_TIP[lang] || TRADING_TIP["en-US"]
+    return `${core}\n\n${tip}`
+}
+
 // 帶科技感邊框／漸層背景的洞察文字卡片；topItems 需已依動能分數由高到低排序，
-// 取前兩名帶入 generateMarketInsight()。文字區塊本身不限制寬度、允許自然換行，
-// 手機窄螢幕下也能正常斷行顯示，不會撐破版面。
+// 取前兩名帶入摘要主文與操作提示。文字區塊本身不限制寬度、允許自然換行，
+// 手機窄螢幕下也能正常斷行顯示，不會撐破版面。操作提示段落刻意使用青綠強調色
+// （降低不透明度）與主文做出微小區隔，同時延續整體科技感視覺語彙。
 function MarketInsightSummary({
     topItems,
     lang,
@@ -1634,7 +1691,8 @@ function MarketInsightSummary({
     const top2 = topItems[1]
     const top1Name = getTranslatedText(resolveSectorInput(top1.sector_id, top1.sector), lang)
     const top2Name = getTranslatedText(resolveSectorInput(top2.sector_id, top2.sector), lang)
-    const insightText = generateMarketInsight(top1Name, top1.momentum_score, top2Name, lang)
+    const insightCore = buildInsightCore(top1Name, top1.momentum_score, top2Name, lang)
+    const tradingTip = TRADING_TIP[lang] || TRADING_TIP["en-US"]
 
     return (
         <div
@@ -1681,7 +1739,22 @@ function MarketInsightSummary({
                     overflowWrap: "break-word",
                 }}
             >
-                {insightText}
+                {insightCore}
+            </div>
+            <div
+                style={{
+                    marginTop: 10,
+                    paddingTop: 10,
+                    borderTop: "1px dashed rgba(0,242,254,0.2)",
+                    fontSize: 11.5,
+                    lineHeight: 1.7,
+                    color: "rgba(0, 242, 254, 0.8)",
+                    fontStyle: "italic",
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                }}
+            >
+                {tradingTip}
             </div>
         </div>
     )
@@ -2007,6 +2080,17 @@ export default function SectorDashboard(props) {
                             }}
                         >
                             {t("title")}
+                        </div>
+                        {/* 隱性品牌浮水印：極小、低調的暗灰色字體，作為底層技術標示，不干擾主標題閱讀 */}
+                        <div
+                            style={{
+                                fontSize: 9,
+                                color: "rgba(124, 138, 165, 0.38)",
+                                letterSpacing: 0.6,
+                                userSelect: "none",
+                            }}
+                        >
+                            Powered by TTMA-Quant
                         </div>
                         {data && (
                             <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
