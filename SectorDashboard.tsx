@@ -293,6 +293,10 @@ const COLOR_TEXT_SECONDARY = "#7C8AA5"
 const COLOR_UP = "#FF4D4F" // 上漲：紅色
 const COLOR_DOWN = "#00E396" // 下跌：綠色
 const COLOR_FLAT = "#7C8AA5"
+// 動能變化值 (Momentum Delta) 專用色彩：採國際通用慣例（正值＝綠色／負值＝紅粉色），
+// 與上方「漲跌」用色（台股慣例：漲紅跌綠）刻意分開定義，避免語意混淆
+const COLOR_DELTA_POSITIVE = "#00E396"
+const COLOR_DELTA_NEGATIVE = "#FF4D6D"
 
 const FONT_STACK =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', Roboto, Arial, sans-serif"
@@ -531,6 +535,40 @@ function Sparkline({
 }
 
 // 動能分數 + 懸浮提示（成交量放大 / 價格動能 / 權重佔比）+ 迷你趨勢線
+// 動能變化值 (Momentum Delta)：今日與昨日動能分數的差值。
+// 需要 history_scores 至少有 2 筆（最新一筆與前一筆）才有意義，資料不足時回傳 null（UI 隱藏）。
+function computeMomentumDelta(item: MomentumItem): number | null {
+    const scores = item.history_scores
+    if (!scores || scores.length < 2) return null
+    const latest = scores[scores.length - 1]
+    const prev = scores[scores.length - 2]
+    if (typeof latest !== "number" || typeof prev !== "number") return null
+    return latest - prev
+}
+
+// 動能變化值標籤：正值綠色 ▲、負值紅粉色 ▼、恰好持平則灰色顯示，不誤導方向
+function MomentumDeltaTag({ delta }: { delta: number | null }) {
+    if (delta === null) return null
+    const rounded = Math.round(delta * 10) / 10
+    if (rounded === 0) {
+        return (
+            <span style={{ color: COLOR_FLAT, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
+                {"0.0"}
+            </span>
+        )
+    }
+    const isUp = rounded > 0
+    const color = isUp ? COLOR_DELTA_POSITIVE : COLOR_DELTA_NEGATIVE
+    const sign = isUp ? "+" : ""
+    const arrow = isUp ? "▲" : "▼"
+    return (
+        <span style={{ color, fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+            {sign}
+            {rounded.toFixed(1)} {arrow}
+        </span>
+    )
+}
+
 function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
     const t = useT()
     const lang = useLang()
@@ -541,6 +579,7 @@ function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
     const tooltipText = `${t("tooltipVolSurge")}：${volSurge.toFixed(1)}${t("unitTimes")} | ${t(
         "tooltipPriceMom"
     )}：${priceMom > 0 ? "+" : ""}${priceMom.toFixed(2)}% | ${t("tooltipWeight")}：${weightPct.toFixed(0)}%`
+    const delta = computeMomentumDelta(item)
 
     return (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
@@ -552,8 +591,20 @@ function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
             >
-                <span style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, whiteSpace: "nowrap" }}>
-                    {t("momentumScoreLabel")} {item.momentum_score.toFixed(1)} / 100
+                <span
+                    style={{
+                        fontSize: 10,
+                        color: COLOR_TEXT_SECONDARY,
+                        whiteSpace: "nowrap",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 5,
+                    }}
+                >
+                    <span>
+                        {t("momentumScoreLabel")} {item.momentum_score.toFixed(1)} / 100
+                    </span>
+                    <MomentumDeltaTag delta={delta} />
                 </span>
                 {hovered && (
                     <div
@@ -1879,6 +1930,38 @@ export default function SectorDashboard(props) {
         }
     }, [dataUrl, refreshIntervalSec])
 
+    // -------------------------------------------------------------------
+    // 隱藏式 SEO 結構化資料 (JSON-LD)：description 直接重用 generateMarketInsight()
+    // 產出的英文版動態洞察摘要，讓搜尋引擎抓到的描述與畫面上顯示的內容永遠一致，
+    // 不需要另外手動維護一份靜態文案。資料尚未載入完成時提供通用 fallback 描述。
+    // -------------------------------------------------------------------
+    const lastUpdate = data?.generated_at_utc || ""
+    const overallTop2 = data
+        ? [...data.momentum_ranking].sort((a, b) => b.momentum_score - a.momentum_score).slice(0, 2)
+        : []
+    const seoDescription =
+        overallTop2.length >= 2
+            ? generateMarketInsight(
+                  getTranslatedText(resolveSectorInput(overallTop2[0].sector_id, overallTop2[0].sector), "en-US"),
+                  overallTop2[0].momentum_score,
+                  getTranslatedText(resolveSectorInput(overallTop2[1].sector_id, overallTop2[1].sector), "en-US"),
+                  "en-US"
+              )
+            : "Real-time cross-market capital momentum and sector rotation dashboard covering Taiwan, US, Japan, Korea, and China equities."
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "TTMA-Quant Cross-Market Momentum Dashboard",
+        applicationCategory: "FinanceApplication",
+        description: seoDescription,
+        dateModified: lastUpdate,
+    }
+    // 將 JSON 字串中的 "<" 全部轉成 Unicode 逸出序列，避免內容中若剛好出現
+    // "</script>" 或其他角括號，提前截斷外層的 <script> 標籤——這是在 HTML 中
+    // 安全內嵌 JSON-LD 的標準做法；該逸出序列本身也是合法的 JSON 語法，
+    // 不影響搜尋引擎爬蟲或 JSON.parse() 正確還原原始內容。
+    const jsonLdString = JSON.stringify(jsonLd).replace(/</g, "\\u003c")
+
     return (
         <LangContext.Provider value={currentLang}>
             <div
@@ -1897,6 +1980,10 @@ export default function SectorDashboard(props) {
                     borderRadius: 12,
                 }}
             >
+                {/* 隱藏式 SEO 結構化資料（JSON-LD）：不影響畫面呈現，
+                    僅供搜尋引擎與其他結構化資料爬蟲讀取。 */}
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString }} />
+
                 {/* 頂部控制區：標題、市場頁籤、語言切換器。外層與內層皆設 flexWrap，
                     手機螢幕空間不足時自動往下折行，rowGap/columnGap 分開設定讓折行後的
                     上下間距更寬鬆好看，不會和左右間距擠在一起。 */}
