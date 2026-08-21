@@ -1,11 +1,11 @@
 {
-  "generated_at_utc": "2026-08-20T16:47:41Z",
+  "generated_at_utc": "2026-08-21T07:37:20Z",
   "fx_rates_usd_base": {
     "USD": 1.0,
-    "TWD": 31.895999908447266,
-    "CNY": 6.713500022888184,
-    "JPY": 159.0229949951172,
-    "KRW": 1394.280029296875
+    "TWD": 31.815000534057617,
+    "CNY": 6.719699859619141,
+    "JPY": 158.7989959716797,
+    "KRW": 1383.7900390625
   },
   "cross_market_table": [
     {
@@ -17,33 +17,33 @@
             {
               "symbol": "2330.TW",
               "name": "台積電",
-              "close": 2350.0,
-              "pct_change": -1.26,
-              "volume": 20098985,
-              "turnover_usd": 1480831918.91,
-              "as_of_date": "2026-08-19"
+              "close": 2410.0,
+              "pct_change": 1.47,
+              "volume": 17158844,
+              "turnover_usd": 1299789826.99,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2303.TW",
               "name": "聯電",
-              "close": 115.5,
-              "pct_change": -2.94,
-              "volume": 108146105,
-              "turnover_usd": 391612589.77,
-              "as_of_date": "2026-08-19"
+              "close": 116.5,
+              "pct_change": 0.87,
+              "volume": 58446969,
+              "turnover_usd": 214020800.7,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6770.TW",
               "name": "力積電",
-              "close": 66.6,
-              "pct_change": -4.45,
-              "volume": 174561102,
-              "turnover_usd": 364489878.36,
-              "as_of_date": "2026-08-19"
+              "close": 68.4,
+              "pct_change": 1.63,
+              "volume": 116035912,
+              "turnover_usd": 249469005.96,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.07,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.42,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -51,15 +51,15 @@
             {
               "symbol": "688981.SS",
               "name": "中芯國際",
-              "close": 128.01,
-              "pct_change": -5.16,
-              "volume": 66595440,
-              "turnover_usd": 1269811853.66,
-              "as_of_date": "2026-08-19"
+              "close": 124.8,
+              "pct_change": -0.56,
+              "volume": 30566366,
+              "turnover_usd": 567686451.74,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -5.16,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.56,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -67,15 +67,15 @@
             {
               "symbol": "INTC",
               "name": "Intel",
-              "close": 96.69,
-              "pct_change": -6.57,
-              "volume": 121969500,
-              "turnover_usd": 11793231252.78,
-              "as_of_date": "2026-08-18"
+              "close": 92.13,
+              "pct_change": -0.72,
+              "volume": 85397600,
+              "turnover_usd": 7867680653.45,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.57,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.72,
+          "as_of": "2026-08-20"
         },
         "KR": {
           "market_label": "韓股",
@@ -83,15 +83,15 @@
             {
               "symbol": "005930.KS",
               "name": "三星電子",
-              "close": 247500.0,
-              "pct_change": -7.82,
-              "volume": 22788552,
-              "turnover_usd": 4045217963.03,
-              "as_of_date": "2026-08-19"
+              "close": 281500.0,
+              "pct_change": 3.87,
+              "volume": 27672192,
+              "turnover_usd": 5629265877.12,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -7.82,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 3.87,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -104,24 +104,24 @@
             {
               "symbol": "2454.TW",
               "name": "聯發科",
-              "close": 3845.0,
-              "pct_change": -1.03,
-              "volume": 6190962,
-              "turnover_usd": 746308281.86,
-              "as_of_date": "2026-08-19"
+              "close": 3790.0,
+              "pct_change": 2.43,
+              "volume": 5995387,
+              "turnover_usd": 714207648.86,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3034.TW",
               "name": "聯詠",
-              "close": 534.0,
-              "pct_change": 5.74,
-              "volume": 4552410,
-              "turnover_usd": 76216044.24,
-              "as_of_date": "2026-08-19"
+              "close": 530.0,
+              "pct_change": 0.57,
+              "volume": 1439224,
+              "turnover_usd": 23975756.94,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.4,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.37,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -129,24 +129,24 @@
             {
               "symbol": "NVDA",
               "name": "NVIDIA",
-              "close": 219.74,
-              "pct_change": -2.34,
-              "volume": 103128200,
-              "turnover_usd": 22661391234.5,
-              "as_of_date": "2026-08-18"
+              "close": 216.85,
+              "pct_change": -0.33,
+              "volume": 92280600,
+              "turnover_usd": 20011048673.24,
+              "as_of_date": "2026-08-20"
             },
             {
               "symbol": "AVGO",
               "name": "博通",
-              "close": 380.0,
-              "pct_change": -3.17,
-              "volume": 22878200,
-              "turnover_usd": 8693716000.0,
-              "as_of_date": "2026-08-18"
+              "close": 364.03,
+              "pct_change": 0.43,
+              "volume": 19691700,
+              "turnover_usd": 7168369526.96,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -2.57,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.13,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -154,15 +154,15 @@
             {
               "symbol": "6723.T",
               "name": "瑞薩電子",
-              "close": 3462.0,
-              "pct_change": -9.06,
-              "volume": 19260400,
-              "turnover_usd": 419307313.4,
-              "as_of_date": "2026-08-19"
+              "close": 3433.0,
+              "pct_change": -1.04,
+              "volume": 7686600,
+              "turnover_usd": 166172951.15,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -9.06,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.04,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -175,24 +175,24 @@
             {
               "symbol": "2408.TW",
               "name": "南亞科",
-              "close": 481.0,
-              "pct_change": -6.6,
-              "volume": 66452201,
-              "turnover_usd": 1002116527.86,
-              "as_of_date": "2026-08-19"
+              "close": 528.0,
+              "pct_change": 2.13,
+              "volume": 65164960,
+              "turnover_usd": 1081474094.06,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3260.TWO",
               "name": "威剛",
-              "close": 395.0,
-              "pct_change": 2.07,
-              "volume": 6190846,
-              "turnover_usd": 76667424.66,
-              "as_of_date": "2026-08-19"
+              "close": 422.5,
+              "pct_change": 5.36,
+              "volume": 21356766,
+              "turnover_usd": 283615699.62,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -5.99,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.8,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -200,15 +200,15 @@
             {
               "symbol": "MU",
               "name": "美光科技",
-              "close": 940.76,
-              "pct_change": -7.02,
-              "volume": 37306000,
-              "turnover_usd": 35095992924.32,
-              "as_of_date": "2026-08-18"
+              "close": 974.33,
+              "pct_change": 3.97,
+              "volume": 25055000,
+              "turnover_usd": 24411838578.19,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -7.02,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 3.97,
+          "as_of": "2026-08-20"
         },
         "KR": {
           "market_label": "韓股",
@@ -216,24 +216,24 @@
             {
               "symbol": "000660.KS",
               "name": "SK海力士",
-              "close": 1500000.0,
-              "pct_change": -9.75,
-              "volume": 4223067,
-              "turnover_usd": 4543277079.85,
-              "as_of_date": "2026-08-19"
+              "close": 1730000.0,
+              "pct_change": 2.31,
+              "volume": 4495764,
+              "turnover_usd": 5620557671.65,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "005930.KS",
               "name": "三星電子",
-              "close": 247500.0,
-              "pct_change": -7.82,
-              "volume": 22788552,
-              "turnover_usd": 4045217963.03,
-              "as_of_date": "2026-08-19"
+              "close": 281500.0,
+              "pct_change": 3.87,
+              "volume": 27672192,
+              "turnover_usd": 5629265877.12,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -8.84,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 3.09,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -246,24 +246,24 @@
             {
               "symbol": "3711.TW",
               "name": "日月光投控",
-              "close": 588.0,
-              "pct_change": -1.84,
-              "volume": 21557315,
-              "turnover_usd": 397407237.78,
-              "as_of_date": "2026-08-19"
+              "close": 587.0,
+              "pct_change": -0.51,
+              "volume": 12821176,
+              "turnover_usd": 236556032.87,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6239.TW",
               "name": "力成",
-              "close": 262.5,
-              "pct_change": -1.13,
-              "volume": 9530619,
-              "turnover_usd": 78435775.48,
-              "as_of_date": "2026-08-19"
+              "close": 267.5,
+              "pct_change": -0.37,
+              "volume": 5427633,
+              "turnover_usd": 45635448.79,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.72,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.49,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -271,15 +271,15 @@
             {
               "symbol": "600584.SS",
               "name": "長電科技",
-              "close": 77.74,
-              "pct_change": -8.99,
-              "volume": 159170816,
-              "turnover_usd": 1843142750.22,
-              "as_of_date": "2026-08-19"
+              "close": 78.57,
+              "pct_change": -1.14,
+              "volume": 97015960,
+              "turnover_usd": 1134357799.73,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -8.99,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.14,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -287,15 +287,15 @@
             {
               "symbol": "AMKR",
               "name": "Amkor",
-              "close": 54.84,
-              "pct_change": -10.54,
-              "volume": 5206400,
-              "turnover_usd": 285518976.79,
-              "as_of_date": "2026-08-18"
+              "close": 50.86,
+              "pct_change": -0.06,
+              "volume": 3953400,
+              "turnover_usd": 201069926.41,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -10.54,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.06,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -308,24 +308,24 @@
             {
               "symbol": "3037.TW",
               "name": "欣興",
-              "close": 1130.0,
-              "pct_change": -1.31,
-              "volume": 23425543,
-              "turnover_usd": 829911702.6,
-              "as_of_date": "2026-08-19"
+              "close": 1085.0,
+              "pct_change": -4.82,
+              "volume": 23152087,
+              "turnover_usd": 789565109.96,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "8046.TW",
               "name": "南電",
-              "close": 1180.0,
-              "pct_change": -5.22,
-              "volume": 14667778,
-              "turnover_usd": 542637888.44,
-              "as_of_date": "2026-08-19"
+              "close": 1135.0,
+              "pct_change": -5.02,
+              "volume": 11580147,
+              "turnover_usd": 413121691.79,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.86,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -4.89,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -338,15 +338,15 @@
             {
               "symbol": "3583.TW",
               "name": "辛耘",
-              "close": 706.0,
-              "pct_change": 0.57,
-              "volume": 1422103,
-              "turnover_usd": 31477449.24,
-              "as_of_date": "2026-08-19"
+              "close": 704.0,
+              "pct_change": -1.26,
+              "volume": 558020,
+              "turnover_usd": 12347825.66,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.57,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.26,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -354,24 +354,24 @@
             {
               "symbol": "AMAT",
               "name": "應用材料",
-              "close": 514.33,
-              "pct_change": -3.92,
-              "volume": 8611900,
-              "turnover_usd": 4429358674.18,
-              "as_of_date": "2026-08-18"
+              "close": 496.21,
+              "pct_change": 0.11,
+              "volume": 6595500,
+              "turnover_usd": 3272752998.64,
+              "as_of_date": "2026-08-20"
             },
             {
               "symbol": "LRCX",
               "name": "科林研發",
-              "close": 327.92,
-              "pct_change": -4.63,
-              "volume": 10210000,
-              "turnover_usd": 3348063337.1,
-              "as_of_date": "2026-08-18"
+              "close": 310.53,
+              "pct_change": 1.09,
+              "volume": 6799200,
+              "turnover_usd": 2111355567.7,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -4.23,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 0.5,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -379,24 +379,24 @@
             {
               "symbol": "8035.T",
               "name": "東京威力科創",
-              "close": 54660.0,
-              "pct_change": -3.05,
-              "volume": 3588700,
-              "turnover_usd": 1233521869.0,
-              "as_of_date": "2026-08-19"
+              "close": 54290.0,
+              "pct_change": 0.5,
+              "volume": 2144800,
+              "turnover_usd": 733261512.69,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6146.T",
               "name": "Disco",
-              "close": 59760.0,
-              "pct_change": -4.15,
-              "volume": 1468100,
-              "turnover_usd": 551704211.1,
-              "as_of_date": "2026-08-19"
+              "close": 61360.0,
+              "pct_change": 1.72,
+              "volume": 1012100,
+              "turnover_usd": 391075873.12,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.39,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.93,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -409,15 +409,15 @@
             {
               "symbol": "3532.TW",
               "name": "台勝科",
-              "close": 356.5,
-              "pct_change": -3.39,
-              "volume": 7242649,
-              "turnover_usd": 80950726.61,
-              "as_of_date": "2026-08-19"
+              "close": 342.5,
+              "pct_change": 0.74,
+              "volume": 6275937,
+              "turnover_usd": 67562734.13,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.39,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.74,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -425,15 +425,15 @@
             {
               "symbol": "ENTG",
               "name": "Entegris",
-              "close": 150.27,
-              "pct_change": -7.86,
-              "volume": 4142200,
-              "turnover_usd": 622448411.7,
-              "as_of_date": "2026-08-18"
+              "close": 144.63,
+              "pct_change": 0.24,
+              "volume": 1486300,
+              "turnover_usd": 214963576.26,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -7.86,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 0.24,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -441,15 +441,15 @@
             {
               "symbol": "4063.T",
               "name": "信越化學",
-              "close": 6090.0,
-              "pct_change": -2.44,
-              "volume": 6766300,
-              "turnover_usd": 259124581.33,
-              "as_of_date": "2026-08-19"
+              "close": 6051.0,
+              "pct_change": -1.79,
+              "volume": 5191500,
+              "turnover_usd": 197820939.03,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.44,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.79,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -462,24 +462,24 @@
             {
               "symbol": "2327.TW",
               "name": "國巨",
-              "close": 576.0,
-              "pct_change": 0.0,
-              "volume": 54594799,
-              "turnover_usd": 985910594.25,
-              "as_of_date": "2026-08-19"
+              "close": 554.0,
+              "pct_change": -1.42,
+              "volume": 20547006,
+              "turnover_usd": 357788500.17,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2492.TW",
               "name": "華新科",
-              "close": 298.0,
-              "pct_change": 5.67,
-              "volume": 45934057,
-              "turnover_usd": 429155662.94,
-              "as_of_date": "2026-08-19"
+              "close": 266.0,
+              "pct_change": -2.39,
+              "volume": 24659058,
+              "turnover_usd": 206170338.45,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.72,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.78,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -487,15 +487,15 @@
             {
               "symbol": "VSH",
               "name": "Vishay",
-              "close": 33.52,
-              "pct_change": -5.79,
-              "volume": 3211600,
-              "turnover_usd": 107652833.47,
-              "as_of_date": "2026-08-18"
+              "close": 31.83,
+              "pct_change": -0.41,
+              "volume": 3162100,
+              "turnover_usd": 100649642.76,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -5.79,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.41,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -503,15 +503,15 @@
             {
               "symbol": "6981.T",
               "name": "村田製作所",
-              "close": 7331.0,
-              "pct_change": -2.2,
-              "volume": 27675300,
-              "turnover_usd": 1275838279.28,
-              "as_of_date": "2026-08-19"
+              "close": 7091.0,
+              "pct_change": -1.58,
+              "volume": 15412300,
+              "turnover_usd": 688219838.11,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.2,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.58,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -519,15 +519,15 @@
             {
               "symbol": "009150.KS",
               "name": "三星電機",
-              "close": 1387000.0,
-              "pct_change": -3.68,
-              "volume": 739938,
-              "turnover_usd": 736074521.93,
-              "as_of_date": "2026-08-19"
+              "close": 1316000.0,
+              "pct_change": -5.73,
+              "volume": 702036,
+              "turnover_usd": 667644187.28,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.68,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -5.73,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -540,24 +540,24 @@
             {
               "symbol": "2313.TW",
               "name": "華通",
-              "close": 207.5,
-              "pct_change": -1.66,
-              "volume": 13046105,
-              "turnover_usd": 84871670.28,
-              "as_of_date": "2026-08-19"
+              "close": 213.5,
+              "pct_change": -1.84,
+              "volume": 24302449,
+              "turnover_usd": 163085738.63,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3044.TW",
               "name": "健鼎",
-              "close": 480.5,
-              "pct_change": -1.64,
-              "volume": 4640376,
-              "turnover_usd": 69905338.42,
-              "as_of_date": "2026-08-19"
+              "close": 459.0,
+              "pct_change": -5.46,
+              "volume": 9092374,
+              "turnover_usd": 131177105.01,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.65,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.45,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -565,15 +565,15 @@
             {
               "symbol": "002463.SZ",
               "name": "滬電股份",
-              "close": 113.41,
-              "pct_change": -8.24,
-              "volume": 52233447,
-              "turnover_usd": 882370655.45,
-              "as_of_date": "2026-08-19"
+              "close": 121.21,
+              "pct_change": 6.03,
+              "volume": 49927178,
+              "turnover_usd": 900586830.68,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -8.24,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 6.03,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -581,15 +581,15 @@
             {
               "symbol": "TTMI",
               "name": "TTM Technologies",
-              "close": 125.71,
-              "pct_change": -10.83,
-              "volume": 3666500,
-              "turnover_usd": 460915711.64,
-              "as_of_date": "2026-08-18"
+              "close": 114.38,
+              "pct_change": -1.72,
+              "volume": 1833300,
+              "turnover_usd": 209692848.96,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -10.83,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.72,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -602,15 +602,15 @@
             {
               "symbol": "2392.TW",
               "name": "正崴",
-              "close": 41.05,
-              "pct_change": 1.86,
-              "volume": 3757616,
-              "turnover_usd": 4836033.81,
-              "as_of_date": "2026-08-19"
+              "close": 41.6,
+              "pct_change": 2.46,
+              "volume": 2537269,
+              "turnover_usd": 3317629.57,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.86,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.46,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -618,15 +618,15 @@
             {
               "symbol": "APH",
               "name": "安費諾",
-              "close": 159.57,
-              "pct_change": -6.61,
-              "volume": 7537300,
-              "turnover_usd": 1202727016.2,
-              "as_of_date": "2026-08-18"
+              "close": 153.11,
+              "pct_change": -1.88,
+              "volume": 5417300,
+              "turnover_usd": 829442806.31,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.61,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.88,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -639,24 +639,24 @@
             {
               "symbol": "2409.TW",
               "name": "友達",
-              "close": 26.15,
-              "pct_change": -0.76,
-              "volume": 133903998,
-              "turnover_usd": 109781461.83,
-              "as_of_date": "2026-08-19"
+              "close": 25.6,
+              "pct_change": -0.78,
+              "volume": 52939170,
+              "turnover_usd": 42597603.31,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3481.TW",
               "name": "群創",
-              "close": 46.75,
-              "pct_change": -5.56,
-              "volume": 222802280,
-              "turnover_usd": 326561531.85,
-              "as_of_date": "2026-08-19"
+              "close": 46.05,
+              "pct_change": 0.11,
+              "volume": 125884595,
+              "turnover_usd": 182209190.83,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.35,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.06,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -664,15 +664,15 @@
             {
               "symbol": "000725.SZ",
               "name": "京東方",
-              "close": 6.01,
-              "pct_change": -7.11,
-              "volume": 2647315428,
-              "turnover_usd": 2369906348.99,
-              "as_of_date": "2026-08-19"
+              "close": 6.0,
+              "pct_change": 1.69,
+              "volume": 1313130817,
+              "turnover_usd": 1172490597.29,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -7.11,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.69,
+          "as_of": "2026-08-21"
         },
         "JP": {
           "market_label": "日股",
@@ -680,15 +680,15 @@
             {
               "symbol": "6753.T",
               "name": "夏普",
-              "close": 616.0,
-              "pct_change": -0.02,
-              "volume": 3439700,
-              "turnover_usd": 13324206.35,
-              "as_of_date": "2026-08-19"
+              "close": 641.0,
+              "pct_change": 0.56,
+              "volume": 3108600,
+              "turnover_usd": 12548017.62,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.02,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.56,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -696,15 +696,15 @@
             {
               "symbol": "034220.KS",
               "name": "LG Display",
-              "close": 9590.0,
-              "pct_change": -1.94,
-              "volume": 2016448,
-              "turnover_usd": 13869334.65,
-              "as_of_date": "2026-08-19"
+              "close": 9500.0,
+              "pct_change": -1.55,
+              "volume": 1842391,
+              "turnover_usd": 12648388.85,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.94,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.55,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -717,15 +717,15 @@
             {
               "symbol": "3081.TWO",
               "name": "全新",
-              "close": 2680.0,
-              "pct_change": -8.38,
-              "volume": 5064198,
-              "turnover_usd": 425509489.56,
-              "as_of_date": "2026-08-19"
+              "close": 2920.0,
+              "pct_change": 5.04,
+              "volume": 5048254,
+              "turnover_usd": 463331806.78,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -8.38,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 5.04,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -738,15 +738,15 @@
             {
               "symbol": "3363.TWO",
               "name": "上詮",
-              "close": 584.0,
-              "pct_change": -0.34,
-              "volume": 1994582,
-              "turnover_usd": 36519810.99,
-              "as_of_date": "2026-08-19"
+              "close": 600.0,
+              "pct_change": -1.64,
+              "volume": 1980530,
+              "turnover_usd": 37350871.6,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.34,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.64,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -754,24 +754,24 @@
             {
               "symbol": "AAOI",
               "name": "Applied Optoelectronics",
-              "close": 131.41,
-              "pct_change": -15.16,
-              "volume": 14651500,
-              "turnover_usd": 1925353668.66,
-              "as_of_date": "2026-08-18"
+              "close": 129.1,
+              "pct_change": 5.66,
+              "volume": 9496200,
+              "turnover_usd": 1225959477.96,
+              "as_of_date": "2026-08-20"
             },
             {
               "symbol": "COHR",
               "name": "Coherent",
-              "close": 306.43,
-              "pct_change": -12.75,
-              "volume": 9644600,
-              "turnover_usd": 2955394707.36,
-              "as_of_date": "2026-08-18"
+              "close": 290.03,
+              "pct_change": 0.89,
+              "volume": 4970600,
+              "turnover_usd": 1441623111.93,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -13.7,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 3.08,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -784,24 +784,24 @@
             {
               "symbol": "3017.TW",
               "name": "奇鋐",
-              "close": 3095.0,
-              "pct_change": 2.58,
-              "volume": 3762432,
-              "turnover_usd": 365084244.84,
-              "as_of_date": "2026-08-19"
+              "close": 2865.0,
+              "pct_change": -4.02,
+              "volume": 2508842,
+              "turnover_usd": 225925890.6,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3324.TWO",
               "name": "雙鴻",
-              "close": 989.0,
-              "pct_change": 1.12,
-              "volume": 1459454,
-              "turnover_usd": 45253323.62,
-              "as_of_date": "2026-08-19"
+              "close": 969.0,
+              "pct_change": -2.42,
+              "volume": 1191502,
+              "turnover_usd": 36289970.73,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 2.42,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.8,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -809,15 +809,15 @@
             {
               "symbol": "002050.SZ",
               "name": "三花智控",
-              "close": 36.79,
-              "pct_change": -7.1,
-              "volume": 93076935,
-              "turnover_usd": 510061892.04,
-              "as_of_date": "2026-08-19"
+              "close": 36.71,
+              "pct_change": 1.58,
+              "volume": 37359869,
+              "turnover_usd": 204098514.14,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -7.1,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.58,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -825,15 +825,15 @@
             {
               "symbol": "VRT",
               "name": "Vertiv",
-              "close": 272.54,
-              "pct_change": -6.8,
-              "volume": 5584100,
-              "turnover_usd": 1521890661.72,
-              "as_of_date": "2026-08-18"
+              "close": 264.63,
+              "pct_change": 1.39,
+              "volume": 5217700,
+              "turnover_usd": 1380759976.48,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.8,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 1.39,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -841,15 +841,15 @@
             {
               "symbol": "6504.T",
               "name": "富士電機",
-              "close": 13505.0,
-              "pct_change": -6.28,
-              "volume": 846100,
-              "turnover_usd": 71854894.32,
-              "as_of_date": "2026-08-19"
+              "close": 13885.0,
+              "pct_change": 1.83,
+              "volume": 844600,
+              "turnover_usd": 73849780.52,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -6.28,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.83,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -857,15 +857,15 @@
             {
               "symbol": "009150.KS",
               "name": "三星電機",
-              "close": 1387000.0,
-              "pct_change": -3.68,
-              "volume": 739938,
-              "turnover_usd": 736074521.93,
-              "as_of_date": "2026-08-19"
+              "close": 1316000.0,
+              "pct_change": -5.73,
+              "volume": 702036,
+              "turnover_usd": 667644187.28,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.68,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -5.73,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -878,24 +878,24 @@
             {
               "symbol": "2308.TW",
               "name": "台達電",
-              "close": 1765.0,
-              "pct_change": -3.02,
-              "volume": 11427523,
-              "turnover_usd": 632354469.3,
-              "as_of_date": "2026-08-19"
+              "close": 1750.0,
+              "pct_change": 0.29,
+              "volume": 4374387,
+              "turnover_usd": 240615342.5,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6412.TW",
               "name": "群電",
-              "close": 77.0,
-              "pct_change": 0.13,
-              "volume": 489503,
-              "turnover_usd": 1181707.15,
-              "as_of_date": "2026-08-19"
+              "close": 78.0,
+              "pct_change": -0.51,
+              "volume": 305754,
+              "turnover_usd": 749609.04,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.02,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.28,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -903,15 +903,15 @@
             {
               "symbol": "MPWR",
               "name": "Monolithic Power",
-              "close": 1333.18,
-              "pct_change": -5.85,
-              "volume": 1144300,
-              "turnover_usd": 1525557935.46,
-              "as_of_date": "2026-08-18"
+              "close": 1310.6,
+              "pct_change": 0.8,
+              "volume": 437100,
+              "turnover_usd": 572863249.33,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -5.85,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 0.8,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -924,24 +924,24 @@
             {
               "symbol": "2345.TW",
               "name": "智邦",
-              "close": 2125.0,
-              "pct_change": -4.49,
-              "volume": 3808690,
-              "turnover_usd": 253745493.89,
-              "as_of_date": "2026-08-19"
+              "close": 2035.0,
+              "pct_change": -3.33,
+              "volume": 2797107,
+              "turnover_usd": 178912860.27,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6285.TW",
               "name": "啟碁",
               "close": 235.5,
-              "pct_change": -0.21,
-              "volume": 3319411,
-              "turnover_usd": 24508442.84,
-              "as_of_date": "2026-08-19"
+              "pct_change": -0.63,
+              "volume": 2227434,
+              "turnover_usd": 16487842.16,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.12,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.1,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -949,24 +949,24 @@
             {
               "symbol": "CSCO",
               "name": "思科",
-              "close": 111.61,
-              "pct_change": -1.14,
-              "volume": 20060500,
-              "turnover_usd": 2238952417.24,
-              "as_of_date": "2026-08-18"
+              "close": 109.59,
+              "pct_change": -0.87,
+              "volume": 12627700,
+              "turnover_usd": 1383869596.76,
+              "as_of_date": "2026-08-20"
             },
             {
               "symbol": "ANET",
               "name": "Arista Networks",
-              "close": 193.18,
-              "pct_change": -4.27,
-              "volume": 8886900,
-              "turnover_usd": 1716771276.91,
-              "as_of_date": "2026-08-18"
+              "close": 183.75,
+              "pct_change": -1.45,
+              "volume": 4204000,
+              "turnover_usd": 772485000.0,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -2.5,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.08,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -979,33 +979,33 @@
             {
               "symbol": "2317.TW",
               "name": "鴻海",
-              "close": 245.0,
-              "pct_change": -1.61,
-              "volume": 34855147,
-              "turnover_usd": 267729841.97,
-              "as_of_date": "2026-08-19"
+              "close": 245.5,
+              "pct_change": -0.41,
+              "volume": 25104115,
+              "turnover_usd": 193715547.04,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2382.TW",
               "name": "廣達",
-              "close": 331.0,
-              "pct_change": 1.22,
-              "volume": 16260606,
-              "turnover_usd": 168744062.0,
-              "as_of_date": "2026-08-19"
+              "close": 321.5,
+              "pct_change": -1.68,
+              "volume": 8697692,
+              "turnover_usd": 87892752.82,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3231.TW",
               "name": "緯創",
-              "close": 182.0,
-              "pct_change": 0.55,
-              "volume": 27794607,
-              "turnover_usd": 158597268.89,
-              "as_of_date": "2026-08-19"
+              "close": 175.5,
+              "pct_change": -2.5,
+              "volume": 27983476,
+              "turnover_usd": 154364292.18,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.23,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.4,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1013,24 +1013,24 @@
             {
               "symbol": "SMCI",
               "name": "美超微",
-              "close": 37.41,
-              "pct_change": -2.27,
-              "volume": 52260100,
-              "turnover_usd": 1955050333.03,
-              "as_of_date": "2026-08-18"
+              "close": 36.5,
+              "pct_change": -0.22,
+              "volume": 51216900,
+              "turnover_usd": 1869416850.0,
+              "as_of_date": "2026-08-20"
             },
             {
               "symbol": "DELL",
               "name": "戴爾",
-              "close": 468.65,
-              "pct_change": -2.33,
-              "volume": 5530200,
-              "turnover_usd": 2591728196.25,
-              "as_of_date": "2026-08-18"
+              "close": 434.78,
+              "pct_change": -0.63,
+              "volume": 3624900,
+              "turnover_usd": 1576034017.58,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -2.3,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.41,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1038,15 +1038,15 @@
             {
               "symbol": "6702.T",
               "name": "富士通",
-              "close": 3607.0,
-              "pct_change": 0.17,
-              "volume": 7069800,
-              "turnover_usd": 160359000.92,
-              "as_of_date": "2026-08-19"
+              "close": 3646.0,
+              "pct_change": -2.59,
+              "volume": 4139700,
+              "turnover_usd": 95046861.65,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.17,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -2.59,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1054,15 +1054,15 @@
             {
               "symbol": "000660.KS",
               "name": "SK海力士",
-              "close": 1500000.0,
-              "pct_change": -9.75,
-              "volume": 4223067,
-              "turnover_usd": 4543277079.85,
-              "as_of_date": "2026-08-19"
+              "close": 1730000.0,
+              "pct_change": 2.31,
+              "volume": 4495764,
+              "turnover_usd": 5620557671.65,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -9.75,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.31,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1075,24 +1075,24 @@
             {
               "symbol": "2317.TW",
               "name": "鴻海",
-              "close": 245.0,
-              "pct_change": -1.61,
-              "volume": 34855147,
-              "turnover_usd": 267729841.97,
-              "as_of_date": "2026-08-19"
+              "close": 245.5,
+              "pct_change": -0.41,
+              "volume": 25104115,
+              "turnover_usd": 193715547.04,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3008.TW",
               "name": "大立光",
-              "close": 5550.0,
-              "pct_change": 4.91,
-              "volume": 3542716,
-              "turnover_usd": 616443248.57,
-              "as_of_date": "2026-08-19"
+              "close": 5610.0,
+              "pct_change": 1.72,
+              "volume": 3433612,
+              "turnover_usd": 605455382.58,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 2.94,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.21,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -1100,15 +1100,15 @@
             {
               "symbol": "002475.SZ",
               "name": "立訊精密",
-              "close": 53.5,
-              "pct_change": -7.34,
-              "volume": 158335376,
-              "turnover_usd": 1261777401.82,
-              "as_of_date": "2026-08-19"
+              "close": 54.65,
+              "pct_change": 2.46,
+              "volume": 98812265,
+              "turnover_usd": 803620778.58,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -7.34,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.46,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1116,15 +1116,15 @@
             {
               "symbol": "AAPL",
               "name": "蘋果",
-              "close": 310.03,
-              "pct_change": 1.45,
-              "volume": 53424500,
-              "turnover_usd": 16563197669.78,
-              "as_of_date": "2026-08-18"
+              "close": 311.3,
+              "pct_change": -1.75,
+              "volume": 40895100,
+              "turnover_usd": 12730644130.79,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 1.45,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.75,
+          "as_of": "2026-08-20"
         },
         "KR": {
           "market_label": "韓股",
@@ -1132,15 +1132,15 @@
             {
               "symbol": "005930.KS",
               "name": "三星電子",
-              "close": 247500.0,
-              "pct_change": -7.82,
-              "volume": 22788552,
-              "turnover_usd": 4045217963.03,
-              "as_of_date": "2026-08-19"
+              "close": 281500.0,
+              "pct_change": 3.87,
+              "volume": 27672192,
+              "turnover_usd": 5629265877.12,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -7.82,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 3.87,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1153,24 +1153,24 @@
             {
               "symbol": "2382.TW",
               "name": "廣達",
-              "close": 331.0,
-              "pct_change": 1.22,
-              "volume": 16260606,
-              "turnover_usd": 168744062.0,
-              "as_of_date": "2026-08-19"
+              "close": 321.5,
+              "pct_change": -1.68,
+              "volume": 8697692,
+              "turnover_usd": 87892752.82,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2356.TW",
               "name": "英業達",
-              "close": 65.2,
-              "pct_change": 0.46,
-              "volume": 15026166,
-              "turnover_usd": 30715637.7,
-              "as_of_date": "2026-08-19"
+              "close": 65.7,
+              "pct_change": 1.86,
+              "volume": 12557156,
+              "turnover_usd": 25931324.75,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.11,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.87,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1178,15 +1178,15 @@
             {
               "symbol": "HPQ",
               "name": "惠普",
-              "close": 29.96,
-              "pct_change": 1.9,
-              "volume": 9541500,
-              "turnover_usd": 285863331.26,
-              "as_of_date": "2026-08-18"
+              "close": 29.47,
+              "pct_change": -1.57,
+              "volume": 11415300,
+              "turnover_usd": 336408883.16,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 1.9,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.57,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -1199,24 +1199,24 @@
             {
               "symbol": "2395.TW",
               "name": "研華",
-              "close": 694.0,
-              "pct_change": 2.21,
-              "volume": 4634414,
-              "turnover_usd": 100836572.78,
-              "as_of_date": "2026-08-19"
+              "close": 649.0,
+              "pct_change": -3.57,
+              "volume": 4041331,
+              "turnover_usd": 82439848.34,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "6414.TW",
               "name": "樺漢",
-              "close": 408.5,
-              "pct_change": 4.88,
-              "volume": 3485103,
-              "turnover_usd": 44634580.5,
-              "as_of_date": "2026-08-19"
+              "close": 395.0,
+              "pct_change": -1.86,
+              "volume": 930810,
+              "turnover_usd": 11556496.74,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 3.03,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.36,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1229,24 +1229,24 @@
             {
               "symbol": "6180.TWO",
               "name": "橘子",
-              "close": 40.85,
-              "pct_change": -0.61,
-              "volume": 167000,
-              "turnover_usd": 213881.04,
-              "as_of_date": "2026-08-19"
+              "close": 41.5,
+              "pct_change": 0.73,
+              "volume": 159633,
+              "turnover_usd": 208227.86,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3293.TWO",
               "name": "鈊象",
-              "close": 749.0,
-              "pct_change": 0.94,
-              "volume": 2159713,
-              "turnover_usd": 50715608.28,
-              "as_of_date": "2026-08-19"
+              "close": 732.0,
+              "pct_change": -3.43,
+              "volume": 3719956,
+              "turnover_usd": 85588802.34,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.94,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.42,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1254,15 +1254,15 @@
             {
               "symbol": "TTWO",
               "name": "Take-Two Interactive",
-              "close": 242.4,
-              "pct_change": 0.33,
-              "volume": 1907900,
-              "turnover_usd": 462474948.36,
-              "as_of_date": "2026-08-18"
+              "close": 240.15,
+              "pct_change": 1.31,
+              "volume": 2444400,
+              "turnover_usd": 587022645.08,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 0.33,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 1.31,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1270,15 +1270,15 @@
             {
               "symbol": "7974.T",
               "name": "任天堂",
-              "close": 8577.0,
-              "pct_change": -2.09,
-              "volume": 9128500,
-              "turnover_usd": 492351087.35,
-              "as_of_date": "2026-08-19"
+              "close": 8599.0,
+              "pct_change": -2.07,
+              "volume": 5643400,
+              "turnover_usd": 305591331.38,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.09,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -2.07,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1286,15 +1286,15 @@
             {
               "symbol": "036570.KS",
               "name": "NCsoft",
-              "close": 219500.0,
-              "pct_change": -4.57,
-              "volume": 84561,
-              "turnover_usd": 13312346.95,
-              "as_of_date": "2026-08-19"
+              "close": 224500.0,
+              "pct_change": 1.81,
+              "volume": 55658,
+              "turnover_usd": 9029708.73,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.57,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.81,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1307,24 +1307,24 @@
             {
               "symbol": "3665.TW",
               "name": "貿聯-KY",
-              "close": 2200.0,
-              "pct_change": -1.79,
-              "volume": 1980907,
-              "turnover_usd": 136631408.72,
-              "as_of_date": "2026-08-19"
+              "close": 2275.0,
+              "pct_change": 1.11,
+              "volume": 3465503,
+              "turnover_usd": 247808241.16,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2231.TW",
               "name": "為升",
-              "close": 96.0,
-              "pct_change": 0.0,
-              "volume": 410049,
-              "turnover_usd": 1234158.02,
-              "as_of_date": "2026-08-19"
+              "close": 93.3,
+              "pct_change": -0.74,
+              "volume": 235651,
+              "turnover_usd": 691065.18,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.77,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.11,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -1332,15 +1332,15 @@
             {
               "symbol": "002594.SZ",
               "name": "比亞迪",
-              "close": 88.66,
-              "pct_change": -0.97,
-              "volume": 21960557,
-              "turnover_usd": 290016095.54,
-              "as_of_date": "2026-08-19"
+              "close": 90.47,
+              "pct_change": -0.01,
+              "volume": 17886205,
+              "turnover_usd": 240809116.77,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.97,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.01,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1348,15 +1348,15 @@
             {
               "symbol": "TSLA",
               "name": "特斯拉",
-              "close": 336.87,
-              "pct_change": -0.72,
-              "volume": 27994500,
-              "turnover_usd": 9430507078.31,
-              "as_of_date": "2026-08-18"
+              "close": 345.13,
+              "pct_change": -1.71,
+              "volume": 30695400,
+              "turnover_usd": 10593903551.88,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -0.72,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.71,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1364,15 +1364,15 @@
             {
               "symbol": "6752.T",
               "name": "Panasonic",
-              "close": 4342.0,
-              "pct_change": -4.61,
-              "volume": 10090000,
-              "turnover_usd": 275499653.38,
-              "as_of_date": "2026-08-19"
+              "close": 4303.0,
+              "pct_change": 0.0,
+              "volume": 8860500,
+              "turnover_usd": 240094285.65,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.61,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.0,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1380,15 +1380,15 @@
             {
               "symbol": "006400.KS",
               "name": "三星SDI",
-              "close": 487000.0,
-              "pct_change": -0.2,
-              "volume": 394552,
-              "turnover_usd": 137810784.03,
-              "as_of_date": "2026-08-19"
+              "close": 478000.0,
+              "pct_change": -4.3,
+              "volume": 285743,
+              "turnover_usd": 98703669.01,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.2,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -4.3,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1401,24 +1401,24 @@
             {
               "symbol": "2308.TW",
               "name": "台達電",
-              "close": 1765.0,
-              "pct_change": -3.02,
-              "volume": 11427523,
-              "turnover_usd": 632354469.3,
-              "as_of_date": "2026-08-19"
+              "close": 1750.0,
+              "pct_change": 0.29,
+              "volume": 4374387,
+              "turnover_usd": 240615342.5,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3665.TW",
               "name": "貿聯-KY",
-              "close": 2200.0,
-              "pct_change": -1.79,
-              "volume": 1980907,
-              "turnover_usd": 136631408.72,
-              "as_of_date": "2026-08-19"
+              "close": 2275.0,
+              "pct_change": 1.11,
+              "volume": 3465503,
+              "turnover_usd": 247808241.16,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.8,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.7,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1426,15 +1426,15 @@
             {
               "symbol": "NXPI",
               "name": "恩智浦",
-              "close": 228.56,
-              "pct_change": -1.79,
-              "volume": 4995200,
-              "turnover_usd": 1141702899.8,
-              "as_of_date": "2026-08-18"
+              "close": 222.97,
+              "pct_change": -1.35,
+              "volume": 2124500,
+              "turnover_usd": 473699767.59,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -1.79,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.35,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1442,15 +1442,15 @@
             {
               "symbol": "6902.T",
               "name": "電裝",
-              "close": 1887.5,
-              "pct_change": -2.38,
-              "volume": 9612700,
-              "turnover_usd": 114096525.79,
-              "as_of_date": "2026-08-19"
+              "close": 1948.5,
+              "pct_change": 0.13,
+              "volume": 5205300,
+              "turnover_usd": 63870221.52,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.38,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.13,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1458,15 +1458,15 @@
             {
               "symbol": "012330.KS",
               "name": "現代摩比斯",
-              "close": 509000.0,
-              "pct_change": -1.74,
-              "volume": 197443,
-              "turnover_usd": 72079126.78,
-              "as_of_date": "2026-08-19"
+              "close": 496000.0,
+              "pct_change": -2.17,
+              "volume": 233704,
+              "turnover_usd": 83767898.83,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.74,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -2.17,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1479,24 +1479,24 @@
             {
               "symbol": "1519.TW",
               "name": "華城",
-              "close": 718.0,
-              "pct_change": 0.56,
-              "volume": 913402,
-              "turnover_usd": 20561281.6,
-              "as_of_date": "2026-08-19"
+              "close": 723.0,
+              "pct_change": -0.55,
+              "volume": 1130374,
+              "turnover_usd": 25687895.28,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1503.TW",
               "name": "士電",
-              "close": 197.0,
-              "pct_change": -1.25,
-              "volume": 778650,
-              "turnover_usd": 4809193.96,
-              "as_of_date": "2026-08-19"
+              "close": 202.0,
+              "pct_change": 0.25,
+              "volume": 1169180,
+              "turnover_usd": 7423364.95,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.22,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.37,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1504,15 +1504,15 @@
             {
               "symbol": "GEV",
               "name": "GE Vernova",
-              "close": 1004.53,
-              "pct_change": -6.9,
-              "volume": 2821500,
-              "turnover_usd": 2834281477.66,
-              "as_of_date": "2026-08-18"
+              "close": 966.01,
+              "pct_change": -2.17,
+              "volume": 2656000,
+              "turnover_usd": 2565722585.94,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.9,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -2.17,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1520,15 +1520,15 @@
             {
               "symbol": "6501.T",
               "name": "日立製作所",
-              "close": 5225.0,
-              "pct_change": -5.24,
-              "volume": 13005100,
-              "turnover_usd": 427307053.94,
-              "as_of_date": "2026-08-19"
+              "close": 5196.0,
+              "pct_change": -1.27,
+              "volume": 10673600,
+              "turnover_usd": 349246701.85,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -5.24,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.27,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1536,15 +1536,15 @@
             {
               "symbol": "267260.KS",
               "name": "HD現代電機",
-              "close": 752000.0,
-              "pct_change": -4.2,
-              "volume": 99051,
-              "turnover_usd": 53422806.35,
-              "as_of_date": "2026-08-19"
+              "close": 718000.0,
+              "pct_change": -3.75,
+              "volume": 137350,
+              "turnover_usd": 71266086.05,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.2,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -3.75,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1557,15 +1557,15 @@
             {
               "symbol": "3576.TW",
               "name": "聯合再生",
-              "close": 16.75,
-              "pct_change": -1.76,
-              "volume": 6429094,
-              "turnover_usd": 3376201.56,
-              "as_of_date": "2026-08-19"
+              "close": 17.3,
+              "pct_change": 1.76,
+              "volume": 7704640,
+              "turnover_usd": 4189541.53,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.76,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.76,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -1573,15 +1573,15 @@
             {
               "symbol": "601012.SS",
               "name": "隆基綠能",
-              "close": 12.45,
-              "pct_change": -3.04,
-              "volume": 98516040,
-              "turnover_usd": 182695267.0,
-              "as_of_date": "2026-08-19"
+              "close": 12.42,
+              "pct_change": 0.08,
+              "volume": 54447596,
+              "turnover_usd": 100635320.12,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.04,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.08,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1589,15 +1589,15 @@
             {
               "symbol": "FSLR",
               "name": "First Solar",
-              "close": 220.01,
-              "pct_change": 0.99,
-              "volume": 1902100,
-              "turnover_usd": 418481010.55,
-              "as_of_date": "2026-08-18"
+              "close": 214.06,
+              "pct_change": -3.75,
+              "volume": 1618500,
+              "turnover_usd": 346456106.05,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 0.99,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -3.75,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -1610,15 +1610,15 @@
             {
               "symbol": "9958.TW",
               "name": "世紀鋼",
-              "close": 99.5,
-              "pct_change": -1.49,
-              "volume": 2295037,
-              "turnover_usd": 7159398.74,
-              "as_of_date": "2026-08-19"
+              "close": 102.0,
+              "pct_change": 0.99,
+              "volume": 1343568,
+              "turnover_usd": 4307525.81,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.49,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.99,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1626,15 +1626,15 @@
             {
               "symbol": "GEV",
               "name": "GE Vernova",
-              "close": 1004.53,
-              "pct_change": -6.9,
-              "volume": 2821500,
-              "turnover_usd": 2834281477.66,
-              "as_of_date": "2026-08-18"
+              "close": 966.01,
+              "pct_change": -2.17,
+              "volume": 2656000,
+              "turnover_usd": 2565722585.94,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.9,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -2.17,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -1647,15 +1647,15 @@
             {
               "symbol": "2308.TW",
               "name": "台達電",
-              "close": 1765.0,
-              "pct_change": -3.02,
-              "volume": 11427523,
-              "turnover_usd": 632354469.3,
-              "as_of_date": "2026-08-19"
+              "close": 1750.0,
+              "pct_change": 0.29,
+              "volume": 4374387,
+              "turnover_usd": 240615342.5,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -3.02,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.29,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -1663,15 +1663,15 @@
             {
               "symbol": "300750.SZ",
               "name": "寧德時代",
-              "close": 389.0,
-              "pct_change": -1.83,
-              "volume": 21157158,
-              "turnover_usd": 1225908160.27,
-              "as_of_date": "2026-08-19"
+              "close": 391.15,
+              "pct_change": 1.6,
+              "volume": 20449615,
+              "turnover_usd": 1190360722.88,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.83,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.6,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1679,15 +1679,15 @@
             {
               "symbol": "FLNC",
               "name": "Fluence Energy",
-              "close": 11.75,
-              "pct_change": -6.97,
-              "volume": 5912300,
-              "turnover_usd": 69469525.0,
-              "as_of_date": "2026-08-18"
+              "close": 11.39,
+              "pct_change": -5.63,
+              "volume": 8538900,
+              "turnover_usd": 97258073.93,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -6.97,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -5.63,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1695,15 +1695,15 @@
             {
               "symbol": "6752.T",
               "name": "Panasonic",
-              "close": 4342.0,
-              "pct_change": -4.61,
-              "volume": 10090000,
-              "turnover_usd": 275499653.38,
-              "as_of_date": "2026-08-19"
+              "close": 4303.0,
+              "pct_change": 0.0,
+              "volume": 8860500,
+              "turnover_usd": 240094285.65,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.61,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.0,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1711,15 +1711,15 @@
             {
               "symbol": "006400.KS",
               "name": "三星SDI",
-              "close": 487000.0,
-              "pct_change": -0.2,
-              "volume": 394552,
-              "turnover_usd": 137810784.03,
-              "as_of_date": "2026-08-19"
+              "close": 478000.0,
+              "pct_change": -4.3,
+              "volume": 285743,
+              "turnover_usd": 98703669.01,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.2,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -4.3,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1732,24 +1732,24 @@
             {
               "symbol": "2412.TW",
               "name": "中華電",
-              "close": 136.0,
-              "pct_change": -0.73,
-              "volume": 6986058,
-              "turnover_usd": 29787556.14,
-              "as_of_date": "2026-08-19"
+              "close": 136.5,
+              "pct_change": 0.0,
+              "volume": 5290794,
+              "turnover_usd": 22699775.86,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "3045.TW",
               "name": "台灣大",
-              "close": 113.5,
-              "pct_change": 2.25,
-              "volume": 26561371,
-              "turnover_usd": 94517043.43,
-              "as_of_date": "2026-08-19"
+              "close": 115.0,
+              "pct_change": 0.0,
+              "volume": 13233606,
+              "turnover_usd": 47834815.79,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.54,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.0,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1757,15 +1757,15 @@
             {
               "symbol": "VZ",
               "name": "Verizon",
-              "close": 48.54,
-              "pct_change": 1.0,
-              "volume": 14376300,
-              "turnover_usd": 697825615.16,
-              "as_of_date": "2026-08-18"
+              "close": 49.19,
+              "pct_change": -0.34,
+              "volume": 12544800,
+              "turnover_usd": 617078694.77,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 1.0,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.34,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1773,15 +1773,15 @@
             {
               "symbol": "9432.T",
               "name": "NTT",
-              "close": 159.4,
-              "pct_change": -0.62,
-              "volume": 202345200,
-              "turnover_usd": 202824903.69,
-              "as_of_date": "2026-08-19"
+              "close": 166.1,
+              "pct_change": 2.91,
+              "volume": 370034500,
+              "turnover_usd": 387047363.44,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.62,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.91,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1789,15 +1789,15 @@
             {
               "symbol": "017670.KS",
               "name": "SK Telecom",
-              "close": 98000.0,
-              "pct_change": -1.8,
-              "volume": 1590159,
-              "turnover_usd": 111767778.87,
-              "as_of_date": "2026-08-19"
+              "close": 102200.0,
+              "pct_change": 5.8,
+              "volume": 2006782,
+              "turnover_usd": 148211155.31,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.8,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 5.8,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1810,24 +1810,24 @@
             {
               "symbol": "4174.TWO",
               "name": "浩鼎",
-              "close": 25.6,
-              "pct_change": -0.58,
-              "volume": 118444,
-              "turnover_usd": 95064.16,
-              "as_of_date": "2026-08-19"
+              "close": 26.9,
+              "pct_change": 0.0,
+              "volume": 250752,
+              "turnover_usd": 212014.1,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1795.TW",
               "name": "美時",
-              "close": 186.5,
-              "pct_change": 1.36,
-              "volume": 817331,
-              "turnover_usd": 4779039.13,
-              "as_of_date": "2026-08-19"
+              "close": 196.5,
+              "pct_change": 0.77,
+              "volume": 1715635,
+              "turnover_usd": 10596331.03,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.32,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.75,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1835,15 +1835,15 @@
             {
               "symbol": "XBI",
               "name": "標普生技ETF",
-              "close": 160.11,
-              "pct_change": 0.36,
-              "volume": 6522000,
-              "turnover_usd": 1044237423.98,
-              "as_of_date": "2026-08-18"
+              "close": 163.38,
+              "pct_change": -3.64,
+              "volume": 15021900,
+              "turnover_usd": 2454278095.35,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 0.36,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -3.64,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1851,15 +1851,15 @@
             {
               "symbol": "4502.T",
               "name": "武田藥品",
-              "close": 5769.0,
-              "pct_change": 1.18,
-              "volume": 6779900,
-              "turnover_usd": 245959668.29,
-              "as_of_date": "2026-08-19"
+              "close": 5764.0,
+              "pct_change": -1.05,
+              "volume": 3177000,
+              "turnover_usd": 115317026.33,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.18,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.05,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -1867,15 +1867,15 @@
             {
               "symbol": "207940.KS",
               "name": "三星生物製劑",
-              "close": 1544000.0,
-              "pct_change": 0.85,
-              "volume": 28670,
-              "turnover_usd": 31748629.45,
-              "as_of_date": "2026-08-19"
+              "close": 1551000.0,
+              "pct_change": -1.46,
+              "volume": 44704,
+              "turnover_usd": 50105797.88,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.85,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.46,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1888,24 +1888,24 @@
             {
               "symbol": "4106.TW",
               "name": "雃博",
-              "close": 24.4,
-              "pct_change": -1.61,
-              "volume": 50000,
-              "turnover_usd": 38249.31,
-              "as_of_date": "2026-08-19"
+              "close": 24.5,
+              "pct_change": 0.2,
+              "volume": 30965,
+              "turnover_usd": 23845.43,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1786.TW",
               "name": "科妍",
-              "close": 49.55,
-              "pct_change": 0.0,
-              "volume": 164000,
-              "turnover_usd": 254771.76,
-              "as_of_date": "2026-08-19"
+              "close": 50.4,
+              "pct_change": 1.61,
+              "volume": 116917,
+              "turnover_usd": 185215.05,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.21,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.45,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1913,15 +1913,15 @@
             {
               "symbol": "MDT",
               "name": "美敦力",
-              "close": 92.09,
-              "pct_change": 1.64,
-              "volume": 6789900,
-              "turnover_usd": 625281866.13,
-              "as_of_date": "2026-08-18"
+              "close": 92.3,
+              "pct_change": -1.94,
+              "volume": 6348800,
+              "turnover_usd": 585994259.38,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 1.64,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -1.94,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -1929,15 +1929,15 @@
             {
               "symbol": "4543.T",
               "name": "Terumo",
-              "close": 2472.0,
-              "pct_change": -4.11,
-              "volume": 9014900,
-              "turnover_usd": 140135914.31,
-              "as_of_date": "2026-08-19"
+              "close": 2569.0,
+              "pct_change": -0.29,
+              "volume": 4562800,
+              "turnover_usd": 73815537.23,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.11,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.29,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -1950,24 +1950,24 @@
             {
               "symbol": "2881.TW",
               "name": "富邦金",
-              "close": 128.5,
-              "pct_change": -0.77,
-              "volume": 12502775,
-              "turnover_usd": 50370159.02,
-              "as_of_date": "2026-08-19"
+              "close": 134.0,
+              "pct_change": 4.69,
+              "volume": 37661834,
+              "turnover_usd": 158625983.7,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2882.TW",
               "name": "國泰金",
-              "close": 98.3,
-              "pct_change": -0.91,
-              "volume": 10770149,
-              "turnover_usd": 33192427.97,
-              "as_of_date": "2026-08-19"
+              "close": 100.5,
+              "pct_change": 2.87,
+              "volume": 21832082,
+              "turnover_usd": 68965085.78,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.83,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 4.14,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -1975,15 +1975,15 @@
             {
               "symbol": "601398.SS",
               "name": "中國工商銀行",
-              "close": 7.8,
-              "pct_change": 1.69,
-              "volume": 462590966,
-              "turnover_usd": 537455814.51,
-              "as_of_date": "2026-08-19"
+              "close": 7.77,
+              "pct_change": -0.13,
+              "volume": 266529315,
+              "turnover_usd": 308188284.56,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.69,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.13,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -1991,15 +1991,15 @@
             {
               "symbol": "XLF",
               "name": "金融類股ETF",
-              "close": 57.84,
-              "pct_change": 0.45,
-              "volume": 25389400,
-              "turnover_usd": 1468522899.87,
-              "as_of_date": "2026-08-18"
+              "close": 56.95,
+              "pct_change": -0.92,
+              "volume": 30696600,
+              "turnover_usd": 1748171393.42,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 0.45,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.92,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -2007,15 +2007,15 @@
             {
               "symbol": "8306.T",
               "name": "三菱UFJ金融集團",
-              "close": 3495.0,
-              "pct_change": -4.35,
-              "volume": 49773700,
-              "turnover_usd": 1093924067.43,
-              "as_of_date": "2026-08-19"
+              "close": 3508.0,
+              "pct_change": 1.27,
+              "volume": 27636100,
+              "turnover_usd": 610504104.3,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.35,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.27,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -2023,15 +2023,15 @@
             {
               "symbol": "105560.KS",
               "name": "KB金融",
-              "close": 166400.0,
-              "pct_change": -1.25,
-              "volume": 912179,
-              "turnover_usd": 108863773.71,
-              "as_of_date": "2026-08-19"
+              "close": 164300.0,
+              "pct_change": 2.69,
+              "volume": 1272924,
+              "turnover_usd": 151136666.18,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.25,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.69,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2044,24 +2044,24 @@
             {
               "symbol": "2603.TW",
               "name": "長榮",
-              "close": 240.5,
-              "pct_change": 1.05,
-              "volume": 20135625,
-              "turnover_usd": 151825239.1,
-              "as_of_date": "2026-08-19"
+              "close": 251.5,
+              "pct_change": 2.24,
+              "volume": 33142624,
+              "turnover_usd": 261994964.52,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2609.TW",
               "name": "陽明",
-              "close": 59.0,
-              "pct_change": 4.98,
-              "volume": 114003003,
-              "turnover_usd": 210878392.16,
-              "as_of_date": "2026-08-19"
+              "close": 64.0,
+              "pct_change": 6.14,
+              "volume": 198517542,
+              "turnover_usd": 399343783.58,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 3.34,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 4.59,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2069,15 +2069,15 @@
             {
               "symbol": "ZIM",
               "name": "ZIM以星航運",
-              "close": 28.49,
-              "pct_change": -1.11,
-              "volume": 3455300,
-              "turnover_usd": 98441496.21,
-              "as_of_date": "2026-08-18"
+              "close": 27.16,
+              "pct_change": -0.91,
+              "volume": 1965700,
+              "turnover_usd": 53388411.7,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -1.11,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.91,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -2085,15 +2085,15 @@
             {
               "symbol": "9101.T",
               "name": "日本郵船",
-              "close": 6733.0,
-              "pct_change": -0.75,
-              "volume": 3969600,
-              "turnover_usd": 168072025.06,
-              "as_of_date": "2026-08-19"
+              "close": 7101.0,
+              "pct_change": 4.5,
+              "volume": 5552800,
+              "turnover_usd": 248304043.48,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.75,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 4.5,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -2101,15 +2101,15 @@
             {
               "symbol": "011200.KS",
               "name": "HMM",
-              "close": 21700.0,
-              "pct_change": -4.19,
-              "volume": 1767571,
-              "turnover_usd": 27509746.89,
-              "as_of_date": "2026-08-19"
+              "close": 21600.0,
+              "pct_change": 1.89,
+              "volume": 1413376,
+              "turnover_usd": 22061816.27,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -4.19,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.89,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2122,24 +2122,24 @@
             {
               "symbol": "2606.TW",
               "name": "裕民",
-              "close": 69.5,
-              "pct_change": 0.72,
-              "volume": 5139639,
-              "turnover_usd": 11199050.4,
-              "as_of_date": "2026-08-19"
+              "close": 72.6,
+              "pct_change": 3.42,
+              "volume": 15882211,
+              "turnover_usd": 36242290.59,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2615.TW",
               "name": "萬海",
-              "close": 106.5,
-              "pct_change": 1.43,
-              "volume": 40954403,
-              "turnover_usd": 136745796.71,
-              "as_of_date": "2026-08-19"
+              "close": 124.5,
+              "pct_change": 9.69,
+              "volume": 87041401,
+              "turnover_usd": 340614623.37,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.38,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 9.09,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2147,15 +2147,15 @@
             {
               "symbol": "BOAT",
               "name": "全球航運ETF",
-              "close": 47.8,
-              "pct_change": 0.31,
-              "volume": 46400,
-              "turnover_usd": 2217919.96,
-              "as_of_date": "2026-08-18"
+              "close": 48.4,
+              "pct_change": -0.68,
+              "volume": 40000,
+              "turnover_usd": 1936000.06,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": 0.31,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -0.68,
+          "as_of": "2026-08-20"
         }
       }
     },
@@ -2168,24 +2168,24 @@
             {
               "symbol": "2610.TW",
               "name": "華航",
-              "close": 19.9,
-              "pct_change": -1.0,
-              "volume": 24371921,
-              "turnover_usd": 15205706.67,
-              "as_of_date": "2026-08-19"
+              "close": 20.4,
+              "pct_change": 2.0,
+              "volume": 27794813,
+              "turnover_usd": 17822227.41,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2618.TW",
               "name": "長榮航",
-              "close": 41.6,
-              "pct_change": -0.72,
-              "volume": 17617987,
-              "turnover_usd": 22978061.02,
-              "as_of_date": "2026-08-19"
+              "close": 42.6,
+              "pct_change": 0.83,
+              "volume": 26512746,
+              "turnover_usd": 35500327.52,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.83,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.22,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2193,15 +2193,15 @@
             {
               "symbol": "DAL",
               "name": "達美航空",
-              "close": 85.7,
-              "pct_change": -2.16,
-              "volume": 4605500,
-              "turnover_usd": 394691335.95,
-              "as_of_date": "2026-08-18"
+              "close": 81.06,
+              "pct_change": -2.68,
+              "volume": 6166100,
+              "turnover_usd": 499824050.95,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -2.16,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -2.68,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -2209,15 +2209,15 @@
             {
               "symbol": "9201.T",
               "name": "日本航空",
-              "close": 2983.5,
-              "pct_change": -0.42,
-              "volume": 2277800,
-              "turnover_usd": 42734802.6,
-              "as_of_date": "2026-08-19"
+              "close": 3002.0,
+              "pct_change": 0.4,
+              "volume": 1443900,
+              "turnover_usd": 27296065.53,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.42,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.4,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -2225,15 +2225,15 @@
             {
               "symbol": "003490.KS",
               "name": "大韓航空",
-              "close": 25050.0,
-              "pct_change": -0.79,
-              "volume": 1944530,
-              "turnover_usd": 34935935.02,
-              "as_of_date": "2026-08-19"
+              "close": 25800.0,
+              "pct_change": 2.99,
+              "volume": 3903452,
+              "turnover_usd": 72777703.81,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -0.79,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 2.99,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2246,24 +2246,24 @@
             {
               "symbol": "2002.TW",
               "name": "中鋼",
-              "close": 18.95,
-              "pct_change": 0.0,
-              "volume": 31016698,
-              "turnover_usd": 18427591.31,
-              "as_of_date": "2026-08-19"
+              "close": 19.45,
+              "pct_change": 0.52,
+              "volume": 31340272,
+              "turnover_usd": 19159776.96,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "2027.TW",
               "name": "大成鋼",
-              "close": 50.0,
-              "pct_change": 0.6,
-              "volume": 17942332,
-              "turnover_usd": 28126304.32,
-              "as_of_date": "2026-08-19"
+              "close": 50.3,
+              "pct_change": -0.4,
+              "volume": 9417778,
+              "turnover_usd": 14889650.11,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.36,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.12,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -2271,15 +2271,15 @@
             {
               "symbol": "600019.SS",
               "name": "寶山鋼鐵",
-              "close": 5.91,
-              "pct_change": 1.2,
-              "volume": 112025363,
-              "turnover_usd": 98617692.11,
-              "as_of_date": "2026-08-19"
+              "close": 5.81,
+              "pct_change": -1.36,
+              "volume": 79202174,
+              "turnover_usd": 68479937.5,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.2,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.36,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2287,15 +2287,15 @@
             {
               "symbol": "NUE",
               "name": "紐克鋼鐵",
-              "close": 264.19,
-              "pct_change": -3.11,
-              "volume": 1503600,
-              "turnover_usd": 397236087.67,
-              "as_of_date": "2026-08-18"
+              "close": 240.48,
+              "pct_change": -3.32,
+              "volume": 2267700,
+              "turnover_usd": 545336486.31,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -3.11,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -3.32,
+          "as_of": "2026-08-20"
         },
         "JP": {
           "market_label": "日股",
@@ -2303,15 +2303,15 @@
             {
               "symbol": "5401.T",
               "name": "日本製鐵",
-              "close": 677.9,
-              "pct_change": -2.26,
-              "volume": 36679400,
-              "turnover_usd": 156360821.63,
-              "as_of_date": "2026-08-19"
+              "close": 659.4,
+              "pct_change": -0.54,
+              "volume": 32500800,
+              "turnover_usd": 134956950.97,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.26,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.54,
+          "as_of": "2026-08-21"
         },
         "KR": {
           "market_label": "韓股",
@@ -2319,15 +2319,15 @@
             {
               "symbol": "005490.KS",
               "name": "POSCO控股",
-              "close": 320000.0,
-              "pct_change": -1.39,
-              "volume": 178183,
-              "turnover_usd": 40894625.76,
-              "as_of_date": "2026-08-19"
+              "close": 310000.0,
+              "pct_change": -2.97,
+              "volume": 246651,
+              "turnover_usd": 55255355.11,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.39,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -2.97,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2340,24 +2340,24 @@
             {
               "symbol": "1301.TW",
               "name": "台塑",
-              "close": 56.8,
-              "pct_change": -3.57,
-              "volume": 23499240,
-              "turnover_usd": 41847153.81,
-              "as_of_date": "2026-08-19"
+              "close": 59.4,
+              "pct_change": 2.77,
+              "volume": 20175527,
+              "turnover_usd": 37668593.89,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1303.TW",
               "name": "南亞",
-              "close": 187.5,
-              "pct_change": -6.25,
-              "volume": 71333814,
-              "turnover_usd": 419334404.42,
-              "as_of_date": "2026-08-19"
+              "close": 192.0,
+              "pct_change": 3.23,
+              "volume": 54196688,
+              "turnover_usd": 327071001.77,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -6.01,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 3.18,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -2365,15 +2365,15 @@
             {
               "symbol": "600028.SS",
               "name": "中國石化",
-              "close": 5.16,
-              "pct_change": 1.98,
-              "volume": 321963309,
-              "turnover_usd": 247461178.17,
-              "as_of_date": "2026-08-19"
+              "close": 5.1,
+              "pct_change": -0.78,
+              "volume": 210261034,
+              "turnover_usd": 159580230.63,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.98,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.78,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2381,15 +2381,15 @@
             {
               "symbol": "DOW",
               "name": "陶氏化學",
-              "close": 31.19,
-              "pct_change": -0.48,
-              "volume": 7367900,
-              "turnover_usd": 229804804.93,
-              "as_of_date": "2026-08-18"
+              "close": 32.9,
+              "pct_change": 3.62,
+              "volume": 14364200,
+              "turnover_usd": 472582201.92,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -0.48,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": 3.62,
+          "as_of": "2026-08-20"
         },
         "KR": {
           "market_label": "韓股",
@@ -2397,15 +2397,15 @@
             {
               "symbol": "051910.KS",
               "name": "LG化學",
-              "close": 266000.0,
-              "pct_change": -1.66,
-              "volume": 118663,
-              "turnover_usd": 22638463.82,
-              "as_of_date": "2026-08-19"
+              "close": 252500.0,
+              "pct_change": -4.36,
+              "volume": 141218,
+              "turnover_usd": 25768031.27,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -1.66,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -4.36,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2418,24 +2418,24 @@
             {
               "symbol": "1101.TW",
               "name": "台泥",
-              "close": 24.05,
-              "pct_change": -0.21,
-              "volume": 16474766,
-              "turnover_usd": 12422188.08,
-              "as_of_date": "2026-08-19"
+              "close": 24.85,
+              "pct_change": 0.2,
+              "volume": 35298815,
+              "turnover_usd": 27571131.59,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1102.TW",
               "name": "亞泥",
-              "close": 33.8,
-              "pct_change": 0.9,
-              "volume": 11969568,
-              "turnover_usd": 12684079.21,
-              "as_of_date": "2026-08-19"
+              "close": 34.95,
+              "pct_change": 0.72,
+              "volume": 16315440,
+              "turnover_usd": 17923137.86,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.35,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 0.41,
+          "as_of": "2026-08-21"
         },
         "CN": {
           "market_label": "中股",
@@ -2443,15 +2443,15 @@
             {
               "symbol": "600585.SS",
               "name": "海螺水泥",
-              "close": 17.46,
-              "pct_change": 0.17,
-              "volume": 19907110,
-              "turnover_usd": 51773012.76,
-              "as_of_date": "2026-08-19"
+              "close": 17.41,
+              "pct_change": -1.14,
+              "volume": 16530735,
+              "turnover_usd": 42829307.83,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 0.17,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -1.14,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2464,24 +2464,24 @@
             {
               "symbol": "1440.TW",
               "name": "南紡",
-              "close": 13.35,
-              "pct_change": 0.0,
-              "volume": 1542200,
-              "turnover_usd": 645484.41,
-              "as_of_date": "2026-08-19"
+              "close": 14.0,
+              "pct_change": 3.32,
+              "volume": 2464697,
+              "turnover_usd": 1084575.12,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1477.TW",
               "name": "聚陽",
-              "close": 192.5,
-              "pct_change": -2.53,
-              "volume": 4194737,
-              "turnover_usd": 25316242.63,
-              "as_of_date": "2026-08-19"
+              "close": 203.0,
+              "pct_change": 1.0,
+              "volume": 1454467,
+              "turnover_usd": 9280427.35,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": -2.47,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.24,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2495,23 +2495,23 @@
               "symbol": "1216.TW",
               "name": "統一",
               "close": 77.5,
-              "pct_change": 1.71,
-              "volume": 16842257,
-              "turnover_usd": 40922840.52,
-              "as_of_date": "2026-08-19"
+              "pct_change": -0.9,
+              "volume": 15349423,
+              "turnover_usd": 37390547.31,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "1201.TW",
               "name": "味全",
-              "close": 12.3,
+              "close": 12.45,
               "pct_change": 0.0,
-              "volume": 381298,
-              "turnover_usd": 147039.3,
-              "as_of_date": "2026-08-19"
+              "volume": 273667,
+              "turnover_usd": 107092.69,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.7,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": -0.89,
+          "as_of": "2026-08-21"
         }
       }
     },
@@ -2524,24 +2524,24 @@
             {
               "symbol": "2912.TW",
               "name": "統一超",
-              "close": 218.5,
-              "pct_change": 1.63,
-              "volume": 2583056,
-              "turnover_usd": 17694937.85,
-              "as_of_date": "2026-08-19"
+              "close": 223.5,
+              "pct_change": 1.59,
+              "volume": 5510819,
+              "turnover_usd": 38713437.87,
+              "as_of_date": "2026-08-21"
             },
             {
               "symbol": "5903.TWO",
               "name": "全家",
-              "close": 185.0,
-              "pct_change": 0.27,
-              "volume": 20030,
-              "turnover_usd": 116176.01,
-              "as_of_date": "2026-08-19"
+              "close": 186.0,
+              "pct_change": 0.54,
+              "volume": 12297,
+              "turnover_usd": 71891.94,
+              "as_of_date": "2026-08-21"
             }
           ],
-          "weighted_change_pct": 1.62,
-          "as_of": "2026-08-19"
+          "weighted_change_pct": 1.59,
+          "as_of": "2026-08-21"
         },
         "US": {
           "market_label": "美股",
@@ -2549,1014 +2549,1014 @@
             {
               "symbol": "XRT",
               "name": "零售類股ETF",
-              "close": 87.13,
-              "pct_change": -0.47,
-              "volume": 3834700,
-              "turnover_usd": 334117400.47,
-              "as_of_date": "2026-08-18"
+              "close": 86.73,
+              "pct_change": -2.36,
+              "volume": 7552200,
+              "turnover_usd": 655002331.35,
+              "as_of_date": "2026-08-20"
             }
           ],
-          "weighted_change_pct": -0.47,
-          "as_of": "2026-08-18"
+          "weighted_change_pct": -2.36,
+          "as_of": "2026-08-20"
         }
       }
     }
   ],
   "momentum_ranking": [
     {
-      "sector": "LED",
-      "momentum_score": 70.2,
-      "weighted_change_pct": -8.38,
-      "turnover_usd": 425509489.56
-    },
-    {
-      "sector": "光通訊與光模組",
-      "momentum_score": 63.3,
-      "weighted_change_pct": -11.13,
-      "turnover_usd": 4917268187.01
+      "sector": "散裝航運",
+      "momentum_score": 100.0,
+      "weighted_change_pct": 9.09,
+      "turnover_usd": 378792914.02
     },
     {
       "sector": "貨櫃航運",
       "momentum_score": 57.2,
-      "weighted_change_pct": -1.86,
-      "turnover_usd": 656726899.42
+      "weighted_change_pct": 3.64,
+      "turnover_usd": 985093019.55
     },
     {
-      "sector": "手機組裝/蘋果供應鏈",
-      "momentum_score": 48.4,
-      "weighted_change_pct": -7.74,
-      "turnover_usd": 22754366125.17
-    },
-    {
-      "sector": "AI伺服器與雲端基建",
-      "momentum_score": 46.7,
-      "weighted_change_pct": -9.67,
-      "turnover_usd": 9845485782.9
-    },
-    {
-      "sector": "風電",
-      "momentum_score": 45.9,
-      "weighted_change_pct": -6.5,
-      "turnover_usd": 2841440876.4
-    },
-    {
-      "sector": "記憶體",
-      "momentum_score": 44.1,
-      "weighted_change_pct": -8.83,
-      "turnover_usd": 44763271919.72
-    },
-    {
-      "sector": "晶圓代工",
-      "momentum_score": 41.9,
-      "weighted_change_pct": -7.74,
-      "turnover_usd": 19345195456.5
-    },
-    {
-      "sector": "散裝航運",
-      "momentum_score": 40.6,
-      "weighted_change_pct": 1.37,
-      "turnover_usd": 150162767.08
-    },
-    {
-      "sector": "連接器",
-      "momentum_score": 38.8,
-      "weighted_change_pct": -5.65,
-      "turnover_usd": 1207563050.01
-    },
-    {
-      "sector": "IC設計",
-      "momentum_score": 38.0,
-      "weighted_change_pct": -5.6,
-      "turnover_usd": 32596938874.0
-    },
-    {
-      "sector": "PCB印刷電路板",
-      "momentum_score": 34.4,
-      "weighted_change_pct": -5.47,
-      "turnover_usd": 1498063375.8
-    },
-    {
-      "sector": "紡織",
-      "momentum_score": 34.3,
-      "weighted_change_pct": -2.47,
-      "turnover_usd": 25961727.03
-    },
-    {
-      "sector": "醫療器材",
-      "momentum_score": 30.9,
-      "weighted_change_pct": -3.95,
-      "turnover_usd": 765710801.51
-    },
-    {
-      "sector": "被動元件",
-      "momentum_score": 30.4,
-      "weighted_change_pct": -3.25,
-      "turnover_usd": 3534631891.87
-    },
-    {
-      "sector": "先進封裝",
-      "momentum_score": 29.8,
-      "weighted_change_pct": -5.04,
-      "turnover_usd": 2604504740.28
-    },
-    {
-      "sector": "半導體設備",
-      "momentum_score": 28.4,
-      "weighted_change_pct": -3.4,
-      "turnover_usd": 9594125540.61
+      "sector": "LED",
+      "momentum_score": 48.7,
+      "weighted_change_pct": 5.04,
+      "turnover_usd": 463331806.78
     },
     {
       "sector": "IC載板",
-      "momentum_score": 27.9,
-      "weighted_change_pct": -2.86,
-      "turnover_usd": 1372549591.04
-    },
-    {
-      "sector": "半導體材料",
-      "momentum_score": 26.8,
-      "weighted_change_pct": -2.57,
-      "turnover_usd": 962523719.64
-    },
-    {
-      "sector": "重電與電網",
-      "momentum_score": 26.8,
-      "weighted_change_pct": -4.71,
-      "turnover_usd": 3340381813.5
-    },
-    {
-      "sector": "網通設備",
-      "momentum_score": 26.7,
-      "weighted_change_pct": -3.62,
-      "turnover_usd": 4233977630.89
-    },
-    {
-      "sector": "面板顯示器",
-      "momentum_score": 25.7,
-      "weighted_change_pct": -4.12,
-      "turnover_usd": 2833442883.68
-    },
-    {
-      "sector": "散熱液冷",
-      "momentum_score": 24.3,
-      "weighted_change_pct": -3.65,
-      "turnover_usd": 3250219538.46
-    },
-    {
-      "sector": "電源供應器",
-      "momentum_score": 23.5,
-      "weighted_change_pct": -3.21,
-      "turnover_usd": 2159094111.91
-    },
-    {
-      "sector": "工業電腦",
-      "momentum_score": 21.5,
-      "weighted_change_pct": 3.03,
-      "turnover_usd": 145471153.27
-    },
-    {
-      "sector": "金融",
-      "momentum_score": 20.2,
-      "weighted_change_pct": -2.82,
-      "turnover_usd": 3292329142.52
-    },
-    {
-      "sector": "遊戲與數位內容",
-      "momentum_score": 19.6,
-      "weighted_change_pct": -2.49,
-      "turnover_usd": 1019067871.98
-    },
-    {
-      "sector": "塑化",
-      "momentum_score": 19.3,
-      "weighted_change_pct": -2.86,
-      "turnover_usd": 961086005.16
-    },
-    {
-      "sector": "食品",
-      "momentum_score": 18.9,
-      "weighted_change_pct": 1.7,
-      "turnover_usd": 41069879.82
+      "momentum_score": 38.5,
+      "weighted_change_pct": -4.89,
+      "turnover_usd": 1202686801.75
     },
     {
       "sector": "電信",
-      "momentum_score": 18.3,
-      "weighted_change_pct": -1.53,
-      "turnover_usd": 1136722897.3
+      "momentum_score": 37.0,
+      "weighted_change_pct": 5.08,
+      "turnover_usd": 1222871805.18
     },
     {
-      "sector": "車用電子",
-      "momentum_score": 15.7,
-      "weighted_change_pct": -2.0,
-      "turnover_usd": 2096864430.4
+      "sector": "散熱液冷",
+      "momentum_score": 35.7,
+      "weighted_change_pct": -5.6,
+      "turnover_usd": 2588568319.74
     },
     {
-      "sector": "鋼鐵",
-      "momentum_score": 13.0,
-      "weighted_change_pct": -1.6,
-      "turnover_usd": 739663122.8
+      "sector": "被動元件",
+      "momentum_score": 33.9,
+      "weighted_change_pct": -5.23,
+      "turnover_usd": 2020472506.78
     },
     {
-      "sector": "儲能",
-      "momentum_score": 12.1,
-      "weighted_change_pct": -1.2,
-      "turnover_usd": 2341042591.98
+      "sector": "手機組裝/蘋果供應鏈",
+      "momentum_score": 30.0,
+      "weighted_change_pct": 3.86,
+      "turnover_usd": 19962701716.11
     },
     {
-      "sector": "太陽能",
-      "momentum_score": 10.4,
-      "weighted_change_pct": -2.0,
-      "turnover_usd": 604552479.11
-    },
-    {
-      "sector": "生技新藥",
-      "momentum_score": 9.1,
-      "weighted_change_pct": 0.99,
-      "turnover_usd": 1326819825.01
-    },
-    {
-      "sector": "電動車供應鏈",
-      "momentum_score": 9.0,
-      "weighted_change_pct": -1.02,
-      "turnover_usd": 10271699177.99
-    },
-    {
-      "sector": "零售通路",
-      "momentum_score": 8.6,
-      "weighted_change_pct": 0.85,
-      "turnover_usd": 351928514.33
-    },
-    {
-      "sector": "水泥",
-      "momentum_score": 7.0,
-      "weighted_change_pct": 0.3,
-      "turnover_usd": 76879280.05
+      "sector": "記憶體",
+      "momentum_score": 27.1,
+      "weighted_change_pct": 3.09,
+      "turnover_usd": 37026751920.64
     },
     {
       "sector": "航空",
-      "momentum_score": 6.0,
-      "weighted_change_pct": -0.76,
-      "turnover_usd": 510545841.26
+      "momentum_score": 25.6,
+      "weighted_change_pct": 2.83,
+      "turnover_usd": 653220375.22
+    },
+    {
+      "sector": "金融",
+      "momentum_score": 25.4,
+      "weighted_change_pct": 2.25,
+      "turnover_usd": 3045591517.94
+    },
+    {
+      "sector": "晶圓代工",
+      "momentum_score": 24.9,
+      "weighted_change_pct": 3.85,
+      "turnover_usd": 15827912615.97
+    },
+    {
+      "sector": "重電與電網",
+      "momentum_score": 24.6,
+      "weighted_change_pct": -2.83,
+      "turnover_usd": 3019346634.07
+    },
+    {
+      "sector": "電動車供應鏈",
+      "momentum_score": 23.3,
+      "weighted_change_pct": -3.07,
+      "turnover_usd": 11422009929.66
+    },
+    {
+      "sector": "儲能",
+      "momentum_score": 22.7,
+      "weighted_change_pct": -3.01,
+      "turnover_usd": 1867032093.97
+    },
+    {
+      "sector": "塑化",
+      "momentum_score": 22.3,
+      "weighted_change_pct": -2.41,
+      "turnover_usd": 1022670059.47
+    },
+    {
+      "sector": "工業電腦",
+      "momentum_score": 21.0,
+      "weighted_change_pct": -3.36,
+      "turnover_usd": 93996345.08
+    },
+    {
+      "sector": "鋼鐵",
+      "momentum_score": 20.5,
+      "weighted_change_pct": -2.41,
+      "turnover_usd": 838078156.96
+    },
+    {
+      "sector": "風電",
+      "momentum_score": 20.3,
+      "weighted_change_pct": -2.01,
+      "turnover_usd": 2570030111.75
+    },
+    {
+      "sector": "生技新藥",
+      "momentum_score": 20.0,
+      "weighted_change_pct": -1.43,
+      "turnover_usd": 2630509264.69
+    },
+    {
+      "sector": "零售通路",
+      "momentum_score": 17.8,
+      "weighted_change_pct": 0.22,
+      "turnover_usd": 693787661.16
+    },
+    {
+      "sector": "遊戲與數位內容",
+      "momentum_score": 17.7,
+      "weighted_change_pct": -1.34,
+      "turnover_usd": 987440715.38
+    },
+    {
+      "sector": "網通設備",
+      "momentum_score": 17.5,
+      "weighted_change_pct": -2.58,
+      "turnover_usd": 2351755299.18
+    },
+    {
+      "sector": "紡織",
+      "momentum_score": 16.3,
+      "weighted_change_pct": 1.24,
+      "turnover_usd": 10365002.47
+    },
+    {
+      "sector": "AI伺服器與雲端基建",
+      "momentum_score": 15.3,
+      "weighted_change_pct": 2.29,
+      "turnover_usd": 9597027992.91
+    },
+    {
+      "sector": "PCB印刷電路板",
+      "momentum_score": 15.2,
+      "weighted_change_pct": 0.24,
+      "turnover_usd": 1404542523.28
+    },
+    {
+      "sector": "半導體材料",
+      "momentum_score": 14.3,
+      "weighted_change_pct": -1.61,
+      "turnover_usd": 480347249.42
+    },
+    {
+      "sector": "水泥",
+      "momentum_score": 13.7,
+      "weighted_change_pct": 0.15,
+      "turnover_usd": 88323577.28
+    },
+    {
+      "sector": "車用電子",
+      "momentum_score": 13.5,
+      "weighted_change_pct": -1.69,
+      "turnover_usd": 1109761471.61
+    },
+    {
+      "sector": "光通訊與光模組",
+      "momentum_score": 13.3,
+      "weighted_change_pct": 1.63,
+      "turnover_usd": 2704933461.5
+    },
+    {
+      "sector": "連接器",
+      "momentum_score": 13.2,
+      "weighted_change_pct": -1.39,
+      "turnover_usd": 832760435.88
+    },
+    {
+      "sector": "食品",
+      "momentum_score": 12.3,
+      "weighted_change_pct": -0.89,
+      "turnover_usd": 37497640.0
+    },
+    {
+      "sector": "半導體設備",
+      "momentum_score": 8.7,
+      "weighted_change_pct": 0.91,
+      "turnover_usd": 6520793777.81
+    },
+    {
+      "sector": "太陽能",
+      "momentum_score": 8.3,
+      "weighted_change_pct": -0.87,
+      "turnover_usd": 451280967.7
+    },
+    {
+      "sector": "醫療器材",
+      "momentum_score": 6.9,
+      "weighted_change_pct": -0.37,
+      "turnover_usd": 660018857.1
     },
     {
       "sector": "筆電代工",
-      "momentum_score": 3.9,
-      "weighted_change_pct": 1.14,
-      "turnover_usd": 485323030.96
+      "momentum_score": 6.8,
+      "weighted_change_pct": -0.93,
+      "turnover_usd": 450232960.74
+    },
+    {
+      "sector": "先進封裝",
+      "momentum_score": 6.5,
+      "weighted_change_pct": -0.78,
+      "turnover_usd": 1617619207.79
+    },
+    {
+      "sector": "IC設計",
+      "momentum_score": 6.3,
+      "weighted_change_pct": 0.32,
+      "turnover_usd": 28083774557.15
+    },
+    {
+      "sector": "面板顯示器",
+      "momentum_score": 4.2,
+      "weighted_change_pct": -0.38,
+      "turnover_usd": 1422493797.91
+    },
+    {
+      "sector": "電源供應器",
+      "momentum_score": 1.0,
+      "weighted_change_pct": 0.32,
+      "turnover_usd": 814228200.86
     }
   ],
   "market_momentum": {
     "TW": [
       {
-        "sector": "LED",
-        "momentum_score": 71.5,
-        "weighted_change_pct": -8.38,
-        "turnover_usd": 425509489.56
+        "sector": "散裝航運",
+        "momentum_score": 98.1,
+        "weighted_change_pct": 9.09,
+        "turnover_usd": 376856913.96
       },
       {
         "sector": "貨櫃航運",
-        "momentum_score": 69.1,
-        "weighted_change_pct": 3.34,
-        "turnover_usd": 362703631.26
+        "momentum_score": 75.3,
+        "weighted_change_pct": 4.59,
+        "turnover_usd": 661338748.1
       },
       {
-        "sector": "塑化",
-        "momentum_score": 39.8,
-        "weighted_change_pct": -6.01,
-        "turnover_usd": 461181558.23
-      },
-      {
-        "sector": "記憶體",
-        "momentum_score": 39.0,
-        "weighted_change_pct": -5.99,
-        "turnover_usd": 1078783952.52
-      },
-      {
-        "sector": "散裝航運",
-        "momentum_score": 32.8,
-        "weighted_change_pct": 1.38,
-        "turnover_usd": 147944847.11
-      },
-      {
-        "sector": "網通設備",
-        "momentum_score": 32.1,
-        "weighted_change_pct": -4.12,
-        "turnover_usd": 278253936.73
-      },
-      {
-        "sector": "面板顯示器",
-        "momentum_score": 30.4,
-        "weighted_change_pct": -4.35,
-        "turnover_usd": 436342993.68
-      },
-      {
-        "sector": "紡織",
-        "momentum_score": 30.4,
-        "weighted_change_pct": -2.47,
-        "turnover_usd": 25961727.04
-      },
-      {
-        "sector": "被動元件",
-        "momentum_score": 30.3,
-        "weighted_change_pct": 1.72,
-        "turnover_usd": 1415066257.19
-      },
-      {
-        "sector": "半導體材料",
-        "momentum_score": 29.9,
-        "weighted_change_pct": -3.39,
-        "turnover_usd": 80950726.61
-      },
-      {
-        "sector": "手機組裝/蘋果供應鏈",
-        "momentum_score": 28.5,
-        "weighted_change_pct": 2.94,
-        "turnover_usd": 884173090.54
-      },
-      {
-        "sector": "IC載板",
-        "momentum_score": 28.1,
-        "weighted_change_pct": -2.86,
-        "turnover_usd": 1372549591.04
-      },
-      {
-        "sector": "電信",
-        "momentum_score": 25.1,
-        "weighted_change_pct": 1.54,
-        "turnover_usd": 124304599.57
-      },
-      {
-        "sector": "工業電腦",
-        "momentum_score": 25.0,
-        "weighted_change_pct": 3.03,
-        "turnover_usd": 145471153.28
-      },
-      {
-        "sector": "儲能",
-        "momentum_score": 24.5,
-        "weighted_change_pct": -3.02,
-        "turnover_usd": 632354469.3
-      },
-      {
-        "sector": "半導體設備",
-        "momentum_score": 23.1,
-        "weighted_change_pct": 0.57,
-        "turnover_usd": 31477449.24
-      },
-      {
-        "sector": "電源供應器",
-        "momentum_score": 21.5,
-        "weighted_change_pct": -3.02,
-        "turnover_usd": 633536176.45
-      },
-      {
-        "sector": "風電",
-        "momentum_score": 21.4,
-        "weighted_change_pct": -1.49,
-        "turnover_usd": 7159398.74
-      },
-      {
-        "sector": "車用電子",
-        "momentum_score": 20.7,
-        "weighted_change_pct": -2.8,
-        "turnover_usd": 768985878.02
-      },
-      {
-        "sector": "連接器",
-        "momentum_score": 19.7,
-        "weighted_change_pct": 1.86,
-        "turnover_usd": 4836033.81
-      },
-      {
-        "sector": "食品",
-        "momentum_score": 18.9,
-        "weighted_change_pct": 1.7,
-        "turnover_usd": 41069879.82
-      },
-      {
-        "sector": "散熱液冷",
-        "momentum_score": 17.8,
-        "weighted_change_pct": 2.42,
-        "turnover_usd": 410337568.46
-      },
-      {
-        "sector": "晶圓代工",
-        "momentum_score": 16.3,
-        "weighted_change_pct": -2.07,
-        "turnover_usd": 2236934387.04
-      },
-      {
-        "sector": "PCB印刷電路板",
-        "momentum_score": 15.7,
-        "weighted_change_pct": -1.65,
-        "turnover_usd": 154777008.7
-      },
-      {
-        "sector": "先進封裝",
-        "momentum_score": 15.0,
-        "weighted_change_pct": -1.72,
-        "turnover_usd": 475843013.26
-      },
-      {
-        "sector": "零售通路",
-        "momentum_score": 14.1,
-        "weighted_change_pct": 1.62,
-        "turnover_usd": 17811113.86
-      },
-      {
-        "sector": "電動車供應鏈",
-        "momentum_score": 14.0,
-        "weighted_change_pct": -1.77,
-        "turnover_usd": 137865566.74
-      },
-      {
-        "sector": "遊戲與數位內容",
-        "momentum_score": 12.5,
-        "weighted_change_pct": 0.94,
-        "turnover_usd": 50929489.32
-      },
-      {
-        "sector": "太陽能",
-        "momentum_score": 9.5,
-        "weighted_change_pct": -1.76,
-        "turnover_usd": 3376201.56
-      },
-      {
-        "sector": "IC設計",
-        "momentum_score": 9.3,
-        "weighted_change_pct": -0.4,
-        "turnover_usd": 822524326.1
-      },
-      {
-        "sector": "水泥",
-        "momentum_score": 8.2,
-        "weighted_change_pct": 0.35,
-        "turnover_usd": 25106267.29
-      },
-      {
-        "sector": "生技新藥",
-        "momentum_score": 7.9,
-        "weighted_change_pct": 1.32,
-        "turnover_usd": 4874103.29
-      },
-      {
-        "sector": "筆電代工",
-        "momentum_score": 7.5,
-        "weighted_change_pct": 1.11,
-        "turnover_usd": 199459699.7
+        "sector": "LED",
+        "momentum_score": 43.4,
+        "weighted_change_pct": 5.04,
+        "turnover_usd": 463331806.78
       },
       {
         "sector": "金融",
-        "momentum_score": 6.7,
-        "weighted_change_pct": -0.83,
-        "turnover_usd": 83562586.99
+        "momentum_score": 39.2,
+        "weighted_change_pct": 4.14,
+        "turnover_usd": 227591069.48
       },
       {
-        "sector": "鋼鐵",
-        "momentum_score": 5.8,
-        "weighted_change_pct": 0.36,
-        "turnover_usd": 46553895.63
+        "sector": "IC載板",
+        "momentum_score": 36.1,
+        "weighted_change_pct": -4.89,
+        "turnover_usd": 1202686801.75
       },
       {
-        "sector": "航空",
-        "momentum_score": 4.8,
-        "weighted_change_pct": -0.83,
-        "turnover_usd": 38183767.69
+        "sector": "PCB印刷電路板",
+        "momentum_score": 35.8,
+        "weighted_change_pct": -3.45,
+        "turnover_usd": 294262843.64
       },
       {
-        "sector": "醫療器材",
-        "momentum_score": 4.3,
-        "weighted_change_pct": -0.21,
-        "turnover_usd": 293021.07
+        "sector": "遊戲與數位內容",
+        "momentum_score": 31.6,
+        "weighted_change_pct": -3.42,
+        "turnover_usd": 85797030.2
       },
       {
-        "sector": "重電與電網",
-        "momentum_score": 3.2,
-        "weighted_change_pct": 0.22,
-        "turnover_usd": 25370475.56
+        "sector": "記憶體",
+        "momentum_score": 27.1,
+        "weighted_change_pct": 2.8,
+        "turnover_usd": 1365089793.68
+      },
+      {
+        "sector": "散熱液冷",
+        "momentum_score": 23.4,
+        "weighted_change_pct": -3.8,
+        "turnover_usd": 262215861.33
+      },
+      {
+        "sector": "塑化",
+        "momentum_score": 21.6,
+        "weighted_change_pct": 3.18,
+        "turnover_usd": 364739595.66
+      },
+      {
+        "sector": "工業電腦",
+        "momentum_score": 21.4,
+        "weighted_change_pct": -3.36,
+        "turnover_usd": 93996345.08
+      },
+      {
+        "sector": "網通設備",
+        "momentum_score": 21.3,
+        "weighted_change_pct": -3.1,
+        "turnover_usd": 195400702.43
+      },
+      {
+        "sector": "零售通路",
+        "momentum_score": 19.2,
+        "weighted_change_pct": 1.59,
+        "turnover_usd": 38785329.81
+      },
+      {
+        "sector": "連接器",
+        "momentum_score": 17.7,
+        "weighted_change_pct": 2.46,
+        "turnover_usd": 3317629.57
+      },
+      {
+        "sector": "IC設計",
+        "momentum_score": 15.7,
+        "weighted_change_pct": 2.37,
+        "turnover_usd": 738183405.8
+      },
+      {
+        "sector": "水泥",
+        "momentum_score": 15.7,
+        "weighted_change_pct": 0.41,
+        "turnover_usd": 45494269.45
+      },
+      {
+        "sector": "手機組裝/蘋果供應鏈",
+        "momentum_score": 15.1,
+        "weighted_change_pct": 1.21,
+        "turnover_usd": 799170929.62
+      },
+      {
+        "sector": "被動元件",
+        "momentum_score": 14.9,
+        "weighted_change_pct": -1.78,
+        "turnover_usd": 563958838.62
+      },
+      {
+        "sector": "紡織",
+        "momentum_score": 14.8,
+        "weighted_change_pct": 1.24,
+        "turnover_usd": 10365002.47
+      },
+      {
+        "sector": "太陽能",
+        "momentum_score": 14.7,
+        "weighted_change_pct": 1.76,
+        "turnover_usd": 4189541.53
+      },
+      {
+        "sector": "生技新藥",
+        "momentum_score": 13.3,
+        "weighted_change_pct": 0.75,
+        "turnover_usd": 10808345.13
+      },
+      {
+        "sector": "半導體材料",
+        "momentum_score": 12.7,
+        "weighted_change_pct": 0.74,
+        "turnover_usd": 67562734.13
+      },
+      {
+        "sector": "電動車供應鏈",
+        "momentum_score": 12.7,
+        "weighted_change_pct": 1.11,
+        "turnover_usd": 248499306.34
       },
       {
         "sector": "光通訊與光模組",
-        "momentum_score": 3.0,
-        "weighted_change_pct": -0.34,
-        "turnover_usd": 36519810.99
+        "momentum_score": 12.2,
+        "weighted_change_pct": -1.64,
+        "turnover_usd": 37350871.6
+      },
+      {
+        "sector": "食品",
+        "momentum_score": 11.4,
+        "weighted_change_pct": -0.89,
+        "turnover_usd": 37497640.0
+      },
+      {
+        "sector": "半導體設備",
+        "momentum_score": 11.1,
+        "weighted_change_pct": -1.26,
+        "turnover_usd": 12347825.66
+      },
+      {
+        "sector": "航空",
+        "momentum_score": 11.0,
+        "weighted_change_pct": 1.22,
+        "turnover_usd": 53322554.93
+      },
+      {
+        "sector": "風電",
+        "momentum_score": 10.5,
+        "weighted_change_pct": 0.99,
+        "turnover_usd": 4307525.81
+      },
+      {
+        "sector": "晶圓代工",
+        "momentum_score": 10.2,
+        "weighted_change_pct": 1.42,
+        "turnover_usd": 1763279633.65
+      },
+      {
+        "sector": "醫療器材",
+        "momentum_score": 10.0,
+        "weighted_change_pct": 1.45,
+        "turnover_usd": 209060.48
+      },
+      {
+        "sector": "車用電子",
+        "momentum_score": 8.9,
+        "weighted_change_pct": 0.7,
+        "turnover_usd": 488423583.66
+      },
+      {
+        "sector": "重電與電網",
+        "momentum_score": 8.7,
+        "weighted_change_pct": -0.37,
+        "turnover_usd": 33111260.23
       },
       {
         "sector": "AI伺服器與雲端基建",
-        "momentum_score": 1.7,
-        "weighted_change_pct": -0.23,
-        "turnover_usd": 595071172.86
+        "momentum_score": 8.6,
+        "weighted_change_pct": -1.4,
+        "turnover_usd": 435972592.04
+      },
+      {
+        "sector": "筆電代工",
+        "momentum_score": 5.5,
+        "weighted_change_pct": -0.87,
+        "turnover_usd": 113824077.57
+      },
+      {
+        "sector": "電信",
+        "momentum_score": 5.3,
+        "weighted_change_pct": 0.0,
+        "turnover_usd": 70534591.65
+      },
+      {
+        "sector": "先進封裝",
+        "momentum_score": 4.4,
+        "weighted_change_pct": -0.49,
+        "turnover_usd": 282191481.66
+      },
+      {
+        "sector": "鋼鐵",
+        "momentum_score": 4.0,
+        "weighted_change_pct": 0.12,
+        "turnover_usd": 34049427.07
+      },
+      {
+        "sector": "電源供應器",
+        "momentum_score": 1.6,
+        "weighted_change_pct": 0.28,
+        "turnover_usd": 241364951.54
+      },
+      {
+        "sector": "儲能",
+        "momentum_score": 1.6,
+        "weighted_change_pct": 0.29,
+        "turnover_usd": 240615342.5
+      },
+      {
+        "sector": "面板顯示器",
+        "momentum_score": 0.8,
+        "weighted_change_pct": -0.06,
+        "turnover_usd": 224806794.14
       }
     ],
     "CN": [
       {
-        "sector": "面板顯示器",
-        "momentum_score": 89.3,
-        "weighted_change_pct": -7.11,
-        "turnover_usd": 2369906348.99
-      },
-      {
-        "sector": "散熱液冷",
-        "momentum_score": 87.5,
-        "weighted_change_pct": -7.1,
-        "turnover_usd": 510061892.04
-      },
-      {
-        "sector": "手機組裝/蘋果供應鏈",
-        "momentum_score": 77.9,
-        "weighted_change_pct": -7.34,
-        "turnover_usd": 1261777401.82
-      },
-      {
-        "sector": "先進封裝",
-        "momentum_score": 72.3,
-        "weighted_change_pct": -8.99,
-        "turnover_usd": 1843142750.22
-      },
-      {
         "sector": "PCB印刷電路板",
-        "momentum_score": 64.4,
-        "weighted_change_pct": -8.24,
-        "turnover_usd": 882370655.45
+        "momentum_score": 99.1,
+        "weighted_change_pct": 6.03,
+        "turnover_usd": 900586830.68
       },
       {
         "sector": "塑化",
-        "momentum_score": 58.1,
-        "weighted_change_pct": 1.98,
-        "turnover_usd": 247461178.17
+        "momentum_score": 56.4,
+        "weighted_change_pct": -0.78,
+        "turnover_usd": 159580230.63
       },
       {
-        "sector": "晶圓代工",
-        "momentum_score": 56.2,
-        "weighted_change_pct": -5.16,
-        "turnover_usd": 1269811853.66
-      },
-      {
-        "sector": "金融",
-        "momentum_score": 38.8,
-        "weighted_change_pct": 1.69,
-        "turnover_usd": 537455814.51
+        "sector": "手機組裝/蘋果供應鏈",
+        "momentum_score": 50.3,
+        "weighted_change_pct": 2.46,
+        "turnover_usd": 803620778.58
       },
       {
         "sector": "鋼鐵",
-        "momentum_score": 34.5,
-        "weighted_change_pct": 1.2,
-        "turnover_usd": 98617692.11
-      },
-      {
-        "sector": "太陽能",
-        "momentum_score": 30.7,
-        "weighted_change_pct": -3.04,
-        "turnover_usd": 182695267.0
+        "momentum_score": 43.0,
+        "weighted_change_pct": -1.36,
+        "turnover_usd": 68479937.5
       },
       {
         "sector": "儲能",
-        "momentum_score": 16.4,
-        "weighted_change_pct": -1.83,
-        "turnover_usd": 1225908160.27
+        "momentum_score": 40.0,
+        "weighted_change_pct": 1.6,
+        "turnover_usd": 1190360722.88
+      },
+      {
+        "sector": "面板顯示器",
+        "momentum_score": 38.2,
+        "weighted_change_pct": 1.69,
+        "turnover_usd": 1172490597.29
       },
       {
         "sector": "水泥",
-        "momentum_score": 7.6,
-        "weighted_change_pct": 0.17,
-        "turnover_usd": 51773012.76
+        "momentum_score": 24.5,
+        "weighted_change_pct": -1.14,
+        "turnover_usd": 42829307.83
+      },
+      {
+        "sector": "先進封裝",
+        "momentum_score": 23.0,
+        "weighted_change_pct": -1.14,
+        "turnover_usd": 1134357799.73
+      },
+      {
+        "sector": "散熱液冷",
+        "momentum_score": 20.0,
+        "weighted_change_pct": 1.58,
+        "turnover_usd": 204098514.14
+      },
+      {
+        "sector": "金融",
+        "momentum_score": 15.4,
+        "weighted_change_pct": -0.13,
+        "turnover_usd": 308188284.56
+      },
+      {
+        "sector": "晶圓代工",
+        "momentum_score": 4.5,
+        "weighted_change_pct": -0.56,
+        "turnover_usd": 567686451.74
+      },
+      {
+        "sector": "太陽能",
+        "momentum_score": 1.8,
+        "weighted_change_pct": 0.08,
+        "turnover_usd": 100635320.12
       },
       {
         "sector": "電動車供應鏈",
-        "momentum_score": 4.5,
-        "weighted_change_pct": -0.97,
-        "turnover_usd": 290016095.54
+        "momentum_score": 0.9,
+        "weighted_change_pct": -0.01,
+        "turnover_usd": 240809116.77
       }
     ],
     "US": [
       {
-        "sector": "光通訊與光模組",
-        "momentum_score": 71.4,
-        "weighted_change_pct": -13.7,
-        "turnover_usd": 4880748376.02
-      },
-      {
-        "sector": "半導體材料",
-        "momentum_score": 58.6,
-        "weighted_change_pct": -7.86,
-        "turnover_usd": 622448411.7
-      },
-      {
-        "sector": "PCB印刷電路板",
-        "momentum_score": 57.3,
-        "weighted_change_pct": -10.83,
-        "turnover_usd": 460915711.64
-      },
-      {
-        "sector": "貨櫃航運",
-        "momentum_score": 53.0,
-        "weighted_change_pct": -1.11,
-        "turnover_usd": 98441496.21
-      },
-      {
-        "sector": "先進封裝",
-        "momentum_score": 47.1,
-        "weighted_change_pct": -10.54,
-        "turnover_usd": 285518976.79
-      },
-      {
-        "sector": "電源供應器",
-        "momentum_score": 46.2,
-        "weighted_change_pct": -5.85,
-        "turnover_usd": 1525557935.46
-      },
-      {
-        "sector": "重電與電網",
-        "momentum_score": 40.8,
-        "weighted_change_pct": -6.9,
-        "turnover_usd": 2834281477.66
-      },
-      {
-        "sector": "風電",
-        "momentum_score": 40.8,
-        "weighted_change_pct": -6.9,
-        "turnover_usd": 2834281477.66
-      },
-      {
-        "sector": "連接器",
-        "momentum_score": 40.2,
-        "weighted_change_pct": -6.61,
-        "turnover_usd": 1202727016.2
-      },
-      {
-        "sector": "晶圓代工",
-        "momentum_score": 37.1,
-        "weighted_change_pct": -6.57,
-        "turnover_usd": 11793231252.78
-      },
-      {
-        "sector": "記憶體",
-        "momentum_score": 34.6,
-        "weighted_change_pct": -7.02,
-        "turnover_usd": 35095992924.32
-      },
-      {
-        "sector": "散熱液冷",
-        "momentum_score": 34.2,
-        "weighted_change_pct": -6.8,
-        "turnover_usd": 1521890661.72
+        "sector": "生技新藥",
+        "momentum_score": 82.1,
+        "weighted_change_pct": -3.64,
+        "turnover_usd": 2454278095.35
       },
       {
         "sector": "儲能",
-        "momentum_score": 28.8,
-        "weighted_change_pct": -6.97,
-        "turnover_usd": 69469525.0
-      },
-      {
-        "sector": "半導體設備",
-        "momentum_score": 28.4,
-        "weighted_change_pct": -4.23,
-        "turnover_usd": 7777422011.28
-      },
-      {
-        "sector": "散裝航運",
-        "momentum_score": 28.0,
-        "weighted_change_pct": 0.31,
-        "turnover_usd": 2217919.96
-      },
-      {
-        "sector": "鋼鐵",
-        "momentum_score": 25.9,
-        "weighted_change_pct": -3.11,
-        "turnover_usd": 397236087.67
-      },
-      {
-        "sector": "IC設計",
-        "momentum_score": 23.0,
-        "weighted_change_pct": -2.57,
-        "turnover_usd": 31355107234.5
-      },
-      {
-        "sector": "被動元件",
-        "momentum_score": 22.1,
-        "weighted_change_pct": -5.79,
-        "turnover_usd": 107652833.47
-      },
-      {
-        "sector": "車用電子",
-        "momentum_score": 21.9,
-        "weighted_change_pct": -1.79,
-        "turnover_usd": 1141702899.8
-      },
-      {
-        "sector": "網通設備",
-        "momentum_score": 21.6,
-        "weighted_change_pct": -2.5,
-        "turnover_usd": 3955723694.15
-      },
-      {
-        "sector": "手機組裝/蘋果供應鏈",
-        "momentum_score": 18.2,
-        "weighted_change_pct": 1.45,
-        "turnover_usd": 16563197669.78
-      },
-      {
-        "sector": "航空",
-        "momentum_score": 17.5,
-        "weighted_change_pct": -2.16,
-        "turnover_usd": 394691335.95
-      },
-      {
-        "sector": "醫療器材",
-        "momentum_score": 17.3,
-        "weighted_change_pct": 1.64,
-        "turnover_usd": 625281866.13
-      },
-      {
-        "sector": "AI伺服器與雲端基建",
-        "momentum_score": 16.6,
-        "weighted_change_pct": -2.3,
-        "turnover_usd": 4546778529.28
-      },
-      {
-        "sector": "遊戲與數位內容",
-        "momentum_score": 9.8,
-        "weighted_change_pct": 0.33,
-        "turnover_usd": 462474948.36
-      },
-      {
-        "sector": "生技新藥",
-        "momentum_score": 8.8,
-        "weighted_change_pct": 0.36,
-        "turnover_usd": 1044237423.98
-      },
-      {
-        "sector": "金融",
-        "momentum_score": 8.8,
-        "weighted_change_pct": 0.45,
-        "turnover_usd": 1468522899.87
-      },
-      {
-        "sector": "零售通路",
-        "momentum_score": 8.7,
-        "weighted_change_pct": -0.47,
-        "turnover_usd": 334117400.47
-      },
-      {
-        "sector": "筆電代工",
-        "momentum_score": 7.7,
-        "weighted_change_pct": 1.9,
-        "turnover_usd": 285863331.26
-      },
-      {
-        "sector": "太陽能",
-        "momentum_score": 6.5,
-        "weighted_change_pct": 0.99,
-        "turnover_usd": 418481010.55
+        "momentum_score": 70.7,
+        "weighted_change_pct": -5.63,
+        "turnover_usd": 97258073.93
       },
       {
         "sector": "塑化",
-        "momentum_score": 6.0,
-        "weighted_change_pct": -0.48,
-        "turnover_usd": 229804804.93
+        "momentum_score": 69.1,
+        "weighted_change_pct": 3.62,
+        "turnover_usd": 472582201.92
+      },
+      {
+        "sector": "鋼鐵",
+        "momentum_score": 63.4,
+        "weighted_change_pct": -3.32,
+        "turnover_usd": 545336486.31
+      },
+      {
+        "sector": "零售通路",
+        "momentum_score": 63.3,
+        "weighted_change_pct": -2.36,
+        "turnover_usd": 655002331.35
+      },
+      {
+        "sector": "航空",
+        "momentum_score": 49.9,
+        "weighted_change_pct": -2.68,
+        "turnover_usd": 499824050.95
+      },
+      {
+        "sector": "重電與電網",
+        "momentum_score": 41.4,
+        "weighted_change_pct": -2.17,
+        "turnover_usd": 2565722585.94
+      },
+      {
+        "sector": "風電",
+        "momentum_score": 41.4,
+        "weighted_change_pct": -2.17,
+        "turnover_usd": 2565722585.94
+      },
+      {
+        "sector": "記憶體",
+        "momentum_score": 40.2,
+        "weighted_change_pct": 3.97,
+        "turnover_usd": 24411838578.19
+      },
+      {
+        "sector": "太陽能",
+        "momentum_score": 38.1,
+        "weighted_change_pct": -3.75,
+        "turnover_usd": 346456106.05
+      },
+      {
+        "sector": "光通訊與光模組",
+        "momentum_score": 35.0,
+        "weighted_change_pct": 3.08,
+        "turnover_usd": 2667582589.89
+      },
+      {
+        "sector": "遊戲與數位內容",
+        "momentum_score": 33.3,
+        "weighted_change_pct": 1.31,
+        "turnover_usd": 587022645.08
+      },
+      {
+        "sector": "醫療器材",
+        "momentum_score": 32.4,
+        "weighted_change_pct": -1.94,
+        "turnover_usd": 585994259.38
+      },
+      {
+        "sector": "散裝航運",
+        "momentum_score": 28.4,
+        "weighted_change_pct": -0.68,
+        "turnover_usd": 1936000.06
+      },
+      {
+        "sector": "連接器",
+        "momentum_score": 27.8,
+        "weighted_change_pct": -1.88,
+        "turnover_usd": 829442806.31
+      },
+      {
+        "sector": "金融",
+        "momentum_score": 26.9,
+        "weighted_change_pct": -0.92,
+        "turnover_usd": 1748171393.42
+      },
+      {
+        "sector": "貨櫃航運",
+        "momentum_score": 25.9,
+        "weighted_change_pct": -0.91,
+        "turnover_usd": 53388411.7
+      },
+      {
+        "sector": "手機組裝/蘋果供應鏈",
+        "momentum_score": 25.7,
+        "weighted_change_pct": -1.75,
+        "turnover_usd": 12730644130.79
       },
       {
         "sector": "電動車供應鏈",
-        "momentum_score": 5.2,
+        "momentum_score": 25.6,
+        "weighted_change_pct": -1.71,
+        "turnover_usd": 10593903551.88
+      },
+      {
+        "sector": "筆電代工",
+        "momentum_score": 24.7,
+        "weighted_change_pct": -1.57,
+        "turnover_usd": 336408883.16
+      },
+      {
+        "sector": "散熱液冷",
+        "momentum_score": 23.9,
+        "weighted_change_pct": 1.39,
+        "turnover_usd": 1380759976.48
+      },
+      {
+        "sector": "PCB印刷電路板",
+        "momentum_score": 17.8,
+        "weighted_change_pct": -1.72,
+        "turnover_usd": 209692848.96
+      },
+      {
+        "sector": "IC設計",
+        "momentum_score": 15.5,
+        "weighted_change_pct": -0.13,
+        "turnover_usd": 27179418200.2
+      },
+      {
+        "sector": "晶圓代工",
+        "momentum_score": 14.2,
         "weighted_change_pct": -0.72,
-        "turnover_usd": 9430507078.31
+        "turnover_usd": 7867680653.45
+      },
+      {
+        "sector": "AI伺服器與雲端基建",
+        "momentum_score": 13.2,
+        "weighted_change_pct": -0.41,
+        "turnover_usd": 3445450867.58
+      },
+      {
+        "sector": "半導體設備",
+        "momentum_score": 13.0,
+        "weighted_change_pct": 0.5,
+        "turnover_usd": 5384108566.34
+      },
+      {
+        "sector": "網通設備",
+        "momentum_score": 11.6,
+        "weighted_change_pct": -1.08,
+        "turnover_usd": 2156354596.76
+      },
+      {
+        "sector": "車用電子",
+        "momentum_score": 11.6,
+        "weighted_change_pct": -1.35,
+        "turnover_usd": 473699767.59
+      },
+      {
+        "sector": "被動元件",
+        "momentum_score": 9.7,
+        "weighted_change_pct": -0.41,
+        "turnover_usd": 100649642.76
+      },
+      {
+        "sector": "電源供應器",
+        "momentum_score": 8.3,
+        "weighted_change_pct": 0.8,
+        "turnover_usd": 572863249.33
+      },
+      {
+        "sector": "先進封裝",
+        "momentum_score": 5.6,
+        "weighted_change_pct": -0.06,
+        "turnover_usd": 201069926.41
       },
       {
         "sector": "電信",
-        "momentum_score": 2.6,
-        "weighted_change_pct": 1.0,
-        "turnover_usd": 697825615.16
+        "momentum_score": 4.9,
+        "weighted_change_pct": -0.34,
+        "turnover_usd": 617078694.77
+      },
+      {
+        "sector": "半導體材料",
+        "momentum_score": 3.7,
+        "weighted_change_pct": 0.24,
+        "turnover_usd": 214963576.26
       }
     ],
     "JP": [
       {
-        "sector": "IC設計",
-        "momentum_score": 73.6,
-        "weighted_change_pct": -9.06,
-        "turnover_usd": 419307313.4
-      },
-      {
-        "sector": "醫療器材",
-        "momentum_score": 72.6,
-        "weighted_change_pct": -4.11,
-        "turnover_usd": 140135914.31
-      },
-      {
-        "sector": "生技新藥",
-        "momentum_score": 46.2,
-        "weighted_change_pct": 1.18,
-        "turnover_usd": 245959668.29
-      },
-      {
-        "sector": "重電與電網",
-        "momentum_score": 43.3,
-        "weighted_change_pct": -5.24,
-        "turnover_usd": 427307053.94
-      },
-      {
-        "sector": "金融",
-        "momentum_score": 43.0,
-        "weighted_change_pct": -4.35,
-        "turnover_usd": 1093924067.43
-      },
-      {
-        "sector": "電動車供應鏈",
-        "momentum_score": 39.1,
-        "weighted_change_pct": -4.61,
-        "turnover_usd": 275499653.38
-      },
-      {
-        "sector": "儲能",
-        "momentum_score": 39.1,
-        "weighted_change_pct": -4.61,
-        "turnover_usd": 275499653.38
-      },
-      {
-        "sector": "散熱液冷",
-        "momentum_score": 37.5,
-        "weighted_change_pct": -6.28,
-        "turnover_usd": 71854894.32
-      },
-      {
-        "sector": "車用電子",
-        "momentum_score": 28.6,
-        "weighted_change_pct": -2.38,
-        "turnover_usd": 114096525.79
-      },
-      {
         "sector": "貨櫃航運",
-        "momentum_score": 28.2,
-        "weighted_change_pct": -0.75,
-        "turnover_usd": 168072025.06
-      },
-      {
-        "sector": "半導體設備",
-        "momentum_score": 21.5,
-        "weighted_change_pct": -3.39,
-        "turnover_usd": 1785226080.1
-      },
-      {
-        "sector": "被動元件",
-        "momentum_score": 21.3,
-        "weighted_change_pct": -2.2,
-        "turnover_usd": 1275838279.28
-      },
-      {
-        "sector": "半導體材料",
-        "momentum_score": 17.1,
-        "weighted_change_pct": -2.44,
-        "turnover_usd": 259124581.33
-      },
-      {
-        "sector": "遊戲與數位內容",
-        "momentum_score": 14.0,
-        "weighted_change_pct": -2.09,
-        "turnover_usd": 492351087.35
-      },
-      {
-        "sector": "鋼鐵",
-        "momentum_score": 12.4,
-        "weighted_change_pct": -2.26,
-        "turnover_usd": 156360821.63
-      },
-      {
-        "sector": "面板顯示器",
-        "momentum_score": 7.3,
-        "weighted_change_pct": -0.02,
-        "turnover_usd": 13324206.35
-      },
-      {
-        "sector": "航空",
-        "momentum_score": 6.8,
-        "weighted_change_pct": -0.42,
-        "turnover_usd": 42734802.6
+        "momentum_score": 100.0,
+        "weighted_change_pct": 4.5,
+        "turnover_usd": 248304043.48
       },
       {
         "sector": "電信",
-        "momentum_score": 5.8,
-        "weighted_change_pct": -0.62,
-        "turnover_usd": 202824903.69
+        "momentum_score": 69.6,
+        "weighted_change_pct": 2.91,
+        "turnover_usd": 387047363.44
+      },
+      {
+        "sector": "散熱液冷",
+        "momentum_score": 32.9,
+        "weighted_change_pct": 1.83,
+        "turnover_usd": 73849780.52
+      },
+      {
+        "sector": "重電與電網",
+        "momentum_score": 29.1,
+        "weighted_change_pct": -1.27,
+        "turnover_usd": 349246701.85
       },
       {
         "sector": "AI伺服器與雲端基建",
-        "momentum_score": 4.2,
-        "weighted_change_pct": 0.17,
-        "turnover_usd": 160359000.92
+        "momentum_score": 28.8,
+        "weighted_change_pct": -2.59,
+        "turnover_usd": 95046861.65
+      },
+      {
+        "sector": "半導體材料",
+        "momentum_score": 25.5,
+        "weighted_change_pct": -1.79,
+        "turnover_usd": 197820939.03
+      },
+      {
+        "sector": "遊戲與數位內容",
+        "momentum_score": 23.9,
+        "weighted_change_pct": -2.07,
+        "turnover_usd": 305591331.38
+      },
+      {
+        "sector": "生技新藥",
+        "momentum_score": 22.5,
+        "weighted_change_pct": -1.05,
+        "turnover_usd": 115317026.33
+      },
+      {
+        "sector": "金融",
+        "momentum_score": 21.0,
+        "weighted_change_pct": 1.27,
+        "turnover_usd": 610504104.3
+      },
+      {
+        "sector": "被動元件",
+        "momentum_score": 20.1,
+        "weighted_change_pct": -1.58,
+        "turnover_usd": 688219838.11
+      },
+      {
+        "sector": "醫療器材",
+        "momentum_score": 19.3,
+        "weighted_change_pct": -0.29,
+        "turnover_usd": 73815537.23
+      },
+      {
+        "sector": "面板顯示器",
+        "momentum_score": 18.9,
+        "weighted_change_pct": 0.56,
+        "turnover_usd": 12548017.62
+      },
+      {
+        "sector": "電動車供應鏈",
+        "momentum_score": 18.1,
+        "weighted_change_pct": 0.0,
+        "turnover_usd": 240094285.65
+      },
+      {
+        "sector": "儲能",
+        "momentum_score": 18.1,
+        "weighted_change_pct": 0.0,
+        "turnover_usd": 240094285.65
+      },
+      {
+        "sector": "IC設計",
+        "momentum_score": 13.0,
+        "weighted_change_pct": -1.04,
+        "turnover_usd": 166172951.15
+      },
+      {
+        "sector": "半導體設備",
+        "momentum_score": 12.0,
+        "weighted_change_pct": 0.93,
+        "turnover_usd": 1124337385.81
+      },
+      {
+        "sector": "鋼鐵",
+        "momentum_score": 11.9,
+        "weighted_change_pct": -0.54,
+        "turnover_usd": 134956950.97
+      },
+      {
+        "sector": "航空",
+        "momentum_score": 7.6,
+        "weighted_change_pct": 0.4,
+        "turnover_usd": 27296065.53
+      },
+      {
+        "sector": "車用電子",
+        "momentum_score": 5.4,
+        "weighted_change_pct": 0.13,
+        "turnover_usd": 63870221.52
       }
     ],
     "KR": [
       {
-        "sector": "AI伺服器與雲端基建",
-        "momentum_score": 71.8,
-        "weighted_change_pct": -9.75,
-        "turnover_usd": 4543277079.85
-      },
-      {
-        "sector": "貨櫃航運",
-        "momentum_score": 70.9,
-        "weighted_change_pct": -4.19,
-        "turnover_usd": 27509746.89
-      },
-      {
-        "sector": "記憶體",
-        "momentum_score": 67.9,
-        "weighted_change_pct": -8.84,
-        "turnover_usd": 8588495042.88
-      },
-      {
-        "sector": "晶圓代工",
-        "momentum_score": 63.5,
-        "weighted_change_pct": -7.82,
-        "turnover_usd": 4045217963.03
-      },
-      {
-        "sector": "手機組裝/蘋果供應鏈",
-        "momentum_score": 63.5,
-        "weighted_change_pct": -7.82,
-        "turnover_usd": 4045217963.03
-      },
-      {
-        "sector": "遊戲與數位內容",
-        "momentum_score": 62.6,
-        "weighted_change_pct": -4.57,
-        "turnover_usd": 13312346.95
-      },
-      {
-        "sector": "被動元件",
-        "momentum_score": 45.0,
-        "weighted_change_pct": -3.68,
-        "turnover_usd": 736074521.93
-      },
-      {
-        "sector": "散熱液冷",
-        "momentum_score": 45.0,
-        "weighted_change_pct": -3.68,
-        "turnover_usd": 736074521.93
-      },
-      {
-        "sector": "金融",
-        "momentum_score": 36.6,
-        "weighted_change_pct": -1.25,
-        "turnover_usd": 108863773.71
-      },
-      {
         "sector": "電信",
-        "momentum_score": 35.0,
-        "weighted_change_pct": -1.8,
-        "turnover_usd": 111767778.87
-      },
-      {
-        "sector": "重電與電網",
-        "momentum_score": 33.8,
-        "weighted_change_pct": -4.2,
-        "turnover_usd": 53422806.35
-      },
-      {
-        "sector": "電動車供應鏈",
-        "momentum_score": 32.3,
-        "weighted_change_pct": -0.2,
-        "turnover_usd": 137810784.03
-      },
-      {
-        "sector": "儲能",
-        "momentum_score": 32.3,
-        "weighted_change_pct": -0.2,
-        "turnover_usd": 137810784.03
+        "momentum_score": 72.7,
+        "weighted_change_pct": 5.8,
+        "turnover_usd": 148211155.31
       },
       {
         "sector": "航空",
-        "momentum_score": 30.5,
-        "weighted_change_pct": -0.79,
-        "turnover_usd": 34935935.02
+        "momentum_score": 67.7,
+        "weighted_change_pct": 2.99,
+        "turnover_usd": 72777703.81
       },
       {
-        "sector": "車用電子",
-        "momentum_score": 21.7,
-        "weighted_change_pct": -1.74,
-        "turnover_usd": 72079126.78
+        "sector": "被動元件",
+        "momentum_score": 61.9,
+        "weighted_change_pct": -5.73,
+        "turnover_usd": 667644187.28
+      },
+      {
+        "sector": "散熱液冷",
+        "momentum_score": 61.9,
+        "weighted_change_pct": -5.73,
+        "turnover_usd": 667644187.28
+      },
+      {
+        "sector": "晶圓代工",
+        "momentum_score": 46.7,
+        "weighted_change_pct": 3.87,
+        "turnover_usd": 5629265877.12
+      },
+      {
+        "sector": "手機組裝/蘋果供應鏈",
+        "momentum_score": 46.7,
+        "weighted_change_pct": 3.87,
+        "turnover_usd": 5629265877.12
       },
       {
         "sector": "塑化",
-        "momentum_score": 21.7,
-        "weighted_change_pct": -1.66,
-        "turnover_usd": 22638463.82
+        "momentum_score": 45.7,
+        "weighted_change_pct": -4.36,
+        "turnover_usd": 25768031.27
+      },
+      {
+        "sector": "金融",
+        "momentum_score": 45.1,
+        "weighted_change_pct": 2.69,
+        "turnover_usd": 151136666.18
+      },
+      {
+        "sector": "重電與電網",
+        "momentum_score": 42.0,
+        "weighted_change_pct": -3.75,
+        "turnover_usd": 71266086.05
+      },
+      {
+        "sector": "電動車供應鏈",
+        "momentum_score": 39.9,
+        "weighted_change_pct": -4.3,
+        "turnover_usd": 98703669.01
+      },
+      {
+        "sector": "儲能",
+        "momentum_score": 39.9,
+        "weighted_change_pct": -4.3,
+        "turnover_usd": 98703669.01
+      },
+      {
+        "sector": "記憶體",
+        "momentum_score": 34.8,
+        "weighted_change_pct": 3.09,
+        "turnover_usd": 11249823548.77
       },
       {
         "sector": "鋼鐵",
-        "momentum_score": 17.7,
-        "weighted_change_pct": -1.39,
-        "turnover_usd": 40894625.76
+        "momentum_score": 32.3,
+        "weighted_change_pct": -2.97,
+        "turnover_usd": 55255355.11
       },
       {
-        "sector": "面板顯示器",
-        "momentum_score": 14.4,
-        "weighted_change_pct": -1.94,
-        "turnover_usd": 13869334.65
+        "sector": "貨櫃航運",
+        "momentum_score": 23.0,
+        "weighted_change_pct": 1.89,
+        "turnover_usd": 22061816.27
+      },
+      {
+        "sector": "AI伺服器與雲端基建",
+        "momentum_score": 22.9,
+        "weighted_change_pct": 2.31,
+        "turnover_usd": 5620557671.65
+      },
+      {
+        "sector": "車用電子",
+        "momentum_score": 21.2,
+        "weighted_change_pct": -2.17,
+        "turnover_usd": 83767898.83
+      },
+      {
+        "sector": "遊戲與數位內容",
+        "momentum_score": 12.1,
+        "weighted_change_pct": 1.81,
+        "turnover_usd": 9029708.73
       },
       {
         "sector": "生技新藥",
-        "momentum_score": 3.4,
-        "weighted_change_pct": 0.85,
-        "turnover_usd": 31748629.45
+        "momentum_score": 6.9,
+        "weighted_change_pct": -1.46,
+        "turnover_usd": 50105797.88
+      },
+      {
+        "sector": "面板顯示器",
+        "momentum_score": 1.1,
+        "weighted_change_pct": -1.55,
+        "turnover_usd": 12648388.85
       }
     ]
   }
