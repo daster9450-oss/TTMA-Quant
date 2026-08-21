@@ -300,75 +300,260 @@ SECTOR_MAP = {
     },
 }
 
-# 靜態代碼→名稱對照（避免逐檔呼叫 yfinance .info 造成速度緩慢 / 速率限制）
-NAME_MAP = {
+# ---------------------------------------------------------------------------
+# 板塊 ID 對照（英文 slug，供前端 sectorDict 依 sector_id 查詢四語系板塊名稱）
+# ---------------------------------------------------------------------------
+SECTOR_ID_MAP = {
+    "晶圓代工": "wafer_foundry",
+    "IC設計": "ic_design",
+    "記憶體": "memory",
+    "先進封裝": "advanced_packaging",
+    "IC載板": "ic_substrate",
+    "半導體設備": "semiconductor_equipment",
+    "半導體材料": "semiconductor_materials",
+    "被動元件": "passive_components",
+    "PCB印刷電路板": "pcb",
+    "連接器": "connectors",
+    "面板顯示器": "display_panel",
+    "LED": "led",
+    "光通訊與光模組": "optical_communication",
+    "散熱液冷": "thermal_cooling",
+    "電源供應器": "power_supply",
+    "網通設備": "networking_equipment",
+    "AI伺服器與雲端基建": "ai_server_cloud_infra",
+    "手機組裝/蘋果供應鏈": "smartphone_apple_supply_chain",
+    "筆電代工": "notebook_odm",
+    "工業電腦": "industrial_pc",
+    "遊戲與數位內容": "gaming_digital_content",
+    "電動車供應鏈": "ev_supply_chain",
+    "車用電子": "automotive_electronics",
+    "重電與電網": "heavy_electric_grid",
+    "太陽能": "solar",
+    "風電": "wind_power",
+    "儲能": "energy_storage",
+    "電信": "telecom",
+    "生技新藥": "biotech_pharma",
+    "醫療器材": "medical_devices",
+    "金融": "financials",
+    "貨櫃航運": "container_shipping",
+    "散裝航運": "dry_bulk_shipping",
+    "航空": "airlines",
+    "鋼鐵": "steel",
+    "塑化": "petrochemicals",
+    "水泥": "cement",
+    "紡織": "textiles",
+    "食品": "food",
+    "零售通路": "retail",
+}
+
+
+# ---------------------------------------------------------------------------
+# 個股多語系名稱對照（zh-TW / zh-CN / en-US / ja）
+# 靜態表為主（避免逐檔呼叫 yfinance .info 造成速度緩慢 / 速率限制）；
+# 英文與日文一律採國際金融市場／日本財經媒體通用代稱或縮寫（如 TSMC、AAPL、Hon Hai），
+# 不做生硬拼音或全名直翻。若代碼未收錄於此表，才由 get_ticker_name_i18n() 以
+# yfinance .info.get('shortName') 自動 fallback（見下方函式）。
+# ---------------------------------------------------------------------------
+NAME_I18N_MAP = {
     # --- 半導體與電子零組件 ---
-    "2330.TW": "台積電", "2303.TW": "聯電", "6770.TW": "力積電",
-    "688981.SS": "中芯國際", "INTC": "Intel", "005930.KS": "三星電子",
-    "2454.TW": "聯發科", "3034.TW": "聯詠", "NVDA": "NVIDIA", "AVGO": "博通",
-    "6723.T": "瑞薩電子",
-    "2408.TW": "南亞科", "3260.TWO": "威剛", "MU": "美光科技", "000660.KS": "SK海力士",
-    "3711.TW": "日月光投控", "6239.TW": "力成", "600584.SS": "長電科技", "AMKR": "Amkor",
-    "3037.TW": "欣興", "8046.TW": "南電",
-    "3583.TW": "辛耘", "AMAT": "應用材料", "LRCX": "科林研發",
-    "8035.T": "東京威力科創", "6146.T": "Disco",
-    "3532.TW": "台勝科", "ENTG": "Entegris", "4063.T": "信越化學",
-    "2327.TW": "國巨", "2492.TW": "華新科", "VSH": "Vishay", "6981.T": "村田製作所",
-    "009150.KS": "三星電機",
-    "2313.TW": "華通", "3044.TW": "健鼎", "002463.SZ": "滬電股份", "TTMI": "TTM Technologies",
-    "2392.TW": "正崴", "APH": "安費諾",
-    "2409.TW": "友達", "3481.TW": "群創", "000725.SZ": "京東方", "6753.T": "夏普",
-    "034220.KS": "LG Display",
-    "3081.TWO": "全新",
-    "3363.TWO": "上詮", "AAOI": "Applied Optoelectronics", "COHR": "Coherent",
-    "3017.TW": "奇鋐", "3324.TWO": "雙鴻", "002050.SZ": "三花智控", "VRT": "Vertiv",
-    "6504.T": "富士電機",
-    "2308.TW": "台達電", "6412.TW": "群電", "MPWR": "Monolithic Power",
-    "2345.TW": "智邦", "6285.TW": "啟碁", "CSCO": "思科", "ANET": "Arista Networks",
+    "2330.TW": {"zh-TW": "台積電", "zh-CN": "台积电", "en-US": "TSMC", "ja": "TSMC"},
+    "2303.TW": {"zh-TW": "聯電", "zh-CN": "联电", "en-US": "UMC", "ja": "UMC"},
+    "6770.TW": {"zh-TW": "力積電", "zh-CN": "力积电", "en-US": "PSMC", "ja": "PSMC"},
+    "688981.SS": {"zh-TW": "中芯國際", "zh-CN": "中芯国际", "en-US": "SMIC", "ja": "SMIC"},
+    "INTC": {"zh-TW": "Intel", "zh-CN": "英特尔", "en-US": "Intel", "ja": "インテル"},
+    "005930.KS": {"zh-TW": "三星電子", "zh-CN": "三星电子", "en-US": "Samsung Electronics", "ja": "サムスン電子"},
+    "2454.TW": {"zh-TW": "聯發科", "zh-CN": "联发科", "en-US": "MediaTek", "ja": "MediaTek"},
+    "3034.TW": {"zh-TW": "聯詠", "zh-CN": "联咏", "en-US": "Novatek", "ja": "Novatek"},
+    "NVDA": {"zh-TW": "NVIDIA", "zh-CN": "英伟达", "en-US": "NVIDIA", "ja": "NVIDIA"},
+    "AVGO": {"zh-TW": "博通", "zh-CN": "博通", "en-US": "Broadcom", "ja": "ブロードコム"},
+    "6723.T": {"zh-TW": "瑞薩電子", "zh-CN": "瑞萨电子", "en-US": "Renesas", "ja": "ルネサス"},
+    "2408.TW": {"zh-TW": "南亞科", "zh-CN": "南亚科", "en-US": "Nanya Tech", "ja": "Nanya Tech"},
+    "3260.TWO": {"zh-TW": "威剛", "zh-CN": "威刚", "en-US": "ADATA", "ja": "ADATA"},
+    "MU": {"zh-TW": "美光科技", "zh-CN": "美光科技", "en-US": "Micron", "ja": "マイクロン"},
+    "000660.KS": {"zh-TW": "SK海力士", "zh-CN": "SK海力士", "en-US": "SK Hynix", "ja": "SKハイニックス"},
+    "3711.TW": {"zh-TW": "日月光投控", "zh-CN": "日月光投控", "en-US": "ASE Technology", "ja": "ASEテクノロジー"},
+    "6239.TW": {"zh-TW": "力成", "zh-CN": "力成", "en-US": "Powertech", "ja": "Powertech"},
+    "600584.SS": {"zh-TW": "長電科技", "zh-CN": "长电科技", "en-US": "JCET", "ja": "JCET"},
+    "AMKR": {"zh-TW": "Amkor", "zh-CN": "安靠科技", "en-US": "Amkor", "ja": "アムコー"},
+    "3037.TW": {"zh-TW": "欣興", "zh-CN": "欣兴", "en-US": "Unimicron", "ja": "Unimicron"},
+    "8046.TW": {"zh-TW": "南電", "zh-CN": "南电", "en-US": "Nan Ya PCB", "ja": "Nan Ya PCB"},
+    "3583.TW": {"zh-TW": "辛耘", "zh-CN": "辛耘", "en-US": "Gallant Micro", "ja": "Gallant Micro"},
+    "AMAT": {"zh-TW": "應用材料", "zh-CN": "应用材料", "en-US": "Applied Materials", "ja": "アプライドマテリアルズ"},
+    "LRCX": {"zh-TW": "科林研發", "zh-CN": "泛林集团", "en-US": "Lam Research", "ja": "ラムリサーチ"},
+    "8035.T": {"zh-TW": "東京威力科創", "zh-CN": "东京电子", "en-US": "Tokyo Electron", "ja": "東京エレクトロン"},
+    "6146.T": {"zh-TW": "Disco", "zh-CN": "Disco", "en-US": "Disco Corp", "ja": "ディスコ"},
+    "3532.TW": {"zh-TW": "台勝科", "zh-CN": "台胜科", "en-US": "FormosaSumco", "ja": "FormosaSumco"},
+    "ENTG": {"zh-TW": "Entegris", "zh-CN": "恩特格里斯", "en-US": "Entegris", "ja": "エンテグリス"},
+    "4063.T": {"zh-TW": "信越化學", "zh-CN": "信越化学", "en-US": "Shin-Etsu Chemical", "ja": "信越化学"},
+    "2327.TW": {"zh-TW": "國巨", "zh-CN": "国巨", "en-US": "Yageo", "ja": "Yageo"},
+    "2492.TW": {"zh-TW": "華新科", "zh-CN": "华新科", "en-US": "Walsin Technology", "ja": "Walsin Technology"},
+    "VSH": {"zh-TW": "Vishay", "zh-CN": "威世", "en-US": "Vishay", "ja": "ヴィシェイ"},
+    "6981.T": {"zh-TW": "村田製作所", "zh-CN": "村田制作所", "en-US": "Murata", "ja": "村田製作所"},
+    "009150.KS": {"zh-TW": "三星電機", "zh-CN": "三星电机", "en-US": "Samsung Electro-Mechanics", "ja": "サムスン電機"},
+    "2313.TW": {"zh-TW": "華通", "zh-CN": "华通", "en-US": "Compeq", "ja": "Compeq"},
+    "3044.TW": {"zh-TW": "健鼎", "zh-CN": "健鼎", "en-US": "Tripod Technology", "ja": "Tripod Technology"},
+    "002463.SZ": {"zh-TW": "滬電股份", "zh-CN": "沪电股份", "en-US": "Hudian (WUS)", "ja": "滬電股份"},
+    "TTMI": {"zh-TW": "TTM Technologies", "zh-CN": "TTM Technologies", "en-US": "TTM Technologies", "ja": "TTMテクノロジーズ"},
+    "2392.TW": {"zh-TW": "正崴", "zh-CN": "正崴", "en-US": "Foxlink", "ja": "Foxlink"},
+    "APH": {"zh-TW": "安費諾", "zh-CN": "安费诺", "en-US": "Amphenol", "ja": "アンフェノール"},
+    "2409.TW": {"zh-TW": "友達", "zh-CN": "友达", "en-US": "AUO", "ja": "AUO"},
+    "3481.TW": {"zh-TW": "群創", "zh-CN": "群创", "en-US": "Innolux", "ja": "Innolux"},
+    "000725.SZ": {"zh-TW": "京東方", "zh-CN": "京东方", "en-US": "BOE", "ja": "BOE"},
+    "6753.T": {"zh-TW": "夏普", "zh-CN": "夏普", "en-US": "Sharp", "ja": "シャープ"},
+    "034220.KS": {"zh-TW": "LG Display", "zh-CN": "LG Display", "en-US": "LG Display", "ja": "LGディスプレイ"},
+    "3081.TWO": {"zh-TW": "全新", "zh-CN": "全新", "en-US": "Epistar", "ja": "Epistar"},
+    "3363.TWO": {"zh-TW": "上詮", "zh-CN": "上诠", "en-US": "Solteam Opto", "ja": "Solteam Opto"},
+    "AAOI": {"zh-TW": "Applied Optoelectronics", "zh-CN": "应用光电", "en-US": "AOI", "ja": "AOI"},
+    "COHR": {"zh-TW": "Coherent", "zh-CN": "相干公司", "en-US": "Coherent", "ja": "コヒレント"},
+    "3017.TW": {"zh-TW": "奇鋐", "zh-CN": "奇鋐", "en-US": "Auras", "ja": "Auras"},
+    "3324.TWO": {"zh-TW": "雙鴻", "zh-CN": "双鸿", "en-US": "AVC", "ja": "AVC"},
+    "002050.SZ": {"zh-TW": "三花智控", "zh-CN": "三花智控", "en-US": "Sanhua Intelligent Controls", "ja": "三花智控"},
+    "VRT": {"zh-TW": "Vertiv", "zh-CN": "维谛技术", "en-US": "Vertiv", "ja": "バーティブ"},
+    "6504.T": {"zh-TW": "富士電機", "zh-CN": "富士电机", "en-US": "Fuji Electric", "ja": "富士電機"},
+    "2308.TW": {"zh-TW": "台達電", "zh-CN": "台达电", "en-US": "Delta Electronics", "ja": "デルタ電子"},
+    "6412.TW": {"zh-TW": "群電", "zh-CN": "群电", "en-US": "Chicony Power", "ja": "Chicony Power"},
+    "MPWR": {"zh-TW": "Monolithic Power", "zh-CN": "芯源系统", "en-US": "MPS", "ja": "MPS"},
+    "2345.TW": {"zh-TW": "智邦", "zh-CN": "智邦", "en-US": "Accton", "ja": "Accton"},
+    "6285.TW": {"zh-TW": "啟碁", "zh-CN": "启碁", "en-US": "Wistron NeWeb", "ja": "Wistron NeWeb"},
+    "CSCO": {"zh-TW": "思科", "zh-CN": "思科", "en-US": "Cisco", "ja": "シスコ"},
+    "ANET": {"zh-TW": "Arista Networks", "zh-CN": "Arista Networks", "en-US": "Arista Networks", "ja": "アリスタネットワークス"},
 
     # --- 系統組裝與終端應用 ---
-    "2317.TW": "鴻海", "2382.TW": "廣達", "3231.TW": "緯創", "SMCI": "美超微", "DELL": "戴爾",
-    "6702.T": "富士通",
-    "3008.TW": "大立光", "002475.SZ": "立訊精密", "AAPL": "蘋果",
-    "2356.TW": "英業達", "HPQ": "惠普",
-    "2395.TW": "研華", "6414.TW": "樺漢",
-    "6180.TWO": "橘子", "3293.TWO": "鈊象", "TTWO": "Take-Two Interactive", "7974.T": "任天堂",
-    "036570.KS": "NCsoft",
+    "2317.TW": {"zh-TW": "鴻海", "zh-CN": "富士康", "en-US": "Foxconn (Hon Hai)", "ja": "鴻海（ホンハイ）"},
+    "2382.TW": {"zh-TW": "廣達", "zh-CN": "广达", "en-US": "Quanta Computer", "ja": "クアンタ・コンピュータ"},
+    "3231.TW": {"zh-TW": "緯創", "zh-CN": "纬创", "en-US": "Wistron", "ja": "Wistron"},
+    "SMCI": {"zh-TW": "美超微", "zh-CN": "美超微", "en-US": "Super Micro", "ja": "スーパーマイクロ"},
+    "DELL": {"zh-TW": "戴爾", "zh-CN": "戴尔", "en-US": "Dell", "ja": "デル"},
+    "6702.T": {"zh-TW": "富士通", "zh-CN": "富士通", "en-US": "Fujitsu", "ja": "富士通"},
+    "3008.TW": {"zh-TW": "大立光", "zh-CN": "大立光", "en-US": "Largan Precision", "ja": "Largan"},
+    "002475.SZ": {"zh-TW": "立訊精密", "zh-CN": "立讯精密", "en-US": "Luxshare", "ja": "Luxshare"},
+    "AAPL": {"zh-TW": "蘋果", "zh-CN": "苹果", "en-US": "Apple", "ja": "アップル"},
+    "2356.TW": {"zh-TW": "英業達", "zh-CN": "英业达", "en-US": "Inventec", "ja": "Inventec"},
+    "HPQ": {"zh-TW": "惠普", "zh-CN": "惠普", "en-US": "HP Inc.", "ja": "HP"},
+    "2395.TW": {"zh-TW": "研華", "zh-CN": "研华", "en-US": "Advantech", "ja": "Advantech"},
+    "6414.TW": {"zh-TW": "樺漢", "zh-CN": "桦汉", "en-US": "Ennoconn", "ja": "Ennoconn"},
+    "6180.TWO": {"zh-TW": "橘子", "zh-CN": "橘子", "en-US": "Gamania", "ja": "Gamania"},
+    "3293.TWO": {"zh-TW": "鈊象", "zh-CN": "铱象", "en-US": "IGS", "ja": "IGS"},
+    "TTWO": {"zh-TW": "Take-Two Interactive", "zh-CN": "Take-Two Interactive", "en-US": "Take-Two Interactive", "ja": "テイクツー・インタラクティブ"},
+    "7974.T": {"zh-TW": "任天堂", "zh-CN": "任天堂", "en-US": "Nintendo", "ja": "任天堂"},
+    "036570.KS": {"zh-TW": "NCsoft", "zh-CN": "NCsoft", "en-US": "NCsoft", "ja": "NCソフト"},
 
     # --- 電動車、車用電子與能源 ---
-    "3665.TW": "貿聯-KY", "2231.TW": "為升", "002594.SZ": "比亞迪", "TSLA": "特斯拉",
-    "6752.T": "Panasonic", "006400.KS": "三星SDI",
-    "NXPI": "恩智浦", "6902.T": "電裝", "012330.KS": "現代摩比斯",
-    "1519.TW": "華城", "1503.TW": "士電", "GEV": "GE Vernova", "6501.T": "日立製作所",
-    "267260.KS": "HD現代電機",
-    "3576.TW": "聯合再生", "601012.SS": "隆基綠能", "FSLR": "First Solar",
-    "9958.TW": "世紀鋼",
-    "300750.SZ": "寧德時代", "FLNC": "Fluence Energy",
-    "2412.TW": "中華電", "3045.TW": "台灣大", "VZ": "Verizon", "9432.T": "NTT",
-    "017670.KS": "SK Telecom",
+    "3665.TW": {"zh-TW": "貿聯-KY", "zh-CN": "贸联", "en-US": "Bizlink", "ja": "Bizlink"},
+    "2231.TW": {"zh-TW": "為升", "zh-CN": "为升", "en-US": "Weup", "ja": "Weup"},
+    "002594.SZ": {"zh-TW": "比亞迪", "zh-CN": "比亚迪", "en-US": "BYD", "ja": "BYD"},
+    "TSLA": {"zh-TW": "特斯拉", "zh-CN": "特斯拉", "en-US": "Tesla", "ja": "テスラ"},
+    "6752.T": {"zh-TW": "Panasonic", "zh-CN": "松下", "en-US": "Panasonic", "ja": "パナソニック"},
+    "006400.KS": {"zh-TW": "三星SDI", "zh-CN": "三星SDI", "en-US": "Samsung SDI", "ja": "サムスンSDI"},
+    "NXPI": {"zh-TW": "恩智浦", "zh-CN": "恩智浦", "en-US": "NXP Semiconductors", "ja": "NXPセミコンダクターズ"},
+    "6902.T": {"zh-TW": "電裝", "zh-CN": "电装", "en-US": "Denso", "ja": "デンソー"},
+    "012330.KS": {"zh-TW": "現代摩比斯", "zh-CN": "现代摩比斯", "en-US": "Hyundai Mobis", "ja": "現代モービス"},
+    "1519.TW": {"zh-TW": "華城", "zh-CN": "华城", "en-US": "Hua Cheng Electric", "ja": "Hua Cheng Electric"},
+    "1503.TW": {"zh-TW": "士電", "zh-CN": "士电", "en-US": "Shihlin Electric", "ja": "Shihlin Electric"},
+    "GEV": {"zh-TW": "GE Vernova", "zh-CN": "GE Vernova", "en-US": "GE Vernova", "ja": "GEバーノバ"},
+    "6501.T": {"zh-TW": "日立製作所", "zh-CN": "日立制作所", "en-US": "Hitachi", "ja": "日立製作所"},
+    "267260.KS": {"zh-TW": "HD現代電機", "zh-CN": "HD现代电机", "en-US": "HD Hyundai Electric", "ja": "HD現代電機"},
+    "3576.TW": {"zh-TW": "聯合再生", "zh-CN": "联合再生", "en-US": "United Renewable Energy", "ja": "United Renewable Energy"},
+    "601012.SS": {"zh-TW": "隆基綠能", "zh-CN": "隆基绿能", "en-US": "LONGi", "ja": "LONGi"},
+    "FSLR": {"zh-TW": "First Solar", "zh-CN": "第一太阳能", "en-US": "First Solar", "ja": "ファーストソーラー"},
+    "9958.TW": {"zh-TW": "世紀鋼", "zh-CN": "世纪钢", "en-US": "Century Iron & Steel", "ja": "Century Iron & Steel"},
+    "300750.SZ": {"zh-TW": "寧德時代", "zh-CN": "宁德时代", "en-US": "CATL", "ja": "CATL"},
+    "FLNC": {"zh-TW": "Fluence Energy", "zh-CN": "Fluence Energy", "en-US": "Fluence Energy", "ja": "フルエンスエナジー"},
+    "2412.TW": {"zh-TW": "中華電", "zh-CN": "中华电信", "en-US": "Chunghwa Telecom", "ja": "中華電信"},
+    "3045.TW": {"zh-TW": "台灣大", "zh-CN": "台湾大哥大", "en-US": "Taiwan Mobile", "ja": "台湾大哥大"},
+    "VZ": {"zh-TW": "Verizon", "zh-CN": "Verizon", "en-US": "Verizon", "ja": "ベライゾン"},
+    "9432.T": {"zh-TW": "NTT", "zh-CN": "日本电信电话", "en-US": "NTT", "ja": "NTT"},
+    "017670.KS": {"zh-TW": "SK Telecom", "zh-CN": "SK Telecom", "en-US": "SK Telecom", "ja": "SKテレコム"},
 
     # --- 生醫、金融與傳產 ---
-    "4174.TWO": "浩鼎", "1795.TW": "美時", "XBI": "標普生技ETF", "4502.T": "武田藥品",
-    "207940.KS": "三星生物製劑",
-    "4106.TW": "雃博", "1786.TW": "科妍", "MDT": "美敦力", "4543.T": "Terumo",
-    "2881.TW": "富邦金", "2882.TW": "國泰金", "601398.SS": "中國工商銀行", "XLF": "金融類股ETF",
-    "8306.T": "三菱UFJ金融集團", "105560.KS": "KB金融",
-    "2603.TW": "長榮", "2609.TW": "陽明", "ZIM": "ZIM以星航運", "9101.T": "日本郵船",
-    "011200.KS": "HMM",
-    "2606.TW": "裕民", "2615.TW": "萬海", "BOAT": "全球航運ETF",
-    "2610.TW": "華航", "2618.TW": "長榮航", "DAL": "達美航空", "9201.T": "日本航空",
-    "003490.KS": "大韓航空",
-    "2002.TW": "中鋼", "2027.TW": "大成鋼", "600019.SS": "寶山鋼鐵", "NUE": "紐克鋼鐵",
-    "5401.T": "日本製鐵", "005490.KS": "POSCO控股",
-    "1301.TW": "台塑", "1303.TW": "南亞", "600028.SS": "中國石化", "DOW": "陶氏化學",
-    "051910.KS": "LG化學",
-    "1101.TW": "台泥", "1102.TW": "亞泥", "600585.SS": "海螺水泥",
+    "4174.TWO": {"zh-TW": "浩鼎", "zh-CN": "浩鼎", "en-US": "OBI Pharma", "ja": "OBI Pharma"},
+    "1795.TW": {"zh-TW": "美時", "zh-CN": "美时", "en-US": "Lotus Pharmaceutical", "ja": "Lotus Pharmaceutical"},
+    "XBI": {"zh-TW": "標普生技ETF", "zh-CN": "标普生技ETF", "en-US": "SPDR S&P Biotech ETF (XBI)", "ja": "XBI"},
+    "4502.T": {"zh-TW": "武田藥品", "zh-CN": "武田药品", "en-US": "Takeda", "ja": "武田薬品"},
+    "207940.KS": {"zh-TW": "三星生物製劑", "zh-CN": "三星生物制剂", "en-US": "Samsung Biologics", "ja": "サムスンバイオロジクス"},
+    "4106.TW": {"zh-TW": "雃博", "zh-CN": "雃博", "en-US": "Apex Medical", "ja": "Apex Medical"},
+    "1786.TW": {"zh-TW": "科妍", "zh-CN": "科妍", "en-US": "Scivision Biotech", "ja": "Scivision Biotech"},
+    "MDT": {"zh-TW": "美敦力", "zh-CN": "美敦力", "en-US": "Medtronic", "ja": "メドトロニック"},
+    "4543.T": {"zh-TW": "Terumo", "zh-CN": "泰尔茂", "en-US": "Terumo", "ja": "テルモ"},
+    "2881.TW": {"zh-TW": "富邦金", "zh-CN": "富邦金控", "en-US": "Fubon Financial", "ja": "富邦金融ホールディングス"},
+    "2882.TW": {"zh-TW": "國泰金", "zh-CN": "国泰金控", "en-US": "Cathay Financial", "ja": "国泰金融ホールディングス"},
+    "601398.SS": {"zh-TW": "中國工商銀行", "zh-CN": "中国工商银行", "en-US": "ICBC", "ja": "中国工商銀行"},
+    "XLF": {"zh-TW": "金融類股ETF", "zh-CN": "金融ETF", "en-US": "Financial Select Sector SPDR (XLF)", "ja": "XLF"},
+    "8306.T": {"zh-TW": "三菱UFJ金融集團", "zh-CN": "三菱UFJ金融集团", "en-US": "MUFG", "ja": "三菱UFJフィナンシャル・グループ"},
+    "105560.KS": {"zh-TW": "KB金融", "zh-CN": "KB金融", "en-US": "KB Financial", "ja": "KB金融"},
+    "2603.TW": {"zh-TW": "長榮", "zh-CN": "长荣海运", "en-US": "Evergreen Marine", "ja": "エバーグリーン海運"},
+    "2609.TW": {"zh-TW": "陽明", "zh-CN": "阳明海运", "en-US": "Yang Ming Marine", "ja": "陽明海運"},
+    "ZIM": {"zh-TW": "ZIM以星航運", "zh-CN": "ZIM以星航运", "en-US": "ZIM Integrated Shipping", "ja": "ZIM"},
+    "9101.T": {"zh-TW": "日本郵船", "zh-CN": "日本邮船", "en-US": "NYK Line", "ja": "日本郵船"},
+    "011200.KS": {"zh-TW": "HMM", "zh-CN": "HMM", "en-US": "HMM", "ja": "HMM"},
+    "2606.TW": {"zh-TW": "裕民", "zh-CN": "裕民", "en-US": "U-Ming Marine", "ja": "U-Ming Marine"},
+    "2615.TW": {"zh-TW": "萬海", "zh-CN": "万海航运", "en-US": "Wan Hai Lines", "ja": "萬海航運"},
+    "BOAT": {"zh-TW": "全球航運ETF", "zh-CN": "全球航运ETF", "en-US": "Breakwave Dry Bulk ETF (BOAT)", "ja": "BOAT"},
+    "2610.TW": {"zh-TW": "華航", "zh-CN": "中华航空", "en-US": "China Airlines", "ja": "チャイナエアライン"},
+    "2618.TW": {"zh-TW": "長榮航", "zh-CN": "长荣航空", "en-US": "EVA Air", "ja": "エバー航空"},
+    "DAL": {"zh-TW": "達美航空", "zh-CN": "达美航空", "en-US": "Delta Air Lines", "ja": "デルタ航空"},
+    "9201.T": {"zh-TW": "日本航空", "zh-CN": "日本航空", "en-US": "JAL", "ja": "日本航空"},
+    "003490.KS": {"zh-TW": "大韓航空", "zh-CN": "大韩航空", "en-US": "Korean Air", "ja": "大韓航空"},
+    "2002.TW": {"zh-TW": "中鋼", "zh-CN": "中钢", "en-US": "China Steel", "ja": "中国鋼鉄"},
+    "2027.TW": {"zh-TW": "大成鋼", "zh-CN": "大成钢", "en-US": "Ta Chen Stainless Pipe", "ja": "Ta Chen"},
+    "600019.SS": {"zh-TW": "寶山鋼鐵", "zh-CN": "宝山钢铁", "en-US": "Baosteel", "ja": "宝山鋼鉄"},
+    "NUE": {"zh-TW": "紐克鋼鐵", "zh-CN": "纽克钢铁", "en-US": "Nucor", "ja": "ニューコア"},
+    "5401.T": {"zh-TW": "日本製鐵", "zh-CN": "日本制铁", "en-US": "Nippon Steel", "ja": "日本製鉄"},
+    "005490.KS": {"zh-TW": "POSCO控股", "zh-CN": "POSCO控股", "en-US": "POSCO Holdings", "ja": "POSCOホールディングス"},
+    "1301.TW": {"zh-TW": "台塑", "zh-CN": "台塑", "en-US": "Formosa Plastics", "ja": "台湾プラスチック"},
+    "1303.TW": {"zh-TW": "南亞", "zh-CN": "南亚塑胶", "en-US": "Nan Ya Plastics", "ja": "南亜プラスチック"},
+    "600028.SS": {"zh-TW": "中國石化", "zh-CN": "中国石化", "en-US": "Sinopec", "ja": "中国石油化工"},
+    "DOW": {"zh-TW": "陶氏化學", "zh-CN": "陶氏化学", "en-US": "Dow Inc.", "ja": "ダウ・ケミカル"},
+    "051910.KS": {"zh-TW": "LG化學", "zh-CN": "LG化学", "en-US": "LG Chem", "ja": "LG化学"},
+    "1101.TW": {"zh-TW": "台泥", "zh-CN": "台泥", "en-US": "Taiwan Cement", "ja": "台湾セメント"},
+    "1102.TW": {"zh-TW": "亞泥", "zh-CN": "亚泥", "en-US": "Asia Cement", "ja": "アジアセメント"},
+    "600585.SS": {"zh-TW": "海螺水泥", "zh-CN": "海螺水泥", "en-US": "Conch Cement", "ja": "海螺セメント"},
 
     # --- 民生消費 ---
-    "1440.TW": "南紡", "1477.TW": "聚陽",
-    "1216.TW": "統一", "1201.TW": "味全",
-    "2912.TW": "統一超", "5903.TWO": "全家", "XRT": "零售類股ETF",
+    "1440.TW": {"zh-TW": "南紡", "zh-CN": "南纺", "en-US": "Nan Fang Textile", "ja": "Nan Fang Textile"},
+    "1477.TW": {"zh-TW": "聚陽", "zh-CN": "聚阳", "en-US": "Makalot Industrial", "ja": "Makalot"},
+    "1216.TW": {"zh-TW": "統一", "zh-CN": "统一企业", "en-US": "Uni-President", "ja": "統一企業"},
+    "1201.TW": {"zh-TW": "味全", "zh-CN": "味全", "en-US": "Wei Chuan", "ja": "味全"},
+    "2912.TW": {"zh-TW": "統一超", "zh-CN": "统一超商", "en-US": "President Chain Store (7-Eleven TW)", "ja": "統一超商"},
+    "5903.TWO": {"zh-TW": "全家", "zh-CN": "全家便利店", "en-US": "FamilyMart Taiwan", "ja": "ファミリーマート台湾"},
+    "XRT": {"zh-TW": "零售類股ETF", "zh-CN": "零售ETF", "en-US": "SPDR S&P Retail ETF (XRT)", "ja": "XRT"},
 }
+
+# 未收錄於 NAME_I18N_MAP 的代碼，以 yfinance .info 自動查詢英文簡稱的快取（避免重複查詢）
+_shortname_fallback_cache = {}
+
+
+def _fetch_fallback_english_name(ticker: str) -> str:
+    """
+    未收錄於靜態多語系對照表時的自動 fallback：
+    以 yfinance 取得 info.get('shortName')，並簡單清理常見公司後綴。
+    僅在真的缺表時才會呼叫（正常情況下 40 個板塊的既有標的皆已收錄，不會觸發）。
+    """
+    if ticker in _shortname_fallback_cache:
+        return _shortname_fallback_cache[ticker]
+
+    print(f"[提示] 代碼 {ticker} 未收錄於多語系名稱對照表，嘗試以 yfinance 自動取得英文名稱...")
+    try:
+        info = yf.Ticker(ticker).info
+        short_name = info.get("shortName") or info.get("longName") or ticker
+        for suffix in [", Ltd.", " Ltd.", " Co., Ltd.", " Corporation", " Corp.", " Inc.", " Co."]:
+            if short_name.endswith(suffix):
+                short_name = short_name[: -len(suffix)]
+                break
+    except Exception:
+        print(f"[警告] {ticker} 自動取得英文名稱失敗，改以代碼本身代替")
+        short_name = ticker
+
+    _shortname_fallback_cache[ticker] = short_name
+    return short_name
+
+
+def get_ticker_name_i18n(ticker: str) -> dict:
+    """回傳單一標的的四語系名稱 dict：{"zh-TW":..., "zh-CN":..., "en-US":..., "ja":...}"""
+    if ticker in NAME_I18N_MAP:
+        return NAME_I18N_MAP[ticker]
+    fallback_name = _fetch_fallback_english_name(ticker)
+    return {"zh-TW": fallback_name, "zh-CN": fallback_name, "en-US": fallback_name, "ja": fallback_name}
 
 # 各市場計價幣別 → 對美元匯率的 yfinance 代碼 (格式為 1 USD 兌換多少當地幣別)
 MARKET_CURRENCY = {"TW": "TWD", "CN": "CNY", "US": "USD", "JP": "JPY", "KR": "KRW"}
@@ -591,6 +776,7 @@ def build_sector_data():
     market_daily_sector_raw = {m: [[] for _ in range(HISTORY_DAYS)] for m in MARKET_CURRENCY.keys()}
 
     for sector_name, markets in SECTOR_MAP.items():
+        sector_id = SECTOR_ID_MAP[sector_name]
         market_blocks = {}
         sector_total_turnover_usd = 0.0
         sector_total_volume_ratio = []
@@ -622,7 +808,7 @@ def build_sector_data():
                 turnover_usd = to_usd(metrics["turnover_local"], currency, fx_rates)
                 ticker_infos.append({
                     "symbol": ticker,
-                    "name": NAME_MAP.get(ticker, ticker),
+                    "name": get_ticker_name_i18n(ticker),
                     "close": round(metrics["close"], 2),
                     "pct_change": round(metrics["pct_change"], 2),
                     "volume": int(metrics["volume"]),
@@ -670,6 +856,7 @@ def build_sector_data():
                 )
                 market_sector_raw[market].append({
                     "sector": sector_name,
+                    "sector_id": sector_id,
                     "weighted_change_pct": round(weighted_change_pct, 2),
                     "turnover_usd": round(market_turnover_usd, 2),
                     "abs_change": abs(weighted_change_pct),
@@ -703,11 +890,13 @@ def build_sector_data():
 
         cross_market_table.append({
             "sector": sector_name,
+            "sector_id": sector_id,
             "markets": market_blocks,
         })
 
         sector_raw_scores.append({
             "sector": sector_name,
+            "sector_id": sector_id,
             "weighted_change_pct": round(sector_weighted_pct, 2),
             "turnover_usd": round(sector_total_turnover_usd, 2),
             "abs_change": abs(sector_weighted_pct),
@@ -765,6 +954,7 @@ def build_sector_data():
         composite = 0.5 * abs_change_scores[i] + 0.5 * volume_ratio_scores[i]
         momentum_ranking.append({
             "sector": s["sector"],
+            "sector_id": s["sector_id"],
             "momentum_score": round(composite, 1),
             "weighted_change_pct": s["weighted_change_pct"],
             "turnover_usd": s["turnover_usd"],
@@ -794,6 +984,7 @@ def build_sector_data():
             composite = 0.5 * m_abs_scores[i] + 0.5 * m_vol_scores[i]
             items.append({
                 "sector": r["sector"],
+                "sector_id": r["sector_id"],
                 "momentum_score": round(composite, 1),
                 "weighted_change_pct": r["weighted_change_pct"],
                 "turnover_usd": r["turnover_usd"],
