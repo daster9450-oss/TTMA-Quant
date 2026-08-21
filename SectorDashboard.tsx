@@ -13,7 +13,8 @@ import { addPropertyControls, ControlType } from "framer"
 // -----------------------------------------------------------------------
 type TickerInfo = {
     symbol: string
-    name: string
+    // 個股名稱由後端直接產生多語系物件，鍵值與 Lang 一致："zh-TW" | "zh-CN" | "en-US" | "ja"
+    name: Record<string, string>
     close: number
     pct_change: number
     volume: number
@@ -29,12 +30,14 @@ type MarketBlock = {
 }
 
 type SectorRow = {
-    sector: string
+    sector: string // 後端 zh-TW 板塊名稱，僅作 sectorDict 缺值時的顯示 fallback
+    sector_id: string // 板塊 ID，對應 sectorDict 查詢四語系板塊名稱
     markets: Record<string, MarketBlock>
 }
 
 type MomentumItem = {
     sector: string
+    sector_id: string
     momentum_score: number
     weighted_change_pct: number
     turnover_usd: number
@@ -310,6 +313,73 @@ const MARKET_NOTE_KEYS: Record<string, string> = {
     US: "marketNoteUS",
     JP: "marketNoteJP",
     KR: "marketNoteKR",
+}
+
+// -----------------------------------------------------------------------
+// 板塊 (Sector) 專用精簡字典：個股名稱已由後端多語系化，前端只需依
+// 後端傳來的 sector_id 對應四語系板塊名稱。術語一律採全球金融市場／
+// 量化交易慣用語（中文：晶圓代工／貨櫃航運；日文採日本券商慣用語；
+// 英文採華爾街慣用語），絕不機器直翻。
+// -----------------------------------------------------------------------
+const SECTOR_DICT: Record<string, Record<Lang, string>> = {
+    wafer_foundry: { "zh-TW": "晶圓代工", "zh-CN": "晶圆代工", ja: "半導体ファウンドリ", "en-US": "Semiconductor Foundry" },
+    ic_design: { "zh-TW": "IC設計", "zh-CN": "IC设计", ja: "ファブレス半導体設計", "en-US": "Fabless IC Design" },
+    memory: { "zh-TW": "記憶體", "zh-CN": "存储器", ja: "メモリ半導体", "en-US": "Memory Semiconductors" },
+    advanced_packaging: { "zh-TW": "先進封裝", "zh-CN": "先进封装", ja: "先端パッケージング", "en-US": "Advanced Packaging" },
+    ic_substrate: { "zh-TW": "IC載板", "zh-CN": "IC载板", ja: "ICサブストレート", "en-US": "IC Substrate" },
+    semiconductor_equipment: { "zh-TW": "半導體設備", "zh-CN": "半导体设备", ja: "半導体製造装置", "en-US": "Semiconductor Equipment" },
+    semiconductor_materials: { "zh-TW": "半導體材料", "zh-CN": "半导体材料", ja: "半導体材料", "en-US": "Semiconductor Materials" },
+    passive_components: { "zh-TW": "被動元件", "zh-CN": "被动元件", ja: "受動部品", "en-US": "Passive Components" },
+    pcb: { "zh-TW": "PCB印刷電路板", "zh-CN": "PCB印制电路板", ja: "プリント基板(PCB)", "en-US": "Printed Circuit Boards (PCB)" },
+    connectors: { "zh-TW": "連接器", "zh-CN": "连接器", ja: "コネクタ", "en-US": "Connectors" },
+    display_panel: { "zh-TW": "面板顯示器", "zh-CN": "面板显示器", ja: "ディスプレイパネル", "en-US": "Display Panels" },
+    led: { "zh-TW": "LED", "zh-CN": "LED", ja: "LED", "en-US": "LED" },
+    optical_communication: { "zh-TW": "光通訊與光模組", "zh-CN": "光通信与光模块", ja: "光通信および光モジュール", "en-US": "Optical Communication & Modules" },
+    thermal_cooling: { "zh-TW": "散熱液冷", "zh-CN": "散热液冷", ja: "熱対策・液冷", "en-US": "Thermal Management & Liquid Cooling" },
+    power_supply: { "zh-TW": "電源供應器", "zh-CN": "电源供应器", ja: "電源装置", "en-US": "Power Supplies" },
+    networking_equipment: { "zh-TW": "網通設備", "zh-CN": "网通设备", ja: "ネットワーク機器", "en-US": "Networking Equipment" },
+    ai_server_cloud_infra: { "zh-TW": "AI伺服器與雲端基建", "zh-CN": "AI服务器与云端基建", ja: "AIサーバー及びクラウドインフラ", "en-US": "AI Servers & Cloud Infrastructure" },
+    smartphone_apple_supply_chain: { "zh-TW": "手機組裝/蘋果供應鏈", "zh-CN": "手机组装/苹果供应链", ja: "スマートフォン組立・アップル関連銘柄", "en-US": "Smartphone Assembly / Apple Supply Chain" },
+    notebook_odm: { "zh-TW": "筆電代工", "zh-CN": "笔记本代工", ja: "ノートPC受託生産(ODM)", "en-US": "Notebook ODM" },
+    industrial_pc: { "zh-TW": "工業電腦", "zh-CN": "工业电脑", ja: "産業用PC", "en-US": "Industrial PC" },
+    gaming_digital_content: { "zh-TW": "遊戲與數位內容", "zh-CN": "游戏与数字内容", ja: "ゲーム・デジタルコンテンツ", "en-US": "Gaming & Digital Content" },
+    ev_supply_chain: { "zh-TW": "電動車供應鏈", "zh-CN": "电动车供应链", ja: "EVサプライチェーン", "en-US": "EV Supply Chain" },
+    automotive_electronics: { "zh-TW": "車用電子", "zh-CN": "车用电子", ja: "車載エレクトロニクス", "en-US": "Automotive Electronics" },
+    heavy_electric_grid: { "zh-TW": "重電與電網", "zh-CN": "重型电机与电网", ja: "重電・電力インフラ", "en-US": "Heavy Electric & Grid Infrastructure" },
+    solar: { "zh-TW": "太陽能", "zh-CN": "太阳能", ja: "太陽光発電", "en-US": "Solar" },
+    wind_power: { "zh-TW": "風電", "zh-CN": "风电", ja: "風力発電", "en-US": "Wind Power" },
+    energy_storage: { "zh-TW": "儲能", "zh-CN": "储能", ja: "蓄電池・エネルギー貯蔵", "en-US": "Energy Storage" },
+    telecom: { "zh-TW": "電信", "zh-CN": "电信", ja: "通信キャリア", "en-US": "Telecom" },
+    biotech_pharma: { "zh-TW": "生技新藥", "zh-CN": "生物科技新药", ja: "バイオ・新薬", "en-US": "Biotech & Pharmaceuticals" },
+    medical_devices: { "zh-TW": "醫療器材", "zh-CN": "医疗器材", ja: "医療機器", "en-US": "Medical Devices" },
+    financials: { "zh-TW": "金融", "zh-CN": "金融", ja: "金融", "en-US": "Financials" },
+    container_shipping: { "zh-TW": "貨櫃航運", "zh-CN": "集装箱航运", ja: "コンテナ船", "en-US": "Container Shipping" },
+    dry_bulk_shipping: { "zh-TW": "散裝航運", "zh-CN": "散货航运", ja: "バラ積み船(ドライバルク)", "en-US": "Dry Bulk Shipping" },
+    airlines: { "zh-TW": "航空", "zh-CN": "航空", ja: "航空", "en-US": "Airlines" },
+    steel: { "zh-TW": "鋼鐵", "zh-CN": "钢铁", ja: "鉄鋼", "en-US": "Steel" },
+    petrochemicals: { "zh-TW": "塑化", "zh-CN": "石化", ja: "石油化学", "en-US": "Petrochemicals" },
+    cement: { "zh-TW": "水泥", "zh-CN": "水泥", ja: "セメント", "en-US": "Cement" },
+    textiles: { "zh-TW": "紡織", "zh-CN": "纺织", ja: "繊維", "en-US": "Textiles" },
+    food: { "zh-TW": "食品", "zh-CN": "食品", ja: "食品", "en-US": "Food" },
+    retail: { "zh-TW": "零售通路", "zh-CN": "零售通路", ja: "小売", "en-US": "Retail" },
+}
+
+// 讀取當前語系 Context（不透過 useT，因為這裡需要 lang 本身而非翻譯後字串）
+function useLang(): Lang {
+    return useContext(LangContext)
+}
+
+// 依 sector_id 查詢板塊名稱；查無字典項或該語系缺字時，依序退回 en-US → 後端傳來的 fallback 字串
+function sectorLabel(sectorId: string | undefined, lang: Lang, fallback: string): string {
+    const entry = sectorId ? SECTOR_DICT[sectorId] : undefined
+    if (!entry) return fallback
+    return entry[lang] || entry["en-US"] || fallback
+}
+
+// 依當前語系讀取後端配好的個股多語系名稱；缺字時退回 en-US，再退回代碼本身
+function tickerName(name: Record<string, string> | undefined, lang: Lang, fallback: string): string {
+    if (!name) return fallback
+    return name[lang] || name["en-US"] || fallback
 }
 
 // 市場切換頁籤：全部市場 + 使用者指定的四個市場（不含中股，中股僅保留於跨市場對比表欄位）
@@ -691,11 +761,11 @@ function sortSectorRowsByFlow(
 ): SectorRow[] {
     const scoreBySector: Record<string, number> = {}
     momentumRanking.forEach((m) => {
-        scoreBySector[m.sector] = m.momentum_score
+        scoreBySector[m.sector_id] = m.momentum_score
     })
     const sorted = [...rows].sort((a, b) => {
-        const scoreA = scoreBySector[a.sector] ?? 0
-        const scoreB = scoreBySector[b.sector] ?? 0
+        const scoreA = scoreBySector[a.sector_id] ?? 0
+        const scoreB = scoreBySector[b.sector_id] ?? 0
         return filter === "top" ? scoreB - scoreA : scoreA - scoreB
     })
     return sorted.slice(0, 10)
@@ -789,6 +859,7 @@ function MarketStatsRow({
 // 成分股清單（灰色小字，公司名稱 + 股價漲跌）
 // -----------------------------------------------------------------------
 function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
+    const lang = useLang()
     if (!tickers || tickers.length === 0) return null
     return (
         <div
@@ -802,7 +873,7 @@ function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
         >
             {tickers.map((t, i) => (
                 <span key={t.symbol} style={{ whiteSpace: "nowrap" }}>
-                    {t.name}
+                    {tickerName(t.name, lang, t.symbol)}
                     <span
                         style={{
                             marginLeft: 4,
@@ -829,6 +900,7 @@ function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
 // -----------------------------------------------------------------------
 function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }) {
     const t = useT()
+    const lang = useLang()
     return (
         <div
             style={{
@@ -893,7 +965,7 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                     <tbody>
                         {rows.map((row, idx) => (
                             <tr
-                                key={row.sector}
+                                key={row.sector_id}
                                 style={{
                                     borderTop: `1px solid ${COLOR_BORDER}`,
                                     background: idx % 2 === 1 ? "rgba(255,255,255,0.015)" : "transparent",
@@ -908,7 +980,7 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                         whiteSpace: "nowrap",
                                     }}
                                 >
-                                    {row.sector}
+                                    {sectorLabel(row.sector_id, lang, row.sector)}
                                 </td>
                                 {MARKET_ORDER.map((m) => {
                                     const block = row.markets[m]
@@ -948,9 +1020,9 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                                                 textOverflow: "ellipsis",
                                                                 whiteSpace: "nowrap",
                                                             }}
-                                                            title={`${t.name} (${t.symbol}) ${t.pct_change > 0 ? "+" : ""}${t.pct_change.toFixed(2)}%`}
+                                                            title={`${tickerName(t.name, lang, t.symbol)} (${t.symbol}) ${t.pct_change > 0 ? "+" : ""}${t.pct_change.toFixed(2)}%`}
                                                         >
-                                                            {t.name}
+                                                            {tickerName(t.name, lang, t.symbol)}
                                                             <span
                                                                 style={{
                                                                     marginLeft: 4,
@@ -1011,6 +1083,7 @@ function MomentumBarRow({
     maxScore: number
     tickers: TickerInfo[]
 }) {
+    const lang = useLang()
     const widthPct = maxScore > 0 ? (item.momentum_score / maxScore) * 100 : 0
     const barColor = item.weighted_change_pct >= 0 ? COLOR_UP : COLOR_DOWN
     return (
@@ -1055,7 +1128,7 @@ function MomentumBarRow({
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
-                        {item.sector}
+                        {sectorLabel(item.sector_id, lang, item.sector)}
                     </div>
                     <ConstituentList tickers={tickers} />
                 </div>
@@ -1116,6 +1189,8 @@ function MomentumBarRow({
 // 單一市場：成分股細項卡片（點擊展開後顯示）
 // -----------------------------------------------------------------------
 function TickerDetailCard({ ticker }: { ticker: TickerInfo }) {
+    const lang = useLang()
+    const displayName = tickerName(ticker.name, lang, ticker.symbol)
     return (
         <div
             style={{
@@ -1145,9 +1220,9 @@ function TickerDetailCard({ ticker }: { ticker: TickerInfo }) {
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                     }}
-                    title={ticker.name}
+                    title={displayName}
                 >
-                    {ticker.name}
+                    {displayName}
                 </span>
                 <PctChangeTag value={ticker.pct_change} size={12} />
             </div>
@@ -1218,6 +1293,7 @@ function SectorAccordionRow({
     onToggle: () => void
 }) {
     const t = useT()
+    const lang = useLang()
     const widthPct = maxScore > 0 ? (item.momentum_score / maxScore) * 100 : 0
     const barColor = item.weighted_change_pct >= 0 ? COLOR_UP : COLOR_DOWN
     return (
@@ -1285,7 +1361,7 @@ function SectorAccordionRow({
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
-                            {item.sector}
+                            {sectorLabel(item.sector_id, lang, item.sector)}
                         </div>
                         <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY }}>
                             {t("constituentCountLine", {
@@ -1405,9 +1481,9 @@ function AllMarketsView({
     const sortedRows = sortSectorRowsByFlow(data.cross_market_table, data.momentum_ranking, flowFilter)
     const sortedMomentum = sortMomentumItems(data.momentum_ranking, flowFilter)
     const maxScore = Math.max(100, ...sortedMomentum.map((i) => i.momentum_score))
-    const sectorByName: Record<string, SectorRow> = {}
+    const sectorById: Record<string, SectorRow> = {}
     data.cross_market_table.forEach((row) => {
-        sectorByName[row.sector] = row
+        sectorById[row.sector_id] = row
     })
     const badgeText = t(flowFilter === "top" ? "flowTop" : "flowBottom")
 
@@ -1426,11 +1502,11 @@ function AllMarketsView({
                 <div style={{ padding: "0 18px 6px" }}>
                     {sortedMomentum.map((item, i) => (
                         <MomentumBarRow
-                            key={item.sector}
+                            key={item.sector_id}
                             rank={i + 1}
                             item={item}
                             maxScore={maxScore}
-                            tickers={getRepresentativeTickers(sectorByName[item.sector])}
+                            tickers={getRepresentativeTickers(sectorById[item.sector_id])}
                         />
                     ))}
                 </div>
@@ -1452,18 +1528,19 @@ function SingleMarketView({
     flowFilter: "top" | "bottom"
 }) {
     const t = useT()
+    const lang = useLang()
     const marketLabel = MARKET_LABEL_KEYS[marketKey] ? t(MARKET_LABEL_KEYS[marketKey]) : marketKey
     const [expandedSector, setExpandedSector] = useState<string | null>(null)
 
-    const sectorByName: Record<string, SectorRow> = {}
+    const sectorById: Record<string, SectorRow> = {}
     data.cross_market_table.forEach((row) => {
-        sectorByName[row.sector] = row
+        sectorById[row.sector_id] = row
     })
 
     // 2. 自動隱藏空白資料：只保留該市場「確實有成分股資料」的板塊，
     //    不顯示任何 — 或空白區塊。
     const nonEmptyItems = (data.market_momentum[marketKey] || []).filter((item) => {
-        const block = sectorByName[item.sector]?.markets[marketKey]
+        const block = sectorById[item.sector_id]?.markets[marketKey]
         return !!block && block.tickers && block.tickers.length > 0
     })
 
@@ -1473,9 +1550,9 @@ function SingleMarketView({
     const maxScore = Math.max(100, ...items.map((i) => i.momentum_score))
 
     const totalTurnoverUsd = items.reduce((sum, i) => sum + i.turnover_usd, 0)
-    const topSector = items.length > 0 ? items[0].sector : ""
+    const topSector = items.length > 0 ? sectorLabel(items[0].sector_id, lang, items[0].sector) : ""
     const asOfDate =
-        items.length > 0 ? sectorByName[items[0].sector]?.markets[marketKey]?.as_of || "" : ""
+        items.length > 0 ? sectorById[items[0].sector_id]?.markets[marketKey]?.as_of || "" : ""
 
     if (items.length === 0) {
         return (
@@ -1521,18 +1598,18 @@ function SingleMarketView({
                 />
                 <div style={{ padding: "0 18px 6px" }}>
                     {items.map((item, i) => {
-                        const tickers = sectorByName[item.sector]?.markets[marketKey]?.tickers || []
+                        const tickers = sectorById[item.sector_id]?.markets[marketKey]?.tickers || []
                         return (
                             <SectorAccordionRow
-                                key={item.sector}
+                                key={item.sector_id}
                                 rank={i + 1}
                                 item={item}
                                 maxScore={maxScore}
                                 tickers={tickers}
-                                isExpanded={expandedSector === item.sector}
+                                isExpanded={expandedSector === item.sector_id}
                                 onToggle={() =>
                                     setExpandedSector((prev) =>
-                                        prev === item.sector ? null : item.sector
+                                        prev === item.sector_id ? null : item.sector_id
                                     )
                                 }
                             />
