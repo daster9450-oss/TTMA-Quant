@@ -406,6 +406,11 @@ const dynamicDict: Record<string, Partial<Record<Lang, string>>> = {
     "華新科": { "zh-TW": "華新科", "zh-CN": "华新科技", "en-US": "Walsin Technology", ja: "Walsin Technology" },
     "全球航運ETF": { "zh-TW": "全球航運ETF", "zh-CN": "全球航运ETF", "en-US": "Global Shipping ETF", ja: "グローバル海運ETF" },
     "ZIM以星航運": { "zh-TW": "ZIM以星航運", "zh-CN": "以星航运", "en-US": "ZIM Integrated Shipping", ja: "ZIM" },
+
+    // --- UI 標示與 SEO 動態洞察區塊專用詞彙 ---
+    "5日趨勢": { "zh-TW": "5日趨勢", "zh-CN": "5日趋势", "en-US": "5-Day Trend", ja: "5日トレンド" },
+    "5日動能走勢": { "zh-TW": "5日動能走勢", "zh-CN": "5日动能走势", "en-US": "5-Day Momentum Trend", ja: "5日モメンタム推移" },
+    "市場動能洞察": { "zh-TW": "市場動能洞察", "zh-CN": "市场动能洞察", "en-US": "Market Momentum Insights", ja: "市場モメンタム洞察" },
 }
 
 // 強健的動態資料翻譯攔截函數：
@@ -475,16 +480,19 @@ function PctChangeTag({ value, size = 13 }: { value: number; size?: number }) {
 }
 
 // 迷你趨勢線（Sparkline）：不含座標軸，僅呈現近 5 日動能分數走勢
+// titleText：滑鼠懸浮於整個 <svg> 上時的原生瀏覽器提示文字（「5日動能走勢」多語系翻譯）
 function Sparkline({
     values,
     color = COLOR_ACCENT,
     width = 60,
     height = 20,
+    titleText,
 }: {
     values: number[]
     color?: string
     width?: number
     height?: number
+    titleText?: string
 }) {
     if (!values || values.length < 2) return null
 
@@ -505,8 +513,10 @@ function Sparkline({
             width={width}
             height={height}
             viewBox={`0 0 ${width} ${height}`}
+            title={titleText}
             style={{ display: "block", flexShrink: 0, overflow: "visible" }}
         >
+            {titleText && <title>{titleText}</title>}
             <polyline
                 points={points}
                 fill="none"
@@ -523,6 +533,7 @@ function Sparkline({
 // 動能分數 + 懸浮提示（成交量放大 / 價格動能 / 權重佔比）+ 迷你趨勢線
 function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
     const t = useT()
+    const lang = useLang()
     const [hovered, setHovered] = useState(false)
     const volSurge = item.vol_surge ?? 0
     const priceMom = item.price_mom ?? item.weighted_change_pct ?? 0
@@ -534,7 +545,7 @@ function MomentumScoreDisplay({ item }: { item: MomentumItem }) {
     return (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
             {item.history_scores && item.history_scores.length >= 2 && (
-                <Sparkline values={item.history_scores} />
+                <Sparkline values={item.history_scores} titleText={getTranslatedText("5日動能走勢", lang)} />
             )}
             <div
                 style={{ position: "relative", cursor: "default" }}
@@ -1477,15 +1488,27 @@ function SectorAccordionRow({
     )
 }
 
-function PanelHeader({ title, badge }: { title: string; badge?: string }) {
+// trendLabel：動能排行榜專用，標示右側 Sparkline 欄位的意義（「5日趨勢」多語系翻譯）
+function PanelHeader({
+    title,
+    badge,
+    trendLabel,
+}: {
+    title: string
+    badge?: string
+    trendLabel?: string
+}) {
     return (
         <div
             style={{
                 padding: "14px 18px",
                 borderBottom: `1px solid ${COLOR_BORDER}`,
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent: "space-between",
+                rowGap: 6,
+                columnGap: 12,
             }}
         >
             <div
@@ -1498,9 +1521,117 @@ function PanelHeader({ title, badge }: { title: string; badge?: string }) {
             >
                 {title}
             </div>
-            {badge && (
-                <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>{badge}</div>
-            )}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+                {trendLabel && (
+                    <div
+                        style={{
+                            fontSize: 10,
+                            color: COLOR_TEXT_SECONDARY,
+                            letterSpacing: 0.3,
+                            whiteSpace: "nowrap",
+                            border: `1px solid ${COLOR_BORDER}`,
+                            borderRadius: 999,
+                            padding: "2px 8px",
+                        }}
+                    >
+                        {trendLabel}
+                    </div>
+                )}
+                {badge && <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>{badge}</div>}
+            </div>
+        </div>
+    )
+}
+
+// -----------------------------------------------------------------------
+// SEO 動態文字摘要（Market Insight Summary）：依當前語系組出一段結構化
+// 財經摘要，供搜尋引擎與人類閱讀者理解目前跨市場資金動能排行榜首與
+// 次席板塊的量價訊號。四語系皆採專業金融慣用語撰寫，非逐字機器翻譯。
+// -----------------------------------------------------------------------
+function generateMarketInsight(
+    top1Sector: string,
+    top1Score: number,
+    top2Sector: string,
+    lang: Lang
+): string {
+    const score = top1Score.toFixed(1)
+    switch (lang) {
+        case "zh-CN":
+            return `截至最新数据，跨市场资金流入榜首为【${top1Sector}】板块，其动能分数呈现强势扩张，总分达 ${score}。系统侦测到其量价结构与动能产生共振。紧追在后的是【${top2Sector}】板块，展现出资金轮动的迹象。`
+        case "ja":
+            return `最新データによると、クロスマーケット資金流入の首位は【${top1Sector}】セクターとなり、モメンタムスコアは ${score} に達して力強い拡大を示しています。価格と出来高の構造的な共鳴が検知されました。続いて【${top2Sector}】セクターが追随し、資金ローテーションの兆候を見せています。`
+        case "en-US":
+            return `Based on the latest data, the top sector for cross-market capital inflow is [${top1Sector}], with its momentum score showing strong expansion reaching ${score}. The system detected a structural convergence of price and volume. Following closely is the [${top2Sector}] sector, indicating signs of capital rotation.`
+        case "zh-TW":
+        default:
+            return `截至最新數據，跨市場資金流入榜首為【${top1Sector}】板塊，其動能分數呈現強勢擴張，總分達 ${score}。系統偵測到其量價結構與動能產生共振。緊追在後的是【${top2Sector}】板塊，展現出資金輪動的跡象。`
+    }
+}
+
+// 帶科技感邊框／漸層背景的洞察文字卡片；topItems 需已依動能分數由高到低排序，
+// 取前兩名帶入 generateMarketInsight()。文字區塊本身不限制寬度、允許自然換行，
+// 手機窄螢幕下也能正常斷行顯示，不會撐破版面。
+function MarketInsightSummary({
+    topItems,
+    lang,
+}: {
+    topItems: MomentumItem[]
+    lang: Lang
+}) {
+    if (!topItems || topItems.length < 2) return null
+    const top1 = topItems[0]
+    const top2 = topItems[1]
+    const top1Name = getTranslatedText(resolveSectorInput(top1.sector_id, top1.sector), lang)
+    const top2Name = getTranslatedText(resolveSectorInput(top2.sector_id, top2.sector), lang)
+    const insightText = generateMarketInsight(top1Name, top1.momentum_score, top2Name, lang)
+
+    return (
+        <div
+            style={{
+                margin: "0 18px 18px",
+                padding: "16px 18px",
+                borderRadius: 10,
+                background: "linear-gradient(135deg, rgba(0,242,254,0.08), rgba(0,242,254,0.02))",
+                border: "1px solid rgba(0,242,254,0.3)",
+                boxShadow: "0 0 24px rgba(0,242,254,0.06) inset",
+                boxSizing: "border-box",
+            }}
+        >
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: COLOR_ACCENT,
+                    letterSpacing: 0.8,
+                    marginBottom: 8,
+                }}
+            >
+                <span
+                    style={{
+                        display: "inline-block",
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: COLOR_ACCENT,
+                        flexShrink: 0,
+                    }}
+                />
+                {getTranslatedText("市場動能洞察", lang)}
+            </div>
+            <div
+                style={{
+                    fontSize: 12.5,
+                    lineHeight: 1.8,
+                    color: COLOR_TEXT_PRIMARY,
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                }}
+            >
+                {insightText}
+            </div>
         </div>
     )
 }
@@ -1528,6 +1659,7 @@ function AllMarketsView({
     flowFilter: "top" | "bottom"
 }) {
     const t = useT()
+    const lang = useLang()
     // 3. 資料排序與截斷：依動能分數排序（top=由大到小 / bottom=由小到大），固定只取 10 筆
     const sortedRows = sortSectorRowsByFlow(data.cross_market_table, data.momentum_ranking, flowFilter)
     const sortedMomentum = sortMomentumItems(data.momentum_ranking, flowFilter)
@@ -1537,6 +1669,10 @@ function AllMarketsView({
         sectorById[row.sector_id] = row
     })
     const badgeText = t(flowFilter === "top" ? "flowTop" : "flowBottom")
+    // SEO 洞察摘要固定取「真正的動能榜首與次席」，不受目前 top/bottom 篩選切換影響
+    const overallTopMomentum = [...data.momentum_ranking]
+        .sort((a, b) => b.momentum_score - a.momentum_score)
+        .slice(0, 2)
 
     return (
         <>
@@ -1549,7 +1685,11 @@ function AllMarketsView({
                     background: COLOR_PANEL,
                 }}
             >
-                <PanelHeader title={t("momentumRankingTitle")} badge={badgeText} />
+                <PanelHeader
+                    title={t("momentumRankingTitle")}
+                    badge={badgeText}
+                    trendLabel={getTranslatedText("5日趨勢", lang)}
+                />
                 <div style={{ padding: "0 18px 6px" }}>
                     {sortedMomentum.map((item, i) => (
                         <MomentumBarRow
@@ -1561,6 +1701,7 @@ function AllMarketsView({
                         />
                     ))}
                 </div>
+                <MarketInsightSummary topItems={overallTopMomentum} lang={lang} />
             </div>
         </>
     )
@@ -1647,6 +1788,7 @@ function SingleMarketView({
                     badge={`${t(flowFilter === "top" ? "badgeTop" : "badgeBottom")} · ${t("sectorCountUnit", {
                         count: items.length,
                     })}`}
+                    trendLabel={getTranslatedText("5日趨勢", lang)}
                 />
                 <div style={{ padding: "0 18px 6px" }}>
                     {items.map((item, i) => {
@@ -1668,6 +1810,10 @@ function SingleMarketView({
                         )
                     })}
                 </div>
+                <MarketInsightSummary
+                    topItems={[...nonEmptyItems].sort((a, b) => b.momentum_score - a.momentum_score).slice(0, 2)}
+                    lang={lang}
+                />
             </div>
         </>
     )
