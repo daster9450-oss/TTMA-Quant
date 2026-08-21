@@ -13,8 +13,10 @@ import { addPropertyControls, ControlType } from "framer"
 // -----------------------------------------------------------------------
 type TickerInfo = {
     symbol: string
-    // 個股名稱由後端直接產生多語系物件，鍵值與 Lang 一致："zh-TW" | "zh-CN" | "en-US" | "ja"
-    name: Record<string, string>
+    // 理論上由後端直接產生多語系物件（鍵值與 Lang 一致），但正式環境資料來源
+    // 若尚未同步到新版後端，仍可能是舊版純中文字串，故型別放寬並由
+    // getTranslatedText() 統一攔截處理，兩種格式都能正確顯示。
+    name: Record<string, string> | string
     close: number
     pct_change: number
     volume: number
@@ -369,17 +371,66 @@ function useLang(): Lang {
     return useContext(LangContext)
 }
 
-// 依 sector_id 查詢板塊名稱；查無字典項或該語系缺字時，依序退回 en-US → 後端傳來的 fallback 字串
-function sectorLabel(sectorId: string | undefined, lang: Lang, fallback: string): string {
-    const entry = sectorId ? SECTOR_DICT[sectorId] : undefined
-    if (!entry) return fallback
-    return entry[lang] || entry["en-US"] || fallback
+// -----------------------------------------------------------------------
+// 動態資料翻譯攔截層：後端理論上會直接送出多語系物件（見 main.py 的
+// NAME_I18N_MAP／sector_id），但正式環境的資料來源（例如自動排程尚未
+// 同步到最新版本）仍可能傳回舊版純中文字串。此處建立一個以「原始繁中
+// 字串」為鍵的字典，作為前端最後一道安全網：無論後端送來的是新版物件
+// 或舊版字串，畫面上一律能顯示正確語系，且絕不因未知詞彙而報錯。
+//
+// ⚠️ 所有語言（en-US／ja／zh-CN／zh-TW）一律採全球金融市場與量化交易
+// 標準專業慣用語：英文採華爾街投行慣用語、日文採日本券商與財經媒體
+// 慣用詞彙、簡體中文嚴格採 A 股市場與主流券商（如申萬行業分類）慣用
+// 術語，並特別區分兩岸金融／半導體用語差異，不以繁轉簡敷衍帶過。
+// -----------------------------------------------------------------------
+const dynamicDict: Record<string, Partial<Record<Lang, string>>> = {
+    // --- 板塊類：與 SECTOR_DICT（依 sector_id 查詢）完全同步，
+    //     此處自動衍生，確保兩套字典的專業術語永遠一致、不會分岔 ---
+    ...Object.fromEntries(Object.values(SECTOR_DICT).map((entry) => [entry["zh-TW"], entry])),
+
+    // --- 個股類：後端多語系物件尚未涵蓋、或資料來源為舊版純字串時的
+    //     專用對照。台股個股一律採國際金融市場通用英文縮寫／拼音，
+    //     簡體中文採該公司於中國大陸市場的官方或慣用簡稱 ---
+    "裕民": { "zh-TW": "裕民", "zh-CN": "裕民海运", "en-US": "U-Ming Marine", ja: "U-Ming Marine" },
+    "萬海": { "zh-TW": "萬海", "zh-CN": "万海航运", "en-US": "Wan Hai Lines", ja: "Wan Hai Lines" },
+    "長榮": { "zh-TW": "長榮", "zh-CN": "长荣海运", "en-US": "Evergreen Marine", ja: "Evergreen Marine" },
+    "陽明": { "zh-TW": "陽明", "zh-CN": "阳明海运", "en-US": "Yang Ming Marine", ja: "Yang Ming Marine" },
+    "全新": { "zh-TW": "全新", "zh-CN": "全新光电", "en-US": "Epistar", ja: "Epistar" },
+    "欣興": { "zh-TW": "欣興", "zh-CN": "欣兴电子", "en-US": "Unimicron", ja: "Unimicron" },
+    "南電": { "zh-TW": "南電", "zh-CN": "南亚电路板", "en-US": "Nan Ya PCB", ja: "Nan Ya PCB" },
+    "中華電": { "zh-TW": "中華電", "zh-CN": "中华电信", "en-US": "Chunghwa Telecom", ja: "Chunghwa Telecom" },
+    "台灣大": { "zh-TW": "台灣大", "zh-CN": "台湾大哥大", "en-US": "Taiwan Mobile", ja: "Taiwan Mobile" },
+    "奇鋐": { "zh-TW": "奇鋐", "zh-CN": "奇鋐科技", "en-US": "Auras Technology", ja: "Auras Technology" },
+    "雙鴻": { "zh-TW": "雙鴻", "zh-CN": "双鸿科技", "en-US": "AVC (Asia Vital Components)", ja: "AVC" },
+    "國巨": { "zh-TW": "國巨", "zh-CN": "国巨股份", "en-US": "Yageo Corporation", ja: "Yageo" },
+    "華新科": { "zh-TW": "華新科", "zh-CN": "华新科技", "en-US": "Walsin Technology", ja: "Walsin Technology" },
+    "全球航運ETF": { "zh-TW": "全球航運ETF", "zh-CN": "全球航运ETF", "en-US": "Global Shipping ETF", ja: "グローバル海運ETF" },
+    "ZIM以星航運": { "zh-TW": "ZIM以星航運", "zh-CN": "以星航运", "en-US": "ZIM Integrated Shipping", ja: "ZIM" },
 }
 
-// 依當前語系讀取後端配好的個股多語系名稱；缺字時退回 en-US，再退回代碼本身
-function tickerName(name: Record<string, string> | undefined, lang: Lang, fallback: string): string {
-    if (!name) return fallback
-    return name[lang] || name["en-US"] || fallback
+// 強健的動態資料翻譯攔截函數：
+// 1) text 已是多語系物件（後端新版 API、或下方 resolveSectorInput 解析出的 SECTOR_DICT 項目）→ 依語系取值。
+// 2) text 是純字串（後端舊版資料格式）→ 查 dynamicDict 取得專業翻譯。
+// 3) 上述皆查無資料 → 原樣回傳輸入字串，確保任何未知詞彙都不會讓畫面壞掉或拋出例外。
+function getTranslatedText(text: any, lang: string): string {
+    if (text && typeof text === "object") {
+        return text[lang] || text["en-US"] || text["zh-TW"] || ""
+    }
+    if (typeof text === "string") {
+        const entry = dynamicDict[text]
+        if (entry) {
+            return entry[lang as Lang] || entry["en-US"] || text
+        }
+        return text
+    }
+    return text ?? ""
+}
+
+// 板塊顯示前的輸入解析：sector_id 存在時優先回傳 SECTOR_DICT 的完整多語系物件
+// （較權威、四語系保證齊全）；否則回傳後端傳來的原始字串，交給 getTranslatedText
+// 走 dynamicDict 查表這條路徑。呼叫端一律透過 getTranslatedText 輸出，見下方 return 區塊。
+function resolveSectorInput(sectorId: string | undefined, fallbackText: string): any {
+    return sectorId && SECTOR_DICT[sectorId] ? SECTOR_DICT[sectorId] : fallbackText
 }
 
 // 市場切換頁籤：全部市場 + 使用者指定的四個市場（不含中股，中股僅保留於跨市場對比表欄位）
@@ -873,7 +924,7 @@ function ConstituentList({ tickers }: { tickers: TickerInfo[] }) {
         >
             {tickers.map((t, i) => (
                 <span key={t.symbol} style={{ whiteSpace: "nowrap" }}>
-                    {tickerName(t.name, lang, t.symbol)}
+                    {getTranslatedText(t.name, lang) || t.symbol}
                     <span
                         style={{
                             marginLeft: 4,
@@ -980,7 +1031,7 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                         whiteSpace: "nowrap",
                                     }}
                                 >
-                                    {sectorLabel(row.sector_id, lang, row.sector)}
+                                    {getTranslatedText(resolveSectorInput(row.sector_id, row.sector), lang)}
                                 </td>
                                 {MARKET_ORDER.map((m) => {
                                     const block = row.markets[m]
@@ -1020,9 +1071,9 @@ function CrossMarketTable({ rows, badge }: { rows: SectorRow[]; badge?: string }
                                                                 textOverflow: "ellipsis",
                                                                 whiteSpace: "nowrap",
                                                             }}
-                                                            title={`${tickerName(t.name, lang, t.symbol)} (${t.symbol}) ${t.pct_change > 0 ? "+" : ""}${t.pct_change.toFixed(2)}%`}
+                                                            title={`${getTranslatedText(t.name, lang) || t.symbol} (${t.symbol}) ${t.pct_change > 0 ? "+" : ""}${t.pct_change.toFixed(2)}%`}
                                                         >
-                                                            {tickerName(t.name, lang, t.symbol)}
+                                                            {getTranslatedText(t.name, lang) || t.symbol}
                                                             <span
                                                                 style={{
                                                                     marginLeft: 4,
@@ -1128,7 +1179,7 @@ function MomentumBarRow({
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
-                        {sectorLabel(item.sector_id, lang, item.sector)}
+                        {getTranslatedText(resolveSectorInput(item.sector_id, item.sector), lang)}
                     </div>
                     <ConstituentList tickers={tickers} />
                 </div>
@@ -1190,7 +1241,7 @@ function MomentumBarRow({
 // -----------------------------------------------------------------------
 function TickerDetailCard({ ticker }: { ticker: TickerInfo }) {
     const lang = useLang()
-    const displayName = tickerName(ticker.name, lang, ticker.symbol)
+    const displayName = getTranslatedText(ticker.name, lang) || ticker.symbol
     return (
         <div
             style={{
@@ -1361,7 +1412,7 @@ function SectorAccordionRow({
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
-                            {sectorLabel(item.sector_id, lang, item.sector)}
+                            {getTranslatedText(resolveSectorInput(item.sector_id, item.sector), lang)}
                         </div>
                         <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY }}>
                             {t("constituentCountLine", {
@@ -1550,7 +1601,8 @@ function SingleMarketView({
     const maxScore = Math.max(100, ...items.map((i) => i.momentum_score))
 
     const totalTurnoverUsd = items.reduce((sum, i) => sum + i.turnover_usd, 0)
-    const topSector = items.length > 0 ? sectorLabel(items[0].sector_id, lang, items[0].sector) : ""
+    const topSector =
+        items.length > 0 ? getTranslatedText(resolveSectorInput(items[0].sector_id, items[0].sector), lang) : ""
     const asOfDate =
         items.length > 0 ? sectorById[items[0].sector_id]?.markets[marketKey]?.as_of || "" : ""
 
