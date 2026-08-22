@@ -116,6 +116,7 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         ctaButton: "了解 TTMA-Quant 系統如何幫您精準擇時 ➔",
         momentumRankingTooltip:
             "綜合評估板塊內成分股之價量結構、波動率擴張與相對強弱。分數越接近 100，代表短期資金流入加速度越強。",
+        insightPendingText: "系統正在計算最新跨市場動力量化數據，請稍候...",
         disclaimerText:
             "免責聲明：本儀表板提供之跨市場量化數據與板塊動能排行，僅供學術研究與客觀市場狀態觀察之用。系統之內容均不構成任何形式之投資建議、要約、招攬或推薦。證券及金融商品交易涉及高風險，歷史數據與動力量化分數不代表未來績效，使用者應自行承擔所有投資決策及衍生之盈虧與法律責任。",
     },
@@ -169,6 +170,7 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         ctaButton: "了解 TTMA-Quant 系统如何帮您精准择时 ➔",
         momentumRankingTooltip:
             "综合评估板块内成分股之价量结构、波动率扩张与相对强弱。分数越接近 100，代表短期资金流入加速度越强。",
+        insightPendingText: "系统正在计算最新跨市场动量因子数据，请稍候...",
         disclaimerText:
             "免责声明：本仪表板提供之跨市场量化数据与板块动能排行，仅供学术研究与客观市场状态观察之用。系统之内容均不构成任何形式之投资建议、要约邀请或推介。金融衍生品及证券交易具有高风险，历史回测数据与动力量化分数不代表未来收益表现，使用者须自行承担所有投资决策及衍生之盈亏与法律责任。",
     },
@@ -222,6 +224,7 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         ctaButton: "TTMA-Quantシステムによる正確なタイミング戦略を学ぶ ➔",
         momentumRankingTooltip:
             "セクター構成銘柄の価格・出来高構造、ボラティリティ拡大、相対的強弱を総合的に評価。スコアが100に近いほど、短期資金流入の加速度が強いことを示します。",
+        insightPendingText: "システムが最新のクロスマーケット・モメンタムデータを算出中です。しばらくお待ちください...",
         disclaimerText:
             "免責事項：本ダッシュボードが提供するクロスマーケットの定量データおよびセクター別モメンタムランキングは、学術研究および客観的な市場動向の観察のみを目的としています。本システムの内容は、いかなる投資助言、勧誘、または推奨を構成するものではありません。金融商品の取引には高いリスクが伴い、過去のデータやモメンタムスコアは将来の運用成果を保証するものではありません。すべての投資判断およびそれに伴う損益ならびに法的責任は、利用者ご自身の自己責任となります。",
     },
@@ -276,6 +279,7 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         ctaButton: "Learn how TTMA-Quant system helps you time the market precisely ➔",
         momentumRankingTooltip:
             "Comprehensively evaluates the price-volume structure, volatility expansion, and relative strength of constituent stocks. A score closer to 100 indicates stronger short-term capital inflow acceleration.",
+        insightPendingText: "The system is computing the latest cross-market quantitative momentum data. Please wait...",
         disclaimerText:
             "Disclaimer: The cross-market quantitative data and sector momentum rankings provided by this dashboard are solely for academic research and objective market observation. The contents herein do not constitute investment advice, an offer, solicitation, or recommendation of any kind. Trading in securities and financial instruments involves substantial risk. Historical data and quantitative momentum scores do not guarantee future performance. Users assume full responsibility for all investment decisions, resulting profits or losses, and legal liabilities.",
     },
@@ -977,7 +981,15 @@ function DisclaimerFooter() {
 // -----------------------------------------------------------------------
 // 隱藏式提示 (Tooltip)：純 CSS 懸浮觸發（透過 .ttma-tooltip-trigger:hover 規則，
 // 見主元件內注入的全域 <style>），不依賴 JS state，效能與行為皆與原生 CSS
-// :hover 一致。z-index 設為 50，確保不被下方表格／圖表遮擋。
+// :hover 一致。z-index 拉到 9999，並在觸發點本身也設定較高的 z-index，
+// 確保不被下方表格／圖表，或父層堆疊環境 (Stacking Context) 遮擋。
+//
+// ⚠️ 已逐層檢查 PanelHeader 與其所有父層容器（AllMarketsView／SingleMarketView
+// 的面板外框、頂層 return 容器），確認皆未設定 overflow: hidden，故本檔案內
+// 沒有會裁切此 Tooltip 的容器。若貼到 Framer 後仍被裁切，成因通常是 Framer
+// 畫布本身在該 Code Component 外層 Frame 預設開啟「Clip Content」，這層裁切
+// 存在於 Framer 編輯器設定、不在這支 .tsx 原始碼裡，需要在 Framer 的圖層面板
+// 手動關閉該 Frame 的 Clip Content 選項才能讓 Tooltip 完整顯示。
 // -----------------------------------------------------------------------
 function InfoTooltip({ text }: { text: string }) {
     return (
@@ -989,39 +1001,54 @@ function InfoTooltip({ text }: { text: string }) {
                 alignItems: "center",
                 marginLeft: 8,
                 cursor: "help",
+                zIndex: 100,
             }}
         >
             <span
                 className="ttma-tooltip-icon"
                 style={{
-                    fontSize: 12,
-                    fontWeight: 400,
+                    display: "inline-flex",
                     color: COLOR_TEXT_SECONDARY,
-                    lineHeight: 1,
+                    lineHeight: 0,
+                    transition: "color 0.2s ease",
                 }}
             >
-                ⓘ
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
             </span>
             <span
                 className="ttma-tooltip-panel"
                 style={{
                     position: "absolute",
                     left: "50%",
-                    bottom: "calc(100% + 8px)",
+                    bottom: "calc(100% + 10px)",
                     transform: "translateX(-50%)",
-                    width: 240,
+                    width: 280,
                     boxSizing: "border-box",
-                    padding: "10px 12px",
-                    background: "rgba(15,20,31,0.95)",
-                    backdropFilter: "blur(6px)",
-                    WebkitBackdropFilter: "blur(6px)",
-                    border: `1px solid ${COLOR_BORDER}`,
+                    padding: 16,
+                    background: "rgba(26,30,38,0.95)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    border: "1px solid rgba(55,65,81,0.8)",
                     borderRadius: 8,
-                    boxShadow: "0 12px 32px rgba(0,0,0,0.5)",
+                    boxShadow: "0 10px 40px rgba(0,0,0,0.8)",
                     opacity: 0,
                     visibility: "hidden",
-                    transition: "opacity 0.25s ease, visibility 0.25s ease",
-                    zIndex: 50,
+                    transition: "opacity 0.3s ease, visibility 0.3s ease",
+                    zIndex: 9999,
                     fontSize: 11,
                     fontWeight: 400,
                     lineHeight: 1.6,
@@ -1032,6 +1059,20 @@ function InfoTooltip({ text }: { text: string }) {
                     pointerEvents: "none",
                 }}
             >
+                {/* 向下指的小箭頭，增加 UI 精緻度 */}
+                <span
+                    style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: 0,
+                        height: 0,
+                        borderLeft: "8px solid transparent",
+                        borderRight: "8px solid transparent",
+                        borderTop: "8px solid rgba(26,30,38,0.95)",
+                    }}
+                />
                 {text}
             </span>
         </span>
@@ -1844,47 +1885,86 @@ const TRADING_TIP: Record<Lang, string> = {
         "💡 Trading Tip: We recommend using the TTMA-Quant system on TradingView to monitor 'L1' (Trend Reconstruction) or 'S1' (Structural Breakdown) signals for these leading sectors, establishing a disciplined 'big win, small loss' trading framework.",
 }
 
-// 洞察摘要主文（不含操作提示），供 UI 端與 generateMarketInsight() 共用
-function buildInsightCore(top1Sector: string, top1Score: number, top2Sector: string, lang: Lang): string {
-    const score = top1Score.toFixed(1)
+// 洞察摘要主文（不含操作提示），供 UI 端與 generateMarketInsight() 共用。
+// flowFilter 決定文案語氣：'top' 為資金淨流入（強勢擴張）語境，
+// 'bottom' 為資金淨流出（尾部風險示警）語境，兩者皆採金融市場／量化交易
+// 標準專業慣用語撰寫，非同一份文案正負向替換。
+function buildInsightCore(
+    flowFilter: "top" | "bottom",
+    item1Sector: string,
+    item1Score: number,
+    item2Sector: string,
+    lang: Lang
+): string {
+    if (flowFilter === "bottom") {
+        switch (lang) {
+            case "zh-CN":
+                return `截至最新数据，跨市场资金净流出榜首为【${item1Sector}】板块，其动量因子得分呈现极度弱势。系统侦测到主力资金正持续撤出。紧随其后的是【${item2Sector}】板块，请密切留意其底层结构进一步恶化之尾部风险 (Tail Risk)。`
+            case "ja":
+                return `最新データによると、クロスマーケットにおける資金流出のトップは【${item1Sector}】セクターであり、そのモメンタムスコアは極めて弱気な推移を示しています。システムは、スマートマネーの継続的な資金引き揚げを検知しました。次点には【${item2Sector}】セクターが続き、基盤構造のさらなる崩壊によるテールリスク（Tail Risk）に警戒が必要です。`
+            case "en-US":
+                return `Based on the latest data, the leading sector for cross-market capital outflow is [${item1Sector}], with its quantitative momentum score showing extreme weakness. The system has detected continuous capital withdrawal by smart money. Closely following is the [${item2Sector}] sector; please closely monitor for tail risks associated with further structural breakdown.`
+            case "zh-TW":
+            default:
+                return `截至最新數據，跨市場資金淨流出榜首為【${item1Sector}】板塊，其動力量化分數呈現極度弱勢。系統偵測到主力資金正持續撤出。緊追在後的是【${item2Sector}】板塊，請密切留意其底層結構進一步惡化之尾部風險 (Tail Risk)。`
+        }
+    }
     switch (lang) {
         case "zh-CN":
-            return `截至最新数据，跨市场资金流入榜首为【${top1Sector}】板块，其动能分数呈现强势扩张，总分达 ${score}。系统侦测到其量价结构与动能产生共振。紧追在后的是【${top2Sector}】板块，展现出资金轮动的迹象。`
+            return `截至最新数据，跨市场资金净流入榜首为【${item1Sector}】板块，其动量因子得分呈现强势扩张。系统侦测到其量价结构与动能产生显著共振。紧随其后的是【${item2Sector}】板块，展现出明确的资金板块轮动迹象。`
         case "ja":
-            return `最新データによると、クロスマーケット資金流入の首位は【${top1Sector}】セクターとなり、モメンタムスコアは ${score} に達して力強い拡大を示しています。価格と出来高の構造的な共鳴が検知されました。続いて【${top2Sector}】セクターが追随し、資金ローテーションの兆候を見せています。`
+            return `最新データによると、クロスマーケットにおける資金流入のトップは【${item1Sector}】セクターであり、そのモメンタムスコアは力強い拡大を示しています。システムは、同セクターの価格・出来高構造とモメンタムの顕著な共鳴（コンバージェンス）を検知しました。次点には【${item2Sector}】セクターが続き、セクターローテーションの明確な兆候が確認されています。`
         case "en-US":
-            return `Based on the latest data, the top sector for cross-market capital inflow is [${top1Sector}], with its momentum score showing strong expansion reaching ${score}. The system detected a structural convergence of price and volume. Following closely is the [${top2Sector}] sector, indicating signs of capital rotation.`
+            return `Based on the latest data, the top sector for cross-market capital inflow is [${item1Sector}], with its quantitative momentum score exhibiting strong expansion. The system has detected a significant convergence between its price-volume structure and momentum. Closely following is the [${item2Sector}] sector, indicating clear signs of sector rotation.`
         case "zh-TW":
         default:
-            return `截至最新數據，跨市場資金流入榜首為【${top1Sector}】板塊，其動能分數呈現強勢擴張，總分達 ${score}。系統偵測到其量價結構與動能產生共振。緊追在後的是【${top2Sector}】板塊，展現出資金輪動的跡象。`
+            return `截至最新數據，跨市場資金淨流入榜首為【${item1Sector}】板塊，其動力量化分數呈現強勢擴張。系統偵測到其量價結構與動能產生顯著共振。緊追在後的是【${item2Sector}】板塊，展現出明確的資金板塊輪動跡象。`
     }
 }
 
 // 對外主函式：洞察摘要主文 + 操作提示（Contextual Upsell）組合成單一字串，
 // 供不需要分段樣式的呼叫端（例如 JSON-LD description）直接取用完整文案。
-function generateMarketInsight(top1Sector: string, top1Score: number, top2Sector: string, lang: Lang): string {
-    const core = buildInsightCore(top1Sector, top1Score, top2Sector, lang)
+function generateMarketInsight(
+    flowFilter: "top" | "bottom",
+    item1Sector: string,
+    item1Score: number,
+    item2Sector: string,
+    lang: Lang
+): string {
+    const core = buildInsightCore(flowFilter, item1Sector, item1Score, item2Sector, lang)
     const tip = TRADING_TIP[lang] || TRADING_TIP["en-US"]
     return `${core}\n\n${tip}`
 }
 
-// 帶科技感邊框／漸層背景的洞察文字卡片；topItems 需已依動能分數由高到低排序，
-// 取前兩名帶入摘要主文與操作提示。文字區塊本身不限制寬度、允許自然換行，
-// 手機窄螢幕下也能正常斷行顯示，不會撐破版面。操作提示段落刻意使用青綠強調色
-// （降低不透明度）與主文做出微小區隔，同時延續整體科技感視覺語彙。
+// 帶科技感邊框／漸層背景的洞察文字卡片；items 需已依 flowFilter 排序完成
+// （sortMomentumItems() 的輸出：top=由高到低、bottom=由低到高皆已處理好），
+// 直接取陣列前兩筆帶入摘要主文與操作提示，文案語氣隨 flowFilter 動態切換。
+// 文字區塊本身不限制寬度、允許自然換行，手機窄螢幕下也能正常斷行顯示，
+// 不會撐破版面。操作提示段落刻意使用青綠強調色（降低不透明度）與主文
+// 做出微小區隔，同時延續整體科技感視覺語彙。
+//
+// 防呆機制：items 不足 2 筆時（資料尚未就緒／該市場當前篩選條件下無足夠
+// 板塊），不隱藏卡片，改顯示安全提示文案，避免版面突然消失造成使用者困惑。
 function MarketInsightSummary({
-    topItems,
+    items,
+    flowFilter,
     lang,
 }: {
-    topItems: MomentumItem[]
+    items: MomentumItem[]
+    flowFilter: "top" | "bottom"
     lang: Lang
 }) {
-    if (!topItems || topItems.length < 2) return null
-    const top1 = topItems[0]
-    const top2 = topItems[1]
-    const top1Name = getTranslatedText(resolveSectorInput(top1.sector_id, top1.sector), lang)
-    const top2Name = getTranslatedText(resolveSectorInput(top2.sector_id, top2.sector), lang)
-    const insightCore = buildInsightCore(top1Name, top1.momentum_score, top2Name, lang)
+    const t = useT()
+    const hasEnoughData = !!items && items.length >= 2
+
+    let insightCore = ""
+    if (hasEnoughData) {
+        const item1 = items[0]
+        const item2 = items[1]
+        const item1Name = getTranslatedText(resolveSectorInput(item1.sector_id, item1.sector), lang)
+        const item2Name = getTranslatedText(resolveSectorInput(item2.sector_id, item2.sector), lang)
+        insightCore = buildInsightCore(flowFilter, item1Name, item1.momentum_score, item2Name, lang)
+    }
     const tradingTip = TRADING_TIP[lang] || TRADING_TIP["en-US"]
 
     return (
@@ -1927,29 +2007,33 @@ function MarketInsightSummary({
                 style={{
                     fontSize: 12.5,
                     lineHeight: 1.8,
-                    color: COLOR_TEXT_PRIMARY,
+                    color: hasEnoughData ? COLOR_TEXT_PRIMARY : COLOR_TEXT_SECONDARY,
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
                 }}
             >
-                {insightCore}
+                {hasEnoughData ? insightCore : t("insightPendingText")}
             </div>
-            <div
-                style={{
-                    marginTop: 10,
-                    paddingTop: 10,
-                    borderTop: "1px dashed rgba(0,242,254,0.2)",
-                    fontSize: 11.5,
-                    lineHeight: 1.7,
-                    color: "rgba(0, 242, 254, 0.8)",
-                    fontStyle: "italic",
-                    wordBreak: "break-word",
-                    overflowWrap: "break-word",
-                }}
-            >
-                {tradingTip}
-            </div>
-            <CtaButton />
+            {hasEnoughData && (
+                <>
+                    <div
+                        style={{
+                            marginTop: 10,
+                            paddingTop: 10,
+                            borderTop: "1px dashed rgba(0,242,254,0.2)",
+                            fontSize: 11.5,
+                            lineHeight: 1.7,
+                            color: "rgba(0, 242, 254, 0.8)",
+                            fontStyle: "italic",
+                            wordBreak: "break-word",
+                            overflowWrap: "break-word",
+                        }}
+                    >
+                        {tradingTip}
+                    </div>
+                    <CtaButton />
+                </>
+            )}
         </div>
     )
 }
@@ -1987,10 +2071,6 @@ function AllMarketsView({
         sectorById[row.sector_id] = row
     })
     const badgeText = t(flowFilter === "top" ? "flowTop" : "flowBottom")
-    // SEO 洞察摘要固定取「真正的動能榜首與次席」，不受目前 top/bottom 篩選切換影響
-    const overallTopMomentum = [...data.momentum_ranking]
-        .sort((a, b) => b.momentum_score - a.momentum_score)
-        .slice(0, 2)
 
     return (
         <>
@@ -2020,7 +2100,7 @@ function AllMarketsView({
                         />
                     ))}
                 </div>
-                <MarketInsightSummary topItems={overallTopMomentum} lang={lang} />
+                <MarketInsightSummary items={sortedMomentum} flowFilter={flowFilter} lang={lang} />
             </div>
         </>
     )
@@ -2130,10 +2210,7 @@ function SingleMarketView({
                         )
                     })}
                 </div>
-                <MarketInsightSummary
-                    topItems={[...nonEmptyItems].sort((a, b) => b.momentum_score - a.momentum_score).slice(0, 2)}
-                    lang={lang}
-                />
+                <MarketInsightSummary items={items} flowFilter={flowFilter} lang={lang} />
             </div>
         </>
     )
@@ -2211,6 +2288,7 @@ export default function SectorDashboard(props) {
     const seoDescription =
         overallTop2.length >= 2
             ? generateMarketInsight(
+                  "top",
                   getTranslatedText(resolveSectorInput(overallTop2[0].sector_id, overallTop2[0].sector), "en-US"),
                   overallTop2[0].momentum_score,
                   getTranslatedText(resolveSectorInput(overallTop2[1].sector_id, overallTop2[1].sector), "en-US"),
