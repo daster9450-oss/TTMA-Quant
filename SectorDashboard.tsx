@@ -112,6 +112,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         unitTimes: "倍",
         officialSiteLink: "TTMA-Quant 官方網站",
         dataSourceNote: "數據來源：第三方市場資訊供應商 | 經 TTMA-Quant 演算法量化處理",
+        subtitleGuide: "即時追蹤全球資金流向與動能變化，精準捕捉市場熱點與輪動趨勢",
+        ctaButton: "了解 TTMA-Quant 系統如何幫您精準擇時 ➔",
+        momentumRankingTooltip:
+            "綜合評估板塊內成分股之價量結構、波動率擴張與相對強弱。分數越接近 100，代表短期資金流入加速度越強。",
         disclaimerText:
             "免責聲明：本儀表板提供之跨市場量化數據與板塊動能排行，僅供學術研究與客觀市場狀態觀察之用。系統之內容均不構成任何形式之投資建議、要約、招攬或推薦。證券及金融商品交易涉及高風險，歷史數據與動力量化分數不代表未來績效，使用者應自行承擔所有投資決策及衍生之盈虧與法律責任。",
     },
@@ -161,6 +165,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         unitTimes: "倍",
         officialSiteLink: "TTMA-Quant 官方网站",
         dataSourceNote: "数据来源：第三方市场信息供应商 | 经 TTMA-Quant 算法量化处理",
+        subtitleGuide: "即时追踪全球资金流向与动能变化，精准捕捉市场热点与轮动趋势",
+        ctaButton: "了解 TTMA-Quant 系统如何帮您精准择时 ➔",
+        momentumRankingTooltip:
+            "综合评估板块内成分股之价量结构、波动率扩张与相对强弱。分数越接近 100，代表短期资金流入加速度越强。",
         disclaimerText:
             "免责声明：本仪表板提供之跨市场量化数据与板块动能排行，仅供学术研究与客观市场状态观察之用。系统之内容均不构成任何形式之投资建议、要约邀请或推介。金融衍生品及证券交易具有高风险，历史回测数据与动力量化分数不代表未来收益表现，使用者须自行承担所有投资决策及衍生之盈亏与法律责任。",
     },
@@ -210,6 +218,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         unitTimes: "倍",
         officialSiteLink: "TTMA-Quant 公式サイト",
         dataSourceNote: "データソース：第三者市場データプロバイダー | TTMA-Quantアルゴリズムによる定量処理",
+        subtitleGuide: "グローバルな資金流入とモメンタムをリアルタイムで追跡し、市場のホットスポットを的確に捉える",
+        ctaButton: "TTMA-Quantシステムによる正確なタイミング戦略を学ぶ ➔",
+        momentumRankingTooltip:
+            "セクター構成銘柄の価格・出来高構造、ボラティリティ拡大、相対的強弱を総合的に評価。スコアが100に近いほど、短期資金流入の加速度が強いことを示します。",
         disclaimerText:
             "免責事項：本ダッシュボードが提供するクロスマーケットの定量データおよびセクター別モメンタムランキングは、学術研究および客観的な市場動向の観察のみを目的としています。本システムの内容は、いかなる投資助言、勧誘、または推奨を構成するものではありません。金融商品の取引には高いリスクが伴い、過去のデータやモメンタムスコアは将来の運用成果を保証するものではありません。すべての投資判断およびそれに伴う損益ならびに法的責任は、利用者ご自身の自己責任となります。",
     },
@@ -259,6 +271,11 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         unitTimes: "x",
         officialSiteLink: "TTMA-Quant Official",
         dataSourceNote: "Data Source: 3rd-Party Market Data Providers | Processed by TTMA-Quant Algorithm",
+        subtitleGuide:
+            "Real-time tracking of global capital flows and momentum to precisely capture market hotspots and rotation trends.",
+        ctaButton: "Learn how TTMA-Quant system helps you time the market precisely ➔",
+        momentumRankingTooltip:
+            "Comprehensively evaluates the price-volume structure, volatility expansion, and relative strength of constituent stocks. A score closer to 100 indicates stronger short-term capital inflow acceleration.",
         disclaimerText:
             "Disclaimer: The cross-market quantitative data and sector momentum rankings provided by this dashboard are solely for academic research and objective market observation. The contents herein do not constitute investment advice, an offer, solicitation, or recommendation of any kind. Trading in securities and financial instruments involves substantial risk. Historical data and quantitative momentum scores do not guarantee future performance. Users assume full responsibility for all investment decisions, resulting profits or losses, and legal liabilities.",
     },
@@ -957,6 +974,108 @@ function DisclaimerFooter() {
     )
 }
 
+// -----------------------------------------------------------------------
+// 隱藏式提示 (Tooltip)：純 CSS 懸浮觸發（透過 .ttma-tooltip-trigger:hover 規則，
+// 見主元件內注入的全域 <style>），不依賴 JS state，效能與行為皆與原生 CSS
+// :hover 一致。z-index 設為 50，確保不被下方表格／圖表遮擋。
+// -----------------------------------------------------------------------
+function InfoTooltip({ text }: { text: string }) {
+    return (
+        <span
+            className="ttma-tooltip-trigger"
+            style={{
+                position: "relative",
+                display: "inline-flex",
+                alignItems: "center",
+                marginLeft: 8,
+                cursor: "help",
+            }}
+        >
+            <span
+                className="ttma-tooltip-icon"
+                style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: COLOR_TEXT_SECONDARY,
+                    lineHeight: 1,
+                }}
+            >
+                ⓘ
+            </span>
+            <span
+                className="ttma-tooltip-panel"
+                style={{
+                    position: "absolute",
+                    left: "50%",
+                    bottom: "calc(100% + 8px)",
+                    transform: "translateX(-50%)",
+                    width: 240,
+                    boxSizing: "border-box",
+                    padding: "10px 12px",
+                    background: "rgba(15,20,31,0.95)",
+                    backdropFilter: "blur(6px)",
+                    WebkitBackdropFilter: "blur(6px)",
+                    border: `1px solid ${COLOR_BORDER}`,
+                    borderRadius: 8,
+                    boxShadow: "0 12px 32px rgba(0,0,0,0.5)",
+                    opacity: 0,
+                    visibility: "hidden",
+                    transition: "opacity 0.25s ease, visibility 0.25s ease",
+                    zIndex: 50,
+                    fontSize: 11,
+                    fontWeight: 400,
+                    lineHeight: 1.6,
+                    letterSpacing: 0.2,
+                    color: COLOR_TEXT_SECONDARY,
+                    textAlign: "left",
+                    whiteSpace: "normal",
+                    pointerEvents: "none",
+                }}
+            >
+                {text}
+            </span>
+        </span>
+    )
+}
+
+// -----------------------------------------------------------------------
+// 高轉換率行動呼籲按鈕（CTA）：置於市場洞察卡片的操作提示正下方，
+// 深藍底 + 亮藍邊框，滑鼠懸浮時邊框與背景同步增亮，呈現科技感發光互動。
+// -----------------------------------------------------------------------
+function CtaButton() {
+    const t = useT()
+    const [hovered, setHovered] = useState(false)
+    return (
+        <a
+            href="https://kamiya-ttma-quant.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            style={{
+                display: "inline-flex",
+                alignItems: "center",
+                marginTop: 14,
+                padding: "9px 18px",
+                borderRadius: 8,
+                border: `1px solid ${hovered ? "rgba(0,242,254,0.75)" : "rgba(0,242,254,0.4)"}`,
+                background: hovered ? "rgba(0,242,254,0.16)" : "rgba(0,242,254,0.07)",
+                color: COLOR_ACCENT,
+                fontSize: 12.5,
+                fontWeight: 700,
+                letterSpacing: 0.3,
+                textDecoration: "none",
+                fontFamily: FONT_STACK,
+                boxShadow: hovered ? "0 0 18px rgba(0,242,254,0.25)" : "none",
+                transition: "all 0.25s ease",
+                cursor: "pointer",
+            }}
+        >
+            {t("ctaButton")}
+        </a>
+    )
+}
+
 // 依「動能分數」排序並截斷為前/後 10 筆（單一市場板塊列表用）
 function sortMomentumItems(
     items: MomentumItem[],
@@ -1652,10 +1771,12 @@ function PanelHeader({
     title,
     badge,
     trendLabel,
+    tooltip,
 }: {
     title: string
     badge?: string
     trendLabel?: string
+    tooltip?: string
 }) {
     return (
         <div
@@ -1672,6 +1793,8 @@ function PanelHeader({
         >
             <div
                 style={{
+                    display: "flex",
+                    alignItems: "center",
                     fontSize: 14,
                     fontWeight: 700,
                     color: COLOR_ACCENT,
@@ -1679,6 +1802,7 @@ function PanelHeader({
                 }}
             >
                 {title}
+                {tooltip && <InfoTooltip text={tooltip} />}
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
                 {trendLabel && (
@@ -1825,6 +1949,7 @@ function MarketInsightSummary({
             >
                 {tradingTip}
             </div>
+            <CtaButton />
         </div>
     )
 }
@@ -1882,6 +2007,7 @@ function AllMarketsView({
                     title={t("momentumRankingTitle")}
                     badge={badgeText}
                     trendLabel={getTranslatedText("5日趨勢", lang)}
+                    tooltip={t("momentumRankingTooltip")}
                 />
                 <div style={{ padding: "0 18px 6px" }}>
                     {sortedMomentum.map((item, i) => (
@@ -1982,6 +2108,7 @@ function SingleMarketView({
                         count: items.length,
                     })}`}
                     trendLabel={getTranslatedText("5日趨勢", lang)}
+                    tooltip={t("momentumRankingTooltip")}
                 />
                 <div style={{ padding: "0 18px 6px" }}>
                     {items.map((item, i) => {
@@ -2126,6 +2253,12 @@ export default function SectorDashboard(props) {
                     僅供搜尋引擎與其他結構化資料爬蟲讀取。 */}
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString }} />
 
+                {/* InfoTooltip 全域樣式：純 CSS :hover 觸發顯示，不依賴 JS state */}
+                <style>{`
+                    .ttma-tooltip-trigger:hover .ttma-tooltip-icon { color: ${COLOR_ACCENT}; }
+                    .ttma-tooltip-trigger:hover .ttma-tooltip-panel { opacity: 1; visibility: visible; }
+                `}</style>
+
                 {/* 頂部控制區：標題、市場頁籤、語言切換器。外層與內層皆設 flexWrap，
                     手機螢幕空間不足時自動往下折行，rowGap/columnGap 分開設定讓折行後的
                     上下間距更寬鬆好看，不會和左右間距擠在一起。 */}
@@ -2149,6 +2282,21 @@ export default function SectorDashboard(props) {
                             }}
                         >
                             {t("title")}
+                        </div>
+                        {/* 一行式使用說明：淡藍→青綠漸層文字，提升訪客對系統核心價值的第一眼理解度 */}
+                        <div
+                            style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                letterSpacing: 0.2,
+                                backgroundImage: `linear-gradient(90deg, #7DB8FF, ${COLOR_ACCENT})`,
+                                WebkitBackgroundClip: "text",
+                                backgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                color: "#7DB8FF",
+                            }}
+                        >
+                            {t("subtitleGuide")}
                         </div>
                         {/* 隱性品牌浮水印：極小、低調的暗灰色字體，作為底層技術標示，不干擾主標題閱讀 */}
                         <div
