@@ -110,6 +110,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         tooltipPriceMom: "價格動能",
         tooltipWeight: "權重佔比",
         unitTimes: "倍",
+        officialSiteLink: "TTMA-Quant 官方網站",
+        dataSourceNote: "數據來源：第三方市場資訊供應商 | 經 TTMA-Quant 演算法量化處理",
+        disclaimerText:
+            "免責聲明：本儀表板提供之跨市場量化數據與板塊動能排行，僅供學術研究與客觀市場狀態觀察之用。系統之內容均不構成任何形式之投資建議、要約、招攬或推薦。證券及金融商品交易涉及高風險，歷史數據與動力量化分數不代表未來績效，使用者應自行承擔所有投資決策及衍生之盈虧與法律責任。",
     },
     "zh-CN": {
         title: "跨市场资金动能与板块轮动",
@@ -155,6 +159,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         tooltipPriceMom: "价格动能",
         tooltipWeight: "权重占比",
         unitTimes: "倍",
+        officialSiteLink: "TTMA-Quant 官方网站",
+        dataSourceNote: "数据来源：第三方市场信息供应商 | 经 TTMA-Quant 算法量化处理",
+        disclaimerText:
+            "免责声明：本仪表板提供之跨市场量化数据与板块动能排行，仅供学术研究与客观市场状态观察之用。系统之内容均不构成任何形式之投资建议、要约邀请或推介。金融衍生品及证券交易具有高风险，历史回测数据与动力量化分数不代表未来收益表现，使用者须自行承担所有投资决策及衍生之盈亏与法律责任。",
     },
     ja: {
         title: "クロスマーケット資金モメンタム＆セクターローテーション",
@@ -200,6 +208,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         tooltipPriceMom: "価格モメンタム",
         tooltipWeight: "ウェイト比率",
         unitTimes: "倍",
+        officialSiteLink: "TTMA-Quant 公式サイト",
+        dataSourceNote: "データソース：第三者市場データプロバイダー | TTMA-Quantアルゴリズムによる定量処理",
+        disclaimerText:
+            "免責事項：本ダッシュボードが提供するクロスマーケットの定量データおよびセクター別モメンタムランキングは、学術研究および客観的な市場動向の観察のみを目的としています。本システムの内容は、いかなる投資助言、勧誘、または推奨を構成するものではありません。金融商品の取引には高いリスクが伴い、過去のデータやモメンタムスコアは将来の運用成果を保証するものではありません。すべての投資判断およびそれに伴う損益ならびに法的責任は、利用者ご自身の自己責任となります。",
     },
     "en-US": {
         title: "Cross-Market Capital Momentum & Sector Rotation",
@@ -245,6 +257,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
         tooltipPriceMom: "Price Momentum",
         tooltipWeight: "Weighting",
         unitTimes: "x",
+        officialSiteLink: "TTMA-Quant Official",
+        dataSourceNote: "Data Source: 3rd-Party Market Data Providers | Processed by TTMA-Quant Algorithm",
+        disclaimerText:
+            "Disclaimer: The cross-market quantitative data and sector momentum rankings provided by this dashboard are solely for academic research and objective market observation. The contents herein do not constitute investment advice, an offer, solicitation, or recommendation of any kind. Trading in securities and financial instruments involves substantial risk. Historical data and quantitative momentum scores do not guarantee future performance. Users assume full responsibility for all investment decisions, resulting profits or losses, and legal liabilities.",
     },
 }
 
@@ -884,6 +900,59 @@ function LangSwitcher({ lang, onSelect }: { lang: Lang; onSelect: (l: Lang) => v
                     </button>
                 )
             })}
+        </div>
+    )
+}
+
+// -----------------------------------------------------------------------
+// 官方主頁入口（極簡文字連結，置於語言切換器左側）
+// -----------------------------------------------------------------------
+function OfficialSiteLink() {
+    const t = useT()
+    const [hovered, setHovered] = useState(false)
+    return (
+        <a
+            href="https://kamiya-ttma-quant.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            style={{
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: 0.2,
+                color: hovered ? COLOR_TEXT_PRIMARY : COLOR_TEXT_SECONDARY,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                fontFamily: FONT_STACK,
+                transition: "color 0.15s ease",
+            }}
+        >
+            {t("officialSiteLink")}
+        </a>
+    )
+}
+
+// -----------------------------------------------------------------------
+// 多語系免責聲明（Legal & Compliance Footer）：置於頁面最底端，字體極小、
+// 顏色低調，作為不干擾閱讀的底層法律宣告。
+// -----------------------------------------------------------------------
+function DisclaimerFooter() {
+    const t = useT()
+    return (
+        <div
+            style={{
+                marginTop: 4,
+                paddingTop: 14,
+                borderTop: `1px solid ${COLOR_BORDER}`,
+                fontSize: 10,
+                lineHeight: 1.7,
+                color: COLOR_TEXT_SECONDARY,
+                opacity: 0.55,
+                textAlign: "left",
+            }}
+        >
+            {t("disclaimerText")}
         </div>
     )
 }
@@ -2093,9 +2162,23 @@ export default function SectorDashboard(props) {
                             Powered by TTMA-Quant
                         </div>
                         {data && (
-                            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>
-                                {t("updatedAt")}
-                                {data.generated_at_utc}
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                    alignItems: "baseline",
+                                    rowGap: 2,
+                                    columnGap: 8,
+                                }}
+                            >
+                                <span style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, whiteSpace: "nowrap" }}>
+                                    {t("updatedAt")}
+                                    {data.generated_at_utc}
+                                </span>
+                                <span style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, opacity: 0.4 }}>|</span>
+                                <span style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, opacity: 0.55, whiteSpace: "nowrap" }}>
+                                    {t("dataSourceNote")}
+                                </span>
                             </div>
                         )}
                     </div>
@@ -2112,6 +2195,7 @@ export default function SectorDashboard(props) {
                         {!loading && !error && data && (
                             <MarketTabs selected={selectedMarket} onSelect={setSelectedMarket} />
                         )}
+                        <OfficialSiteLink />
                         <LangSwitcher lang={currentLang} onSelect={setCurrentLang} />
                     </div>
                 </div>
@@ -2136,6 +2220,8 @@ export default function SectorDashboard(props) {
                         )}
                     </>
                 )}
+
+                <DisclaimerFooter />
             </div>
         </LangContext.Provider>
     )
